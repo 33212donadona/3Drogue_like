@@ -99,11 +99,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\game\game.cpp" />
+    <ClCompile Include="src\game\game_object\game_camera\game_camera.cpp" />
     <ClCompile Include="src\game\game_object\unit\unit.cpp" />
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game\game.h" />
+    <ClInclude Include="src\game\game_object\game_camera\game_camera.h" />
     <ClInclude Include="src\game\game_object\unit\unit.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

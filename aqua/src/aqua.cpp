@@ -73,7 +73,7 @@ GetWindowHeight( void )
 {
     return aqua::core::CFramework::GetInstance( ).GetWindowHeight( );
 }
-
+//! ウィンドウの幅取得 by弓削
 aqua::CPoint aqua::GetWindowSize()
 {
     return aqua::CPoint(GetWindowWidth(), GetWindowHeight());

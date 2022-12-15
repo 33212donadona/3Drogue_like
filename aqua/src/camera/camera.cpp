@@ -24,7 +24,7 @@ void aqua::CCamera::Draw()
 	SetCameraScreenCenter(screen_center.x, screen_center.y);
 
 	//SetCameraPositionAndAngle(camera_position, aqua::DegToRad(angle_y), aqua::DegToRad(angle_x), aqua::DegToRad(0));
-	SetCameraPositionAndTarget_UpVecY(camera_position, aqua::CVector3::ZERO);
+	SetCameraPositionAndTarget_UpVecY(camera_position,target_point);
 	aqua::core::DrawObject3D::DrawList();
 
 	m_Surface.End();
@@ -40,6 +40,4 @@ aqua::CCamera::CCamera()
 	screen_position = aqua::CVector2::ZERO;
 	
 	screen_center = { 500,500 };
-	angle_x = 0;
-	angle_y = 0;
 }

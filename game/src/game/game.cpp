@@ -11,7 +11,7 @@
 
 #include "game.h"
 #include "game_object/unit/unit.h"
-
+#include "game_object/game_camera/game_camera.h"
 const unsigned int CGame::m_clear_color = 0xff7f7f7f;
 
 /*
@@ -33,6 +33,7 @@ Initialize(void)
     // 最初に作るオブジェクト群
 
     aqua::CreateGameObject<CUnit>(this);
+    aqua::CreateGameObject<CGameCamera>(this);
 
     IGameObject::Initialize();
 }

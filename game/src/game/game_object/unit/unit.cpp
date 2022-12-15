@@ -1,14 +1,13 @@
 #include "unit.h"
 
 CUnit::CUnit(aqua::IGameObject* parent)
+	:aqua::IGameObject(parent,"Unit")
 {
 }
 
 void CUnit::Initialize()
 {
 	m_UnitModel.Create("data\\zero");
-	m_Camera.Create(aqua::GetWindowSize().x, aqua::GetWindowSize().y);
-	m_Camera.camera_position = m_UnitModel.position - aqua::CVector3(50,0,50);
 }
 
 void CUnit::Update()
@@ -20,7 +19,7 @@ void CUnit::Update()
 
 void CUnit::Draw()
 {
-	m_Camera.Draw();
+
 	IGameObject::Draw();
 }
 

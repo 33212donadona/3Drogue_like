@@ -13,8 +13,8 @@ public:
 	void Draw() override;
 	void Finalize() override;
 
-private:
 	aqua::CModel m_UnitModel;
-	aqua::CCamera m_Camera;
+private:
+
 
 };
