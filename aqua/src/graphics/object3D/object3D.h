@@ -61,7 +61,7 @@ namespace aqua
             return m_Object3DResorce->IsEnable();
         }
 
-        void        ReAttach(int a_i);
+        void        ReAttach(int a_i, int handle = -1);
 
         void        Detach(int a_i);
 
