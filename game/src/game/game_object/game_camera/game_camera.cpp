@@ -2,11 +2,16 @@
 #include "../unit/unit.h"
 const aqua::CVector3 CGameCamera::m_camera_position = aqua::CVector3(0, 75, 25);
 
+/*
+ *  コンストラクタ
+ */
 CGameCamera::CGameCamera(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent, "GameCamera")
 {
 }
-
+/*
+ *  初期化
+ */
 void CGameCamera::Initialize()
 {
 	m_UnitClass = (CUnit*)aqua::FindGameObject("Unit");
@@ -17,7 +22,9 @@ void CGameCamera::Initialize()
 		m_Camera.target_point = m_UnitClass->GetPosition();
 	}
 }
-
+/*
+ *  更新
+ */
 void CGameCamera::Update()
 {
 	if (m_UnitClass)
@@ -26,7 +33,9 @@ void CGameCamera::Update()
 		m_Camera.target_point = m_UnitClass->GetPosition();
 	}
 }
-
+/*
+ *  描画
+ */
 void CGameCamera::Draw()
 {
 	m_Camera.Draw();

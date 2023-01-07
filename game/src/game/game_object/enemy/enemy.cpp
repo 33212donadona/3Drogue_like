@@ -1,10 +1,16 @@
 #include "enemy.h"
 #include "../unit/unit.h"
+
+/*
+ *  コンストラクタ
+ */
 CEnemy::CEnemy(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent,"Enemy")
 {
 }
-
+/*
+ *  初期化
+ */
 void CEnemy::Initialize()
 {
 	m_UnitModel = (CUnit*)aqua::FindGameObject("Unit");
@@ -14,15 +20,19 @@ void CEnemy::Initialize()
 	m_EnemyModel.position = aqua::CVector3(0.0f, 0.0f, 75.0f);
 	m_EnemyModel.axis = aqua::CVector3(0.0f, 1.0f, 0.0f);
 }
-
+/*
+ *  更新
+ */
 void CEnemy::Update()
 {
 	aqua::CVector3 angle = m_EnemyModel.position - m_UnitModel->GetPosition();
 	m_EnemyModel.angles.x = atan2(angle.x, angle.z);
-		//atan2(m_EnemyModel.position.x - m_UnitModel->GetPosition().x, m_EnemyModel.position.z - m_UnitModel->GetPosition().z);
 	m_EnemyModel.AnimationUpdata(3);
 }
-
+/*
+ *  解放
+ */
 void CEnemy::Finalize()
 {
+	m_EnemyModel.Delete();
 }

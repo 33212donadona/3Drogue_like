@@ -16,6 +16,8 @@
  */
 namespace aqua
 {
+    class CPoint;
+
     /*!
      *  @class      CVector2
      *
@@ -51,9 +53,25 @@ namespace aqua
         /*!
          *  @brief  コンストラクタ
          *
+         *  @param[in]  x   X成分
+         *  @param[in]  y   Y成分
+         */
+        CVector2(int x, int y);
+
+        /*!
+         *  @brief  コンストラクタ
+         *
          *  @param[in]  v  ベクトル
          */
         CVector2( const CVector2& v );
+
+        /*!
+         *  @brief  コンストラクタ
+         *
+         *  @param[in]  x   X成分
+         *  @param[in]  y   Y成分
+         */
+        CVector2( const CPoint& p);
 
         /*!
          *  @brief  デストラクタ

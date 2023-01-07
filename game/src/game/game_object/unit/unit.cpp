@@ -1,10 +1,15 @@
 #include "unit.h"
 
+/*
+ *  コンストラクタ
+ */
 CUnit::CUnit(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent, "Unit")
 {
 }
-
+/*
+ *  初期化
+ */
 void CUnit::Initialize()
 {
 	m_UnitModel.Create("data\\model\\Bot", 4);
@@ -15,7 +20,9 @@ void CUnit::Initialize()
 
 	m_UnitModel.axis = aqua::CVector3(0.0f, 1.0f, 0.0f);
 }
-
+/*
+ *  更新
+ */
 void CUnit::Update()
 {
 	AnimetionWork();
@@ -50,27 +57,37 @@ void CUnit::Update()
 
 	m_UnitModel.AnimationUpdata(Animetion);
 }
-
+/*
+ *  描画
+ */
 void CUnit::Draw()
 {
 	IGameObject::Draw();
 }
-
+/*
+ *  解放
+ */
 void CUnit::Finalize()
 {
 	m_UnitModel.Delete();
 }
-
+/*
+ *  アニメーション番号
+ */
 int CUnit::GetAnimetionNum()
 {
 	return Animetion;
 }
-
+/*
+ *  座標取得
+ */
 aqua::CVector3 CUnit::GetPosition()
 {
 	return m_UnitModel.position;
 }
-
+/*
+ *  アニメーションの更新
+ */
 void CUnit::AnimetionWork()
 {
 	if (
