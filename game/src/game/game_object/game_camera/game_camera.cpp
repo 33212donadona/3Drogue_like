@@ -47,5 +47,9 @@ void CGameCamera::Draw()
 		"x:" + std::to_string(m_Camera.camera_position.x) + "\n"
 		"y:" + std::to_string(m_Camera.camera_position.y) + "\n"
 		"z:" + std::to_string(m_Camera.camera_position.z) + "\n";
+
+	
+
 	cl.Draw();
+	cl.Delete();
 }

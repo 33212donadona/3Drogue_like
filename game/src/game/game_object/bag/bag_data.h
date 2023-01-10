@@ -1,6 +1,8 @@
 #pragma once
 #include "aqua.h"
-#include "../weapon/weapon_id.h"
+
+enum class WEAPON_ID;
+struct WEAPON_STATE;
 
 class CBagData : public aqua::IGameObject
 {
@@ -25,9 +27,9 @@ public:
 	*  @brief      バックの中に登録
 	* 
 	* @param[in] bag_num バックの中身
-	* @param[in] id　     　　武器のID
-	* @param[in] attack　 　　武器の攻撃力
-	* @param[in] durability　 武器の耐久度
+	* @param[in] id           武器のID
+	* @param[in] attack       武器の攻撃力
+	* @param[in] durability   武器の耐久度
 	*/
 	void SetWeapon(int const bag_num,WEAPON_ID id, float attack,float durability);
 
@@ -46,25 +48,24 @@ public:
 	void AddToDepositBalance(int add_to_deposit_balance);
 
 	// バックの容量
-	int GetBagCapacity();   
+	int GetBagCapacity();
 	// バックの選択した枠番号
 	int GetSelectBagNumber();
 	// お金の預金残高取得
 	int GetDepositBalance();
 	// バックの開閉フラグ
-	bool GetBagFlag();			
+	bool GetBagFlag();
 	// バックの中身の情報
-	WEAPON_STATE GetWeaponData(int const bag_num);  
+	WEAPON_STATE GetWeaponData(int const bag_num);
 
 private:
 	static const int m_max_item;             //! アイテムの最大数
 	static const int m_bag_capacity;         //! バックの容量
 	static const int m_max_deposit_balance;  //! 預金残高の上限
-										     
 	WEAPON_STATE* m_BagInventory;            //! バックの中身
-										         
-	bool m_BagFlag;					         //! バックのフラグ
+
+	bool m_BagFlag;                          //! バックのフラグ
 	int  m_SelectBagNumber;                  //! バックの番号
-										     
+
 	int m_DepositBalance;                    //! 預金残高
 };

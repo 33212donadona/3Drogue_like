@@ -1,4 +1,5 @@
 #include "bag_data.h"
+#include "../weapon_manager/weapon_id.h"
 
 const int CBagData::m_max_item = 2;
 const int CBagData::m_bag_capacity = 3;

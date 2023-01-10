@@ -27,7 +27,7 @@ void CEnemy::Update()
 {
 	aqua::CVector3 angle = m_EnemyModel.position - m_UnitModel->GetPosition();
 	m_EnemyModel.angles.x = atan2(angle.x, angle.z);
-	m_EnemyModel.AnimationUpdata(3);
+	m_EnemyModel.AnimationUpdata();
 }
 /*
  *  ‰ð•ú

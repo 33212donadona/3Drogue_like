@@ -1,12 +1,14 @@
 #include "model.h"
 #include "../../aqua.h"
-// 初めに作ったファイル検索の機能を追加して！！！！！弓削に対して
-void aqua::CModel::Create(const std::string& file_name, int anime_max,float add_frame)
+// 弓削に対して初めに作ったファイル検索の機能を追加して！！！！！
+void aqua::CModel::Create(const std::string& file_name, int anime_max, float add_frame)
 {
 	Delete();
 	m_max_animetion = anime_max;
 	m_AddFrame = add_frame;
-	m_AnimetionObject3D = AQUA_NEW aqua::CObject3D[m_max_animetion];
+
+	if (m_max_animetion > 0)
+		m_AnimetionObject3D = AQUA_NEW aqua::CObject3D[m_max_animetion];
 
 	if (file_name == "")return;
 
@@ -18,6 +20,7 @@ void aqua::CModel::Create(const std::string& file_name, int anime_max,float add_
 
 	for (int i = 0; i <= MV1GetFrameNum(m_ModelHandle); i++)
 		MV1SetupCollInfo(m_ModelHandle, i, 2, 2, 2);
+
 
 	for (int f_i = 0; f_i < m_max_animetion; ++f_i)
 	{
@@ -38,9 +41,16 @@ void aqua::CModel::Create(const std::string& file_name, int anime_max,float add_
 
 void aqua::CModel::Delete()
 {
+	m_Object3D.Unload();
+
 	for (int f_i = 0; f_i < m_max_animetion; ++f_i)
-		m_Object3D.Unload();
+		m_AnimetionObject3D[f_i].Unload();
 }
+
+
+
+
+
 
 // ボーンのインデックス番号
 int aqua::CModel::GetBoneIndex(std::string bone_name)
@@ -59,11 +69,16 @@ void aqua::CModel::ChengeFrameVisible(std::string frame_name, bool visible_flag)
 	MV1SetFrameVisible(m_ModelHandle, frame_index, visible_flag);
 }
 
+int aqua::CModel::GetMaxAnimationIndex()
+{
+	return m_max_animetion;
+}
+
 void aqua::CModel::AttachAnimation(int index)
 {
-	if (m_AttachIndex == index)return;
+	if (m_AttachIndex == index || m_max_animetion <= 0)return;
 	if (m_AttachIndex >= 0)m_Object3D.Detach(0);
-
+	if (m_AttachIndex != index)m_Frame = 0.0f;
 	//! リソースに書き込む
 	m_AttachIndex = index;
 	m_AttachIndex = aqua::Limit(m_AttachIndex, 0, m_max_animetion - 1);
@@ -73,14 +88,8 @@ void aqua::CModel::AttachAnimation(int index)
 }
 
 // アニメーションの更新
-void aqua::CModel::AnimationUpdata(int index)
+void aqua::CModel::AnimationUpdata()
 {
-	if (m_AttachIndex != index)
-		m_Frame = 0.0f;
-
-	if (m_Frame == 0.0f)
-		AttachAnimation(index);
-
 	m_Frame += m_AddFrame;
 
 	if (m_Frame >= m_MaxTime)
@@ -228,14 +237,25 @@ void aqua::CModel::Draw()
 		m_PrevScale = scale;
 	}
 
-
-	MV1SetMatrix(m_ModelHandle, (m_MatrixRotation * m_MatrixScale * m_MatrixPosition));
+	if (axis != aqua::CVector3::ZERO)
+		MV1SetMatrix(m_ModelHandle, (m_MatrixRotation * m_MatrixScale * m_MatrixPosition));
 
 	MV1DrawModel(m_ModelHandle);
 
 	DrawObject3D::Draw();
 }
+
 aqua::CVector3 aqua::CModel::GetBonePosistion(int bone_index)
 {
 	return MV1GetFramePosition(m_ModelHandle, bone_index);
+}
+
+aqua::CMatrix aqua::CModel::GetBoneMatrix(int bone_index)
+{
+	return MV1GetFrameLocalWorldMatrix(m_ModelHandle, bone_index);
+}
+
+void aqua::CModel::SetBoneMatrix(aqua::CMatrix m)
+{
+	MV1SetMatrix(m_ModelHandle, m);
 }

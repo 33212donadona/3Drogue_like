@@ -1,5 +1,7 @@
 #pragma once
 #include "aqua.h"
+#include "../weapon_manager/weapon/weapon.h"
+#include "../weapon_manager/weapon/sword/sword.h"
 
 class CUnit : public aqua::IGameObject
 {
@@ -18,9 +20,11 @@ public:
 	aqua::CVector3 GetPosition();
 
 private:
-
+	static const int m_max_animetion;
 	void AnimetionWork();
 
 	aqua::CModel m_UnitModel;
+	IWeapon* m_W;
+	float m_Angles;
 	int Animetion;
 };

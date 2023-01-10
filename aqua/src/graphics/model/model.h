@@ -56,6 +56,20 @@ namespace aqua
 		*/
 		aqua::CVector3 GetBonePosistion(int bone_index);
 
+		/*!
+		*  @brief     モデルから特定のボーン回転行列を取得
+		*
+		* @param[in]  bone_index   ボーン番号
+		*/
+		aqua::CMatrix GetBoneMatrix(int bone_index);
+
+		/*!
+		*  @brief     モデルから特定のボーン回転行列を取得
+		*
+		* @param[in]  bone_index   ボーン番号
+		*/
+		void  SetBoneMatrix(aqua::CMatrix m);
+
 		//! モデルのハンドル取得
 		int       GetHandle()const { return m_ModelHandle; };
 		//! モデルのボーン取得
@@ -63,9 +77,13 @@ namespace aqua
 		//! モデルのボーンの表示設定
 		void      ChengeFrameVisible(std::string frame_name, bool visible_flag);
 
+		//! アニメーション最大数の取得
+		int       GetMaxAnimationIndex();
+
 		void      AttachAnimation(int index = 0);
 		//! アニメーションを再生
-		void      AnimationUpdata(int index = 0);
+		void      AnimationUpdata();
+		
 		/*!
 		*  @brief       線分と球モデルの衝突情報
 		*

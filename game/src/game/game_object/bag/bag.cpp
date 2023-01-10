@@ -94,6 +94,7 @@ void CBag::Finalize()
 
 	AQUA_SAFE_DELETE_ARRAY(m_ItemSprite);
 	AQUA_SAFE_DELETE_ARRAY(m_BagSprite);
+	m_BagData = nullptr;
 }
 
 /*

@@ -36,6 +36,8 @@ void CStage::Update()
  */
 void CStage::Finalize()
 {
+	AQUA_SAFE_DELETE_ARRAY(m_RandStage);
+
 	m_StageModel.Delete();
 }
 /*

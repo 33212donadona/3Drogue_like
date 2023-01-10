@@ -50,6 +50,8 @@ void CMoney::Update()
 
 	if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::J))
 		m_BagData->AddToDepositBalance(100);
+	if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::K))
+		m_BagData->AddToDepositBalance(-100);
 }
 
 /*
@@ -70,6 +72,7 @@ void CMoney::Finalize()
 	m_MoneyBoxSprite.Delete();
 	m_Deposit.Delete();
 	m_DepositFluctuation.Delete();
+	m_BagData = nullptr;
 }
 
 /*
