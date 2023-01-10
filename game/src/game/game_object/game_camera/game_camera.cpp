@@ -29,6 +29,8 @@ void CGameCamera::Update()
 {
 	if (m_UnitClass)
 	{
+		//m_Camera.camera_position = m_UnitClass->m_UnitModel.position + aqua::CVector3(0, 50, 50);
+		//m_Camera.target_point = m_UnitClass->m_UnitModel.position;
 		m_Camera.camera_position = m_UnitClass->GetPosition() + m_camera_position;
 		m_Camera.target_point = m_UnitClass->GetPosition();
 	}
