@@ -41,13 +41,13 @@ namespace aqua
 		*
 		*  @param[in]   file_name 読み込むファイル
 		*/
-		void      Create(const std::string& file_name,int anime_max = 1);
+		void      Create(const std::string& file_name,int anime_max = 1,float add_frame = 1.0f);
 
 		//  モデルを解放
 		void      Delete();
 
 		//! ボーンの数取得
-		int       GetBone()const { return MV1GetFrameNum(m_ModelHandle[m_AttachIndex]); }
+		int       GetBone()const { return MV1GetFrameNum(m_ModelHandle); }
 
 		/*!
 		*  @brief     モデルから特定のボーン座標を取得
@@ -57,7 +57,7 @@ namespace aqua
 		aqua::CVector3 GetBonePosistion(int bone_index);
 
 		//! モデルのハンドル取得
-		int       GetHandle()const { return m_ModelHandle[m_AttachIndex]; };
+		int       GetHandle()const { return m_ModelHandle; };
 		//! モデルのボーン取得
 		int       GetBoneIndex(std::string bone_name);
 		//! モデルのボーンの表示設定
@@ -122,11 +122,12 @@ namespace aqua
 
 		void      Draw()override;
 
-		static const aqua::CMatrix m_Indent; // マトリクスの初期化
+		static const aqua::CMatrix m_Indent;   //! マトリクスの初期化
 
-		aqua::CObject3D* m_Object3D;  //!　モデル変数
-		aqua::CVector2 m_PrevAngles;  //! 回転値
-		aqua::CVector2 m_PrevInitialAngles;  //! 回転値
+		aqua::CObject3D  m_Object3D;           //! モデル
+		aqua::CObject3D* m_AnimetionObject3D;  //! アニメーションモデル
+		aqua::CVector2 m_PrevAngles;           //! 回転値
+		aqua::CVector2 m_PrevInitialAngles;    //! 回転値
 		aqua::CVector3 m_PrevPosition;
 		aqua::CVector3 m_PrevScale;
 
@@ -135,7 +136,7 @@ namespace aqua
 		aqua::CMatrix m_MatrixPosition;
 		aqua::CMatrix m_MatrixScale;
 
-		int* m_ModelHandle;
+		int m_ModelHandle;
 
 		int m_max_animetion;
 
@@ -146,8 +147,9 @@ namespace aqua
 		int m_AttachHandle;
 
 		float m_Frame;
+		float m_AddFrame;
 
-		float* m_MaxTime;
+		float m_MaxTime;
 		float m_NowTime;
 	};
 

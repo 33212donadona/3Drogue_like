@@ -39,5 +39,5 @@ aqua::CCamera::CCamera()
 {
 	screen_position = aqua::CVector2::ZERO;
 	
-	screen_center = { 500,500 };
+	screen_center = { 1920 / 2,1080 / 2 };
 }

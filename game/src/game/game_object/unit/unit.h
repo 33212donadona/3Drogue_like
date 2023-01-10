@@ -13,8 +13,14 @@ public:
 	void Draw() override;
 	void Finalize() override;
 
-	aqua::CModel m_UnitModel;
+	int GetAnimetionNum();
+
+	aqua::CVector3 GetPosition();
+
 private:
 
+	void AnimetionWork();
 
+	aqua::CModel m_UnitModel;
+	int Animetion;
 };

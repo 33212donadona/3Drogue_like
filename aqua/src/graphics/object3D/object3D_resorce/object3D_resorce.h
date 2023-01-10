@@ -39,7 +39,7 @@ namespace aqua
 			int         GetBone()const { return m_ModelBone; }
 
 
-			void        ReAttach(int a_i);
+			void        ReAttach(int a_i, int handle = -1);
 
 			void        Dettach(int a_i);
 

@@ -58,9 +58,9 @@ void aqua::core::CObject3DResorce::Unload(void)
 	m_Enabel = false;
 }
 
-void aqua::core::CObject3DResorce::ReAttach(int a_i)
+void aqua::core::CObject3DResorce::ReAttach(int a_i, int handle)
 {
-	MV1AttachAnim(m_ResourceHandle, a_i, -1, FALSE);
+	MV1AttachAnim(m_ResourceHandle, a_i,handle, FALSE);
 }
 
 void aqua::core::CObject3DResorce::Dettach(int a_i)

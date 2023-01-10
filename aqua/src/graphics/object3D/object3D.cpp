@@ -44,10 +44,10 @@ void aqua::CObject3D::Unload(void)
 	m_Object3DResorce = nullptr;
 }
 
-void aqua::CObject3D::ReAttach(int a_i)
+void aqua::CObject3D::ReAttach(int a_i,int handle)
 {
 	if (m_Object3DResorce)
-		m_Object3DResorce->ReAttach(a_i);
+		m_Object3DResorce->ReAttach(a_i,handle);
 }
 
 void aqua::CObject3D::Detach(int a_i)
@@ -56,7 +56,7 @@ void aqua::CObject3D::Detach(int a_i)
 		m_Object3DResorce->Dettach(a_i);
 }
 
-void aqua::CObject3D::SetAnimeFrame(int a_i, float time)
+void aqua::CObject3D::SetAnimeFrame(int a_i,float time)
 {
 	if (m_Object3DResorce)
 		m_Object3DResorce->SetAnimeFrame(a_i, time);

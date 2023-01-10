@@ -1,0 +1,14 @@
+#pragma once
+enum class WEAPON_ID
+{
+	SWORD,
+	MAGIC_STICK,
+	MAX
+};
+
+struct WEAPON_STATE
+{
+	WEAPON_ID id = WEAPON_ID::MAX;
+	float durability = 0; //! ëœãvìx
+	float attack = 0;     //! çUåÇóÕ
+};
