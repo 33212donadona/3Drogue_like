@@ -98,6 +98,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\game\game_object\weapon_manager\weapon\magic\magic_stick.cpp" />
     <ClCompile Include="src\game\game_object\weapon_manager\weapon\sword\sword.cpp" />
     <ClCompile Include="src\game\game.cpp" />
     <ClCompile Include="src\game\game_object\bag\bag.cpp" />
@@ -113,6 +114,7 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\game\game_object\weapon_manager\weapon\magic\magic_stick.h" />
     <ClInclude Include="src\game\game_object\weapon_manager\weapon\sword\sword.h" />
     <ClInclude Include="src\game\game.h" />
     <ClInclude Include="src\game\game_object\bag\bag.h" />

@@ -12,16 +12,22 @@ public:
 	virtual void Update() override;
 	virtual void Finalize() override;
 
-	aqua::CVector3 m_ModelPosition;   //! 武器モデルの座標
-	aqua::CVector3 m_ModelScale;      //! 武器モデルの拡大率
-	aqua::CMatrix  m_ModelMatrix; //! 武器モデルの回転行列
+	/*!
+	*  @brief 行列設定
+	* 
+	* @param[in] mm   行列
+	*/
+	void SetMatrix(aqua::CMatrix mm);
 
 private:
 
-	aqua::CModel m_WeaponModel;       //! 武器のモデル
+	aqua::CMatrix m_ModelMatrix;       //! 武器モデルの行列
+	aqua::CModel  m_WeaponModel;       //! 武器のモデル
 
 protected:
 
-	std::string m_WeaponFileName;     //! 武器のファイル名
+	aqua::CMatrix m_RotationMatrix;    //! 武器モデルの回転行列
+	aqua::CMatrix m_RotationMatrix2;   //! 武器モデルの回転行列
+	std::string m_WeaponFileName;      //! 武器のファイル名
 
 };

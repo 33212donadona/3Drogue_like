@@ -12,13 +12,15 @@ void IWeapon::Initialize()
 
 void IWeapon::Update()
 {
-	aqua::CMatrix m;
-	m.AxisRotation(aqua::CVector3(1.0f, 0.0f, 0.0f),aqua::DegToRad(-45));
-	m_WeaponModel.SetBoneMatrix(m * m_ModelMatrix);
-	m_WeaponModel.scale = m_ModelScale;
+	m_WeaponModel.SetMatrix(m_RotationMatrix * m_RotationMatrix2 * m_ModelMatrix);
 }
 
 void IWeapon::Finalize()
 {
 	m_WeaponModel.Delete();
+}
+
+void IWeapon::SetMatrix(aqua::CMatrix mm)
+{
+	m_ModelMatrix = mm;
 }

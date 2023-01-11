@@ -255,7 +255,7 @@ aqua::CMatrix aqua::CModel::GetBoneMatrix(int bone_index)
 	return MV1GetFrameLocalWorldMatrix(m_ModelHandle, bone_index);
 }
 
-void aqua::CModel::SetBoneMatrix(aqua::CMatrix m)
+void aqua::CModel::SetMatrix(aqua::CMatrix m)
 {
 	MV1SetMatrix(m_ModelHandle, m);
 }

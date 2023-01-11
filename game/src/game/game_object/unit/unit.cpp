@@ -1,6 +1,6 @@
 #include "unit.h"
 
-const int CUnit::m_max_animetion = 4;
+const int CUnit::m_max_animetion = 6;
 
 /*
  *  コンストラクタ
@@ -8,6 +8,7 @@ const int CUnit::m_max_animetion = 4;
 CUnit::CUnit(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent, "Unit")
 	, m_Angles(0.0f)
+	, m_Weapon(nullptr)
 {
 }
 /*
@@ -21,10 +22,9 @@ void CUnit::Initialize()
 
 	Animetion = 0;
 
-	m_W = (IWeapon*)aqua::CreateGameObject<CSword>(this);
-	m_W->m_ModelScale = aqua::CVector3::ONE * 0.005f;
+	//m_Weapon = (IWeapon*)aqua::CreateGameObject<CMagicStick>(this);
 	m_UnitModel.axis = aqua::CVector3(0.0f, 1.0f, 0.0f);
-	m_W->Initialize();
+	if(m_Weapon)m_Weapon->Initialize();
 }
 
 /*
@@ -44,22 +44,21 @@ void CUnit::Update()
 	int Horizotal = aqua::keyboard::Button(aqua::keyboard::KEY_ID::D) - aqua::keyboard::Button(aqua::keyboard::KEY_ID::A);
 
 	if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::W))
-		m_Angles = Horizotal * 45;
+		m_Angles = Horizotal * 45.0f;
 	else if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::S))
-		m_Angles = 180 - Horizotal * 45;
+		m_Angles = 180 - Horizotal * 45.0f;
 	else if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::A))
-		m_Angles = 270;
+		m_Angles = 270.0f;
 	else if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::D))
-		m_Angles = 90;
+		m_Angles = 90.0f;
 
 	m_UnitModel.angles.x = aqua::DegToRad(m_Angles);
 
 	m_UnitModel.AnimationUpdata();
 
-	m_W->m_ModelPosition = m_UnitModel.GetBonePosistion(11);
-	m_W->m_ModelMatrix = m_UnitModel.GetBoneMatrix(11);
+	if (m_Weapon)m_Weapon->SetMatrix(m_UnitModel.GetBoneMatrix(42));
 
-	m_W->Update();
+	if (m_Weapon)m_Weapon->Update();
 }
 /*
  *  描画
@@ -74,7 +73,7 @@ void CUnit::Draw()
 void CUnit::Finalize()
 {
 	m_UnitModel.Delete();
-	m_W->Finalize();
+	if (m_Weapon)m_Weapon->Finalize();
 }
 /*
  *  アニメーション番号
@@ -104,6 +103,13 @@ void CUnit::AnimetionWork()
 	{
 		Animetion = 2;
 	}
+
+	else if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::Z))
+		Animetion = 3;
+	else if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::X))
+		Animetion = 4;
+	else if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::C))
+		Animetion = 5;
 	else
 		Animetion = 0;
 

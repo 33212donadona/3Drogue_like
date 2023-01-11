@@ -104,7 +104,7 @@ void CMoney::DepositFluctuation()
 		);
 
 	m_DepositFluctuation.color.alpha =
-		aqua::easing::InCubic
+		(unsigned char)aqua::easing::InCubic
 		(
 			m_EasingTimer.GetTime(),
 			m_EasingTimer.GetLimit(),

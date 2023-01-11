@@ -68,7 +68,7 @@ namespace aqua
 		*
 		* @param[in]  bone_index   ボーン番号
 		*/
-		void  SetBoneMatrix(aqua::CMatrix m);
+		void  SetMatrix(aqua::CMatrix m);
 
 		//! モデルのハンドル取得
 		int       GetHandle()const { return m_ModelHandle; };
