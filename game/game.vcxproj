@@ -98,7 +98,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\game\game_object\weapon_manager\weapon\magic\magic_stick.cpp" />
     <ClCompile Include="src\game\game_object\weapon_manager\weapon\sword\sword.cpp" />
     <ClCompile Include="src\game\game.cpp" />
     <ClCompile Include="src\game\game_object\bag\bag.cpp" />
@@ -114,7 +113,6 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\game\game_object\weapon_manager\weapon\magic\magic_stick.h" />
     <ClInclude Include="src\game\game_object\weapon_manager\weapon\sword\sword.h" />
     <ClInclude Include="src\game\game.h" />
     <ClInclude Include="src\game\game_object\bag\bag.h" />
@@ -125,7 +123,7 @@
     <ClInclude Include="src\game\game_object\stage\stage_id.h" />
     <ClInclude Include="src\game\game_object\unit\unit.h" />
     <ClInclude Include="src\game\game_object\weapon_manager\weapon\weapon.h" />
-    <ClInclude Include="src\game\game_object\weapon_manager\weapon_id.h" />
+    <ClInclude Include="src\game\game_object\weapon_manager\weapon\weapon_id.h" />
     <ClInclude Include="src\game\game_object\weapon_manager\weapon_manager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

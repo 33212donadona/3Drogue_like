@@ -15,22 +15,13 @@ aqua::core::CObject3DManager::Load(const std::string& file_name, int index)
 {
 	CObject3DResorce* object_3d = Find(file_name);
 
+	if (!object_3d)
+	{
+		object_3d = AQUA_NEW CObject3DResorce();
+		object_3d->Load(file_name, index);
 
-	object_3d = AQUA_NEW CObject3DResorce();
-	object_3d->Load(file_name, index);
-
-	//	// Œ©‚Â‚ç‚È‚©‚Á‚½‚ç
-	//	if (!model) 
-	//	{
-	//	}
-	//	// ƒ‚ƒfƒ‹‚ªŒ©‚Â‚©‚Á‚½‚ç
-	//	else
-	//	{
-	//		model->DuplicateLoad(file_name);
-	//	}
-
-	m_Object3DList.push_back(object_3d);
-
+		m_Object3DList.push_back(object_3d);
+	}
 	object_3d->AddReference();
 
 	return object_3d;

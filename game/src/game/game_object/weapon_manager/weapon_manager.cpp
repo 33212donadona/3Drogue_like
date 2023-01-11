@@ -1,5 +1,5 @@
 #include "weapon_manager.h"
-#include "weapon_id.h"
+#include "weapon/weapon_id.h"
 
 CWeaponManager::CWeaponManager(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent,"WeaponManager")

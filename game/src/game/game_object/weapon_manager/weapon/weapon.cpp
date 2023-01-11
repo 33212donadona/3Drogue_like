@@ -7,6 +7,7 @@ IWeapon::IWeapon(aqua::IGameObject* parent, std::string name)
 
 void IWeapon::Initialize()
 {
+
 	m_WeaponModel.Create(m_WeaponFileName,0);
 }
 

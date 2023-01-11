@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vector>
 #include "..\graphic_filter\graphic_filter.h"
 #include "../draw_object_3d/draw_object_3d.h"
 #include "..\..\mathematics\mathematics.h"
@@ -140,12 +141,12 @@ namespace aqua
 
 		void      Draw()override;
 
-		static const aqua::CMatrix m_Indent;   //! マトリクスの初期化
+		static const aqua::CMatrix m_Indent;               //! マトリクスの初期化
 
-		aqua::CObject3D  m_Object3D;           //! モデル
-		aqua::CObject3D* m_AnimetionObject3D;  //! アニメーションモデル
-		aqua::CVector2 m_PrevAngles;           //! 回転値
-		aqua::CVector2 m_PrevInitialAngles;    //! 回転値
+		aqua::CObject3D  m_Object3D;			           //! モデル
+		std::vector<int> m_AnimetionObject3D;              //! アニメーションモデル
+		aqua::CVector2 m_PrevAngles;                       //! 回転値
+		aqua::CVector2 m_PrevInitialAngles;                //! 回転値
 		aqua::CVector3 m_PrevPosition;
 		aqua::CVector3 m_PrevScale;
 

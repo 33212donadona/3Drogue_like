@@ -1,5 +1,6 @@
 #include "model.h"
 #include "../../aqua.h"
+
 // 弓削に対して初めに作ったファイル検索の機能を追加して！！！！！
 void aqua::CModel::Create(const std::string& file_name, int anime_max, float add_frame)
 {
@@ -7,8 +8,8 @@ void aqua::CModel::Create(const std::string& file_name, int anime_max, float add
 	m_max_animetion = anime_max;
 	m_AddFrame = add_frame;
 
-	if (m_max_animetion > 0)
-		m_AnimetionObject3D = AQUA_NEW aqua::CObject3D[m_max_animetion];
+	//if (m_max_animetion > 0)
+	//	m_AnimetionObject3D = AQUA_NEW aqua::CObject3D[m_max_animetion];
 
 	if (file_name == "")return;
 
@@ -25,10 +26,10 @@ void aqua::CModel::Create(const std::string& file_name, int anime_max, float add
 	for (int f_i = 0; f_i < m_max_animetion; ++f_i)
 	{
 		std::string name;
-
+		aqua::CObject3D model;
 		name = file_name + "_" + std::to_string(f_i / 10) + std::to_string(f_i) + ".mv1";
-
-		m_AnimetionObject3D[f_i].Load(name);
+		model.Load(name);
+		m_AnimetionObject3D.push_back(model.GetResourceHandle());
 	}
 
 	m_MatrixPosition.SetTranslate(position);
@@ -43,14 +44,9 @@ void aqua::CModel::Delete()
 {
 	m_Object3D.Unload();
 
-	for (int f_i = 0; f_i < m_max_animetion; ++f_i)
-		m_AnimetionObject3D[f_i].Unload();
+	if (m_max_animetion > 0)
+		m_AnimetionObject3D.clear();
 }
-
-
-
-
-
 
 // ボーンのインデックス番号
 int aqua::CModel::GetBoneIndex(std::string bone_name)
@@ -83,7 +79,7 @@ void aqua::CModel::AttachAnimation(int index)
 	m_AttachIndex = index;
 	m_AttachIndex = aqua::Limit(m_AttachIndex, 0, m_max_animetion - 1);
 
-	m_Object3D.ReAttach(0, m_AnimetionObject3D[m_AttachIndex].GetResourceHandle());
+	m_Object3D.ReAttach(0, m_AnimetionObject3D[m_AttachIndex]);
 	m_MaxTime = m_Object3D.GetAnimeTotalTime(0);
 }
 
