@@ -1,5 +1,4 @@
 #include "unit.h"
-#include "../unit_state/unit_state.h"
 #include "../enemy/enemy.h"
 
 const int CUnit::m_max_animetion = 6;
@@ -16,7 +15,6 @@ CUnit::CUnit(aqua::IGameObject* parent)
 	, m_ShotMagic(false)
 	, m_Weapon(nullptr)
 	, m_Magic(nullptr)
-	, m_UnitState(nullptr)
 {
 }
 /*
@@ -32,12 +30,9 @@ void CUnit::Initialize()
 
 	m_Weapon = (IWeapon*)aqua::CreateGameObject<CSword>(this);
 	m_Magic = (IMagic*)aqua::CreateGameObject<CFireBall>(this);
-	m_UnitState = (CStateData*)aqua::CreateGameObject<CStateData>(this);
 	m_UnitModel.axis = aqua::CVector3(0.0f, 1.0f, 0.0f);
 	if (m_Weapon)m_Weapon->Initialize();
 	if (m_Magic)m_Magic->Initialize();
-
-	if (m_UnitState)m_UnitState->Set(m_max_hit_point, m_attack);
 
 	m_Enemy = (CEnemy*)aqua::FindGameObject("Enemy");
 }
@@ -164,7 +159,7 @@ void CUnit::Weapon()
 		pos -= aqua::CVector3(sin(aqua::DegToRad(m_Angles)), 0.0f, cos(aqua::DegToRad(m_Angles))) * (float)m_MagicFrame;
 		
 		if (m_Enemy)
-			m_Enemy->Damage(m_UnitState->GetAttack(), pos, pos);
+			m_Enemy->Damage(0, pos, pos);//TODO
 	}
 	else
 		m_MagicFrame = 0;

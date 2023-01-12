@@ -1,6 +1,5 @@
 #include "enemy.h"
 #include "../unit/unit.h"
-#include "../unit_state/unit_state.h"
 
 const float CEnemy::m_max_hit_point = 100.0f;
 const float CEnemy::m_attack = 10.0f;
@@ -26,11 +25,6 @@ void CEnemy::Initialize()
 	m_EnemyModel.scale = aqua::CVector3::ONE * 0.1f;
 	m_EnemyModel.position = aqua::CVector3(0.0f, 0.0f, 75.0f);
 	m_EnemyModel.axis = aqua::CVector3(0.0f, 1.0f, 0.0f);
-
-	m_EnemyState = aqua::CreateGameObject<CStateData>(this);
-
-	if (m_EnemyState)
-		m_EnemyState->Set(m_max_hit_point, m_attack);
 }
 /*
  *  XV
@@ -55,16 +49,13 @@ void CEnemy::Damage(float hit_damage)
 {
 	if (m_EnemyState)
 	{
-		m_EnemyState->Damage(hit_damage);
-
-		if (m_EnemyState->GetHitPoint() <= 0.0f)
-			aqua::IGameObject::DeleteObject();
+		aqua::IGameObject::DeleteObject();
 	}
 }
 
 void CEnemy::Damage(float hit_damage, aqua::CVector3 hit_pos_first, aqua::CVector3 hit_pos_end)
 {
-	bool gbc = m_EnemyModel.GetBoneCollision("mixamorig:Hips",20,hit_pos_first, hit_pos_end).HitFlag;
+	bool gbc = m_EnemyModel.GetBoneCollision("mixamorig:Hips", 20, hit_pos_first, hit_pos_end).HitFlag;
 
 	if (!m_DamageFlag && gbc)
 		m_DamageFlag = true;

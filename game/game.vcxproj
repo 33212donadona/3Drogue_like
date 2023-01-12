@@ -98,7 +98,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\game\game_object\unit_state\unit_state.cpp" />
     <ClCompile Include="src\game\game_object\weapon_manager\magic\fire_ball\fire_ball.cpp" />
     <ClCompile Include="src\game\game_object\weapon_manager\magic\magic.cpp" />
     <ClCompile Include="src\game\game_object\weapon_manager\weapon\sword\sword.cpp" />
@@ -116,7 +115,6 @@
     <ClCompile Include="src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\game\game_object\unit_state\unit_state.h" />
     <ClInclude Include="src\game\game_object\weapon_manager\magic\fire_ball\fire_ball.h" />
     <ClInclude Include="src\game\game_object\weapon_manager\magic\magic.h" />
     <ClInclude Include="src\game\game_object\weapon_manager\weapon\sword\sword.h" />
