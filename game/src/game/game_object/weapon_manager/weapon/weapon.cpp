@@ -21,7 +21,7 @@ void IWeapon::Finalize()
 	m_WeaponModel.Delete();
 }
 
-void IWeapon::SetMatrix(aqua::CMatrix mm)
+void IWeapon::SetMatrix(aqua::CMatrix model_matrix)
 {
-	m_ModelMatrix = mm;
+	m_ModelMatrix = model_matrix;
 }

@@ -1,25 +1,25 @@
 #pragma once
-// —æ‰¹‚Ì”­‘z
+
 #include <list>
 namespace aqua
 {
 	namespace core
 	{
-		class DrawObject3D
+		class IDrawObject3D
 		{
 		public:
 
 			static void DrawList();
 
 		protected:
-			DrawObject3D();
+			IDrawObject3D();
 
-			virtual ~DrawObject3D();
+			virtual ~IDrawObject3D();
 			virtual void Draw();
 
 		private:
 
-			static std::list<DrawObject3D*> m_DrawList;
+			static std::list<IDrawObject3D*> m_DrawList;
 		};
 	}
 }

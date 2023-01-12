@@ -34,7 +34,7 @@ namespace aqua
 		CVector3 distance;
 	};
 
-	class CModel : public aqua::core::DrawObject3D
+	class CModel : public aqua::core::IDrawObject3D
 	{
 	public:
 		/*!
@@ -85,13 +85,19 @@ namespace aqua
 		//! アニメーションを再生
 		void      AnimationUpdata();
 		
+		//! アニメーションの終了
+		bool      AnimetionFinished();
+
+		//! アニメーションの終了
+		bool      AnimetionFinished(float m_time);
+
 		/*!
-		*  @brief       線分と球モデルの衝突情報
+		*  @brief       球と線分の衝突情報
 		*
 		*  @param[in]   bone_name    ボーン名
-		*  @param[in]   r　　　　　  半径
-		*  @param[in]   start_pos 　 始点
-		*  @param[in]   end_pos　　  終点
+		*  @param[in]   r            半径
+		*  @param[in]   start_pos    始点
+		*  @param[in]   end_pos      終点
 		*/
 		CollisionInfo GetBoneCollision
 		(	std::string bone_name,

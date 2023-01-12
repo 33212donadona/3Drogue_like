@@ -25,7 +25,7 @@ void aqua::CCamera::Draw()
 
 	//SetCameraPositionAndAngle(camera_position, aqua::DegToRad(angle_y), aqua::DegToRad(angle_x), aqua::DegToRad(0));
 	SetCameraPositionAndTarget_UpVecY(camera_position,target_point);
-	aqua::core::DrawObject3D::DrawList();
+	aqua::core::IDrawObject3D::DrawList();
 
 	m_Surface.End();
 

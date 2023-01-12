@@ -1,18 +1,18 @@
 #include "draw_object_3d.h"
-std::list<aqua::core::DrawObject3D*> aqua::core::DrawObject3D::m_DrawList;
+std::list<aqua::core::IDrawObject3D*> aqua::core::IDrawObject3D::m_DrawList;
 
-void aqua::core::DrawObject3D::DrawList()
+void aqua::core::IDrawObject3D::DrawList()
 {
 	for (auto& i : m_DrawList)
 		i->Draw();
 }
 
-aqua::core::DrawObject3D::DrawObject3D()
+aqua::core::IDrawObject3D::IDrawObject3D()
 {
 	m_DrawList.push_back(this);
 }
 
-aqua::core::DrawObject3D::~DrawObject3D()
+aqua::core::IDrawObject3D::~IDrawObject3D()
 {
 	auto find = std::find(m_DrawList.begin(), m_DrawList.end(), this);
 
@@ -20,6 +20,6 @@ aqua::core::DrawObject3D::~DrawObject3D()
 		m_DrawList.erase(find);
 }
 
-void aqua::core::DrawObject3D::Draw()
+void aqua::core::IDrawObject3D::Draw()
 {
 }

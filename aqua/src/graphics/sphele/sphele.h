@@ -4,7 +4,7 @@
 
 namespace aqua
 {
-	class CSphele : public aqua::core::DrawObject3D
+	class CSphele : public aqua::core::IDrawObject3D
 	{
 	public:
 

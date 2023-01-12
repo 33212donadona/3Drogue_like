@@ -40,5 +40,5 @@ void aqua::CSphele::Draw()
 		m_SpheleData.FillFlag
 	);
 
-	DrawObject3D::Draw();
+	IDrawObject3D::Draw();
 }

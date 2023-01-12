@@ -17,7 +17,7 @@ public:
 	* 
 	* @param[in] mm   çsóÒ
 	*/
-	void SetMatrix(aqua::CMatrix mm);
+	void SetMatrix(aqua::CMatrix model_matrix);
 
 private:
 

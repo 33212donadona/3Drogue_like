@@ -22,7 +22,6 @@ void aqua::CModel::Create(const std::string& file_name, int anime_max, float add
 	for (int i = 0; i <= MV1GetFrameNum(m_ModelHandle); i++)
 		MV1SetupCollInfo(m_ModelHandle, i, 2, 2, 2);
 
-
 	for (int f_i = 0; f_i < m_max_animetion; ++f_i)
 	{
 		std::string name;
@@ -95,6 +94,16 @@ void aqua::CModel::AnimationUpdata()
 	m_Object3D.SetAnimeFrame(0, m_Frame);
 }
 
+bool aqua::CModel::AnimetionFinished()
+{
+	return m_Frame >= m_MaxTime;
+}
+
+bool aqua::CModel::AnimetionFinished(float m_time)
+{
+	return m_Frame >= m_time;
+}
+
 aqua::CollisionInfo aqua::CModel::GetBoneCollision(
 	std::string bone_name,
 	float r,
@@ -151,7 +160,11 @@ aqua::CollisionInfo aqua::CModel::GetBoneCollision
 	return info;
 }
 
-aqua::CollisionInfo aqua::CModel::GetBoneCollision(std::string bone_name, aqua::CVector3 position, float r)
+aqua::CollisionInfo aqua::CModel::GetBoneCollision(
+	std::string bone_name, 
+	aqua::CVector3 m_position, 
+	float r
+)
 {
 	CollisionInfo info;
 	MV1_COLL_RESULT_POLY_DIM coll_result_poly;
@@ -164,14 +177,14 @@ aqua::CollisionInfo aqua::CModel::GetBoneCollision(std::string bone_name, aqua::
 	else
 		index = 0;
 
-	aqua::CVector3 low_position = position;
+	aqua::CVector3 low_position = m_position;
 	low_position.y = 0;
 
 	coll_result_poly = MV1CollCheck_Capsule
 	(
 		m_ModelHandle,
 		index,
-		position,
+		m_position,
 		low_position,
 		r
 	);
@@ -179,7 +192,7 @@ aqua::CollisionInfo aqua::CModel::GetBoneCollision(std::string bone_name, aqua::
 	int num = coll_result_poly.HitNum;
 
 	if (coll_result_poly.Dim && coll_result_poly.Dim[num].HitFlag)
-		distance = position - coll_result_poly.Dim[num].HitPosition;
+		distance = m_position - coll_result_poly.Dim[num].HitPosition;
 
 	distance.x = abs(distance.x);
 	distance.y = abs(distance.y);
@@ -238,7 +251,7 @@ void aqua::CModel::Draw()
 
 	MV1DrawModel(m_ModelHandle);
 
-	DrawObject3D::Draw();
+	IDrawObject3D::Draw();
 }
 
 aqua::CVector3 aqua::CModel::GetBonePosistion(int bone_index)
