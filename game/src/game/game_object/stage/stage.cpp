@@ -1,12 +1,15 @@
 #include "stage.h"
 
 const int CStage::m_max_stage = 2;
+const int CStage::m_max_template_stage = 5;
+const std::string CStage::m_stage_commn_name = "data\\stage\\template_stage_";
 
 /*
  *  コンストラクタ
  */
 CStage::CStage(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent,"Stage")
+	, m_RandStage(nullptr)
 {
 }
 /*
@@ -23,7 +26,6 @@ void CStage::Initialize()
 	m_StageModel.angles.x = aqua::DegToRad(90.0f);
 
 	m_StageNum = 0;
-	CreateStage();
 }
 /*
  *  更新
@@ -40,14 +42,26 @@ void CStage::Finalize()
 
 	m_StageModel.Delete();
 }
+
 /*
  *  ステージ生成
  */
-void CStage::CreateStage()
+void CStage::CreateStageObject()
 {
-	m_StageNum = (m_StageNum + 1) % 2;
 
+}
 
+void CStage::LodaStage()
+{
+	m_TemplateStage.Unload();
+	m_TemplateStage.Load(m_stage_commn_name + std::to_string(aqua::Rand(m_max_template_stage, 0)) + ".csv");
+
+	int col = m_TemplateStage.GetInteger(0,1);
+	int row = m_TemplateStage.GetInteger(0,2);
+
+	for (int i = 0; i < row; ++i)
+		for (int j = 0; j < col; ++j)
+			m_StageMap[i][j] = m_TemplateStage.GetInteger(i, j);
 
 
 }
