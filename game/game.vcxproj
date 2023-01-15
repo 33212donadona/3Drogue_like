@@ -98,37 +98,43 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\game\game_object\stage\stage_object\object.cpp" />
+    <ClCompile Include="src\game\game_object\unit_manager\unit\enemy\enemy.cpp" />
+    <ClCompile Include="src\game\game_object\unit_manager\unit\player\player.cpp" />
     <ClCompile Include="src\game\game_object\weapon_manager\magic\fire_ball\fire_ball.cpp" />
     <ClCompile Include="src\game\game_object\weapon_manager\magic\magic.cpp" />
     <ClCompile Include="src\game\game_object\weapon_manager\weapon\sword\sword.cpp" />
     <ClCompile Include="src\game\game.cpp" />
     <ClCompile Include="src\game\game_object\bag\bag.cpp" />
     <ClCompile Include="src\game\game_object\bag\bag_data.cpp" />
-    <ClCompile Include="src\game\game_object\enemy\enemy.cpp" />
     <ClCompile Include="src\game\game_object\game_camera\game_camera.cpp" />
     <ClCompile Include="src\game\game_object\money\money.cpp" />
     <ClCompile Include="src\game\game_object\money\money.h" />
     <ClCompile Include="src\game\game_object\stage\stage.cpp" />
-    <ClCompile Include="src\game\game_object\unit\unit.cpp" />
     <ClCompile Include="src\game\game_object\weapon_manager\weapon\weapon.cpp" />
     <ClCompile Include="src\game\game_object\weapon_manager\weapon_manager.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\game\game_object\unit_manager\unit_manager.cpp" />
+    <ClCompile Include="src\game\game_object\unit_manager\unit\unit.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\game\game_object\stage\stage_object\object.h" />
+    <ClInclude Include="src\game\game_object\unit_manager\unit\enemy\enemy.h" />
+    <ClInclude Include="src\game\game_object\unit_manager\unit\player\player.h" />
     <ClInclude Include="src\game\game_object\weapon_manager\magic\fire_ball\fire_ball.h" />
     <ClInclude Include="src\game\game_object\weapon_manager\magic\magic.h" />
     <ClInclude Include="src\game\game_object\weapon_manager\weapon\sword\sword.h" />
     <ClInclude Include="src\game\game.h" />
     <ClInclude Include="src\game\game_object\bag\bag.h" />
     <ClInclude Include="src\game\game_object\bag\bag_data.h" />
-    <ClInclude Include="src\game\game_object\enemy\enemy.h" />
     <ClInclude Include="src\game\game_object\game_camera\game_camera.h" />
     <ClInclude Include="src\game\game_object\stage\stage.h" />
     <ClInclude Include="src\game\game_object\stage\stage_id.h" />
-    <ClInclude Include="src\game\game_object\unit\unit.h" />
     <ClInclude Include="src\game\game_object\weapon_manager\weapon\weapon.h" />
     <ClInclude Include="src\game\game_object\weapon_manager\weapon_id.h" />
     <ClInclude Include="src\game\game_object\weapon_manager\weapon_manager.h" />
+    <ClInclude Include="src\game\game_object\unit_manager\unit_manager.h" />
+    <ClInclude Include="src\game\game_object\unit_manager\unit\unit.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

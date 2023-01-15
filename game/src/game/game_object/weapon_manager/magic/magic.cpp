@@ -9,7 +9,7 @@ IMagic::IMagic(aqua::IGameObject* parent, std::string name)
 void IMagic::Initialize()
 {
 	m_MagicEffect.Create(m_MagicEffectName);
-	m_MagicEffect.scale = aqua::CVector3::ONE * 10;
+	m_MagicEffect.scale = aqua::CVector3::ONE * 1000;
 	m_MagicEffect.Play();
 	m_MagicEffect.SetPlayingSpeed(10.0f);
 	m_MagicSphele.Create();
@@ -23,8 +23,8 @@ void IMagic::Update()
 
 	if (m_MagicEffect.Finished())
 		m_MagicEffect.Play();
+
 	m_MagicEffect.position = m_Position;
-	m_MagicSphele.Updata(m_Position, 1);
 	m_MagicEffect.Update();
 }
 

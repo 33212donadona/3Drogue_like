@@ -10,8 +10,7 @@
  */
 
 #include "game.h"
-#include "game_object/unit/unit.h"
-#include "game_object/enemy/enemy.h"
+#include "game_object/unit_manager/unit_manager.h"
 #include "game_object/stage/stage.h"
 #include "game_object/money/money.h"
 #include "game_object/bag/bag.h"
@@ -39,11 +38,10 @@ Initialize(void)
     // 最初に作るオブジェクト群
 
     aqua::CreateGameObject<CBagData>(this);
-    aqua::CreateGameObject<CEnemy>(this);
-    aqua::CreateGameObject<CUnit>(this);
+    aqua::CreateGameObject<CUnitManager>(this);
+    aqua::CreateGameObject<CMoney>(this);
     aqua::CreateGameObject<CStage>(this);
     aqua::CreateGameObject<CGameCamera>(this);
-    aqua::CreateGameObject<CMoney>(this);
     aqua::CreateGameObject<CBag>(this);
 
     IGameObject::Initialize();

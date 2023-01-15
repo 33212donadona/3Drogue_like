@@ -13,7 +13,7 @@
 
 #include <DxLib.h>
 #include <EffekseerForDXLib.h>
-#include "../draw_object/draw_object.h"
+#include "../draw_object_3D/draw_object_3D.h"
 #include "..\..\mathematics\mathematics.h"
 #include ".\..\color\color.h"
 #include "..\effekseer\effekseer.h"
@@ -35,7 +35,7 @@ namespace aqua
      *  @version    7.17
      */
     class CEffect3D
-        : public aqua::core::IDrawObject
+        : public aqua::core::IDrawObject3D
     {
     public:
         //! •\Ž¦ˆÊ’u

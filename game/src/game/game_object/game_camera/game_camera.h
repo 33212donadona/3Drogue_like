@@ -1,7 +1,7 @@
 #pragma once
 #include "aqua.h"
 
-class CUnit;
+class CPlayer;
 
 class CGameCamera : public aqua::IGameObject
 {
@@ -16,5 +16,5 @@ public :
 private:
 	static const aqua::CVector3 m_camera_position;
 	aqua::CCamera m_Camera;
-	CUnit* m_UnitClass;
+	CPlayer* m_PlayerClass;
 };

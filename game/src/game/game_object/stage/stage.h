@@ -1,5 +1,6 @@
 #pragma once
 #include "aqua.h"
+#include "stage_object/object.h"
 class CStage : public aqua::IGameObject
 {
 public:
@@ -23,7 +24,8 @@ private:
 	static const std::string m_stage_commn_name;
 
 	std::vector<std::vector<int>> m_StageMap;
-	aqua::CCSVLoader m_TemplateStage;
+	aqua::CPoint  m_StageSize;
+	int           m_StageObjectSize;
 	aqua::CModel* m_RandStage;
 	int m_StageNum;
 };

@@ -22,6 +22,7 @@ aqua::core::CObject3DManager::Load(const std::string& file_name, int index)
 
 		m_Object3DList.push_back(object_3d);
 	}
+
 	object_3d->AddReference();
 
 	return object_3d;

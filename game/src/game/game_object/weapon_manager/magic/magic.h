@@ -18,7 +18,7 @@ public:
 private:
 
 	aqua::CEffect3D m_MagicEffect;    //魔法のエフェクト
-	aqua::CSphele   m_MagicSphele;    //魔法の球体
+	aqua::CSphere   m_MagicSphele;    //魔法の球体
 	aqua::CVector3  m_Position;       //魔法の座標
 	aqua::CVector3  m_PrevPosition;   //魔法の前座標
 	int             m_MagicRotationi; //魔法の回転

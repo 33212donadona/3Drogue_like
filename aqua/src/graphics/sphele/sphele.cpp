@@ -1,8 +1,13 @@
 #include "sphele.h"
 
-void aqua::CSphele::Create(int div_num, unsigned int dif_color, unsigned int spc_color, bool fill_flag)
+aqua::CSphere::CSphere()
+	:radius(1.0f)
 {
-	SpheleData sd;
+}
+
+void aqua::CSphere::Create(int div_num, unsigned int dif_color, unsigned int spc_color, bool fill_flag)
+{
+	SphereData sd;
 
 	sd.DivNum = div_num;
 	sd.DifColor = dif_color;
@@ -12,28 +17,22 @@ void aqua::CSphele::Create(int div_num, unsigned int dif_color, unsigned int spc
 	Create(sd);
 }
 
-void aqua::CSphele::Create(SpheleData sphele_data)
+void aqua::CSphere::Create(SphereData sphele_data)
 {
 	m_SpheleData = sphele_data;
 }
 
-void aqua::CSphele::Delete()
+void aqua::CSphere::Delete()
 {
-
+	
 }
 
-void aqua::CSphele::Updata(VECTOR CenterPosition, float r)
-{
-	m_Position = CenterPosition;
-	m_Radius = r;
-}
-
-void aqua::CSphele::Draw()
+void aqua::CSphere::Draw()
 {
 	DrawSphere3D
 	(
-		m_Position,
-		m_Radius,
+		position,
+		radius,
 		m_SpheleData.DivNum,
 		m_SpheleData.DifColor,
 		m_SpheleData.SpcColor,

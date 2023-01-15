@@ -1,14 +1,17 @@
 #pragma once
 #include "../draw_object_3d/draw_object_3d.h"
+#include "..\..\mathematics\mathematics.h"
 #include <DxLib.h>
 
 namespace aqua
 {
-	class CSphele : public aqua::core::IDrawObject3D
+	class CSphere : public aqua::core::IDrawObject3D
 	{
 	public:
 
-		struct SpheleData
+		CSphere();
+
+		struct SphereData
 		{
 			int DivNum = 32;
 			unsigned int DifColor = GetColor(255, 0, 0);
@@ -31,27 +34,16 @@ namespace aqua
 			unsigned int spc_Color = GetColor(255, 255, 255),
 			bool fill_flag = true);
 
-		void Create(SpheleData sphele_data);
+		void Create(SphereData sphele_data);
 
 		void Delete();
 
-		/*!
-		* @brief  球の更新
-		*
-		* @param[in]  CenterPosition  中心点
-		*
-		* @param[in]  r               半径
-		*/
-		void Updata(VECTOR CenterPosition, float r);
-
+		aqua::CVector3    position;
+		float             radius;
 	private:
-
 		void      Draw()override;
 
-		VECTOR            m_Position;
-		float             m_Radius;
-
-		SpheleData m_SpheleData; //! 球の静的情報
+		SphereData m_SpheleData; //! 球の静的情報
 
 	};
 }
