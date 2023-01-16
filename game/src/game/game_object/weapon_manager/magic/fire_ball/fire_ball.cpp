@@ -7,7 +7,7 @@ CFireBall::CFireBall(aqua::IGameObject* parent)
 
 void CFireBall::Initialize()
 {
-	m_MagicEffectName = "data\\effect\\magic_3.efkefc";
+	m_MagicEffectName = "data\\effect\\magic_3.efk";
 	IMagic::Initialize();
 }
 

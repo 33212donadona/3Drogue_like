@@ -9,27 +9,17 @@ IMagic::IMagic(aqua::IGameObject* parent, std::string name)
 void IMagic::Initialize()
 {
 	m_MagicEffect.Create(m_MagicEffectName);
-	m_MagicEffect.scale = aqua::CVector3::ONE * 1000.0f;
+	m_MagicEffect.scale = aqua::CVector3::ONE;
 	m_MagicEffect.Play();
-	m_MagicSphele.Create();
 }
 
 void IMagic::Update()
 {
-	m_MagicRotationi = (m_MagicRotationi++) % 180;
-
-	m_MagicEffect.rotation = aqua::DegToRad((float)m_MagicRotationi);
-
-	if (m_MagicEffect.Finished())
+	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::C) && m_MagicEffect.Finished())
 		m_MagicEffect.Play();
 
 	m_MagicEffect.position = m_Position;
 	m_MagicEffect.Update();
-}
-
-void IMagic::Draw()
-{
-	m_MagicEffect.Draw();
 }
 
 void IMagic::Finalize()

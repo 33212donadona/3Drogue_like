@@ -8,6 +8,7 @@ namespace aqua
 		class IDrawObject3D
 		{
 		public:
+			bool visible;
 
 			static void DrawList();
 

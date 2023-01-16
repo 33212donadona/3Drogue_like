@@ -30,7 +30,6 @@ void CPlayer::Initialize()
 	m_Magic = (IMagic*)aqua::CreateGameObject<CFireBall>(this);
 	m_UnitModel.axis = aqua::CVector3(0.0f, 1.0f, 0.0f);
 	if (m_Weapon)m_Weapon->Initialize();
-	if (m_Magic)m_Magic->Initialize();
 	m_MaxHitPoint = 100;
 
 	IUnit::Initialize();
@@ -57,7 +56,6 @@ void CPlayer::Update()
 void CPlayer::Finalize()
 {
 	if (m_Weapon)m_Weapon->Finalize();
-	if (m_Magic)m_Magic->Finalize();
 
 	IUnit::Finalize();
 }
@@ -153,7 +151,6 @@ void CPlayer::Weapon()
 	if (m_Magic)
 	{
 		m_Magic->SetPosition(pos);
-		m_Magic->Update();
 	}
 }
 

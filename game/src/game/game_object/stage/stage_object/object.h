@@ -11,7 +11,6 @@ public:
 	void Finalize() override;
 
 private:
-	aqua::CSphere m_Object;
 	aqua::CModel  m_Model;
 };
 

@@ -8,7 +8,7 @@
 
 #include <DxLib.h>
 #include <EffekseerForDXLib.h>
-#include "../draw_object_3D/draw_object_3D.h"
+#include "../draw_object_3d/draw_object_3d.h"
 #include "..\..\mathematics\mathematics.h"
 #include ".\..\color\color.h"
 #include "..\effekseer\effekseer.h"
@@ -22,12 +22,6 @@ namespace aqua
      *  @class      CEffect3D
      *
      *  @brief      Effekseer用3Dエフェクトクラス
-     *
-     *  @author     Kazuya Maruyama
-     *
-     *  @date       2021/03/10
-     *
-     *  @version    7.17
      */
     class CEffect3D
         : public aqua::core::IDrawObject3D
@@ -38,7 +32,7 @@ namespace aqua
         //! 拡大率
         aqua::CVector3  scale;
         //! 回転値(ラジアン)
-        float           rotation;
+        aqua::CVector3  rotation;
         //! 色
         aqua::CColor    color;
 
@@ -68,11 +62,6 @@ namespace aqua
          *  @brief  更新
          */
         void    Update(void);
-
-        /*!
-         *  @brief  描画
-         */
-        void    Draw(void);
 
         /*!
          *  @brief  再生
@@ -111,9 +100,14 @@ namespace aqua
          *
          *  @return リソースハンドル
          */
-        int     GetResourceHandle( void ) const;
+        int     GetResourceHandle(void) const;
 
     private:
+        /*!
+         *  @brief  描画
+         */
+        void    Draw(void) override;
+
         //! Effekseerリソース
         CEffekseer  m_Effekseer;
         //! 再生中のエフェクトハンドル

@@ -28,6 +28,7 @@ void aqua::CCamera::Draw()
 	Effekseer_Sync3DSetting();
 	aqua::core::IDrawObject3D::DrawList();
 	SetWriteZBufferFlag(FALSE);
+
 	m_Surface.End();
 
 	int handle = m_Surface.GetTexture().GetResourceHandle();
