@@ -122,9 +122,6 @@ Initialize( HINSTANCE instance_handle, aqua::IGameObject* game )
     // Effekseerに2D描画を設定する
     Effekseer_Set2DSetting(m_width, m_height);
 
-    // Effekseerに3D描画を設定する
-    Effekseer_Sync3DSetting();
-
     // Zバッファの有効化
     SetUseZBuffer3D( TRUE );
 

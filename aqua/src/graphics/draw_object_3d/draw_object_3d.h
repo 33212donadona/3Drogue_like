@@ -15,7 +15,7 @@ namespace aqua
 			IDrawObject3D();
 
 			virtual ~IDrawObject3D();
-			virtual void Draw();
+			virtual void Draw() {}
 
 		private:
 

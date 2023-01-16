@@ -48,9 +48,10 @@ void CMoney::Update()
 
 	DepositBalanceCalculation();
 
-	if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::J))
+	if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::J) && m_BagData)
 		m_BagData->AddToDepositBalance(100);
-	if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::K))
+
+	if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::K) && m_BagData)
 		m_BagData->AddToDepositBalance(-100);
 }
 
@@ -80,7 +81,7 @@ void CMoney::Finalize()
 */
 void CMoney::DepositFluctuation()
 {
-	if (m_PrevDeposit == m_BagData->GetDepositBalance())return;
+	if (m_PrevDeposit == m_BagData->GetDepositBalance() && !m_BagData)return;
 
 	std::string sign;
 	int d = m_BagData->GetDepositBalance() - m_PrevDeposit;

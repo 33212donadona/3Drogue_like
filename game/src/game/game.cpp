@@ -38,9 +38,9 @@ Initialize(void)
     // 最初に作るオブジェクト群
 
     aqua::CreateGameObject<CBagData>(this);
-    aqua::CreateGameObject<CUnitManager>(this);
     aqua::CreateGameObject<CMoney>(this);
     aqua::CreateGameObject<CStage>(this);
+    aqua::CreateGameObject<CUnitManager>(this);
     aqua::CreateGameObject<CGameCamera>(this);
     aqua::CreateGameObject<CBag>(this);
 

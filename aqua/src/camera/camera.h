@@ -1,4 +1,5 @@
 #pragma once
+#include <EffekseerForDXLib.h>
 #include "../mathematics/mathematics.h"
 #include "../graphics/surface/surface.h"
 #include "../graphics/sprite/sprite.h"

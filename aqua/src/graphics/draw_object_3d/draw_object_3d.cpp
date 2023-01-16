@@ -19,7 +19,3 @@ aqua::core::IDrawObject3D::~IDrawObject3D()
 	if (find != m_DrawList.end())
 		m_DrawList.erase(find);
 }
-
-void aqua::core::IDrawObject3D::Draw()
-{
-}

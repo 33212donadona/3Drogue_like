@@ -51,4 +51,6 @@ private:
 	int m_SelectNumber;
 	float m_EsingScale;
 	bool  m_KeybordFlag;
+
+	aqua::CEffect2D m_Fire;
 };

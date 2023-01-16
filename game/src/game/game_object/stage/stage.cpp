@@ -99,6 +99,7 @@ void CStage::LodaStage()
 
 			c.push_back(map_data);
 		}
+
 		m_StageMap.push_back(c);
 		c.clear();
 	}

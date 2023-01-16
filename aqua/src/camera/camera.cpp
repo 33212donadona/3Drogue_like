@@ -18,15 +18,16 @@ void aqua::CCamera::Draw()
 	m_Surface.Begin();
 
 	ClearDrawScreen();
-
-	SetCameraNearFar(15.0f, 50000.0f);
-
+	SetWriteZBufferFlag(TRUE);
+	SetCameraNearFar(1.0f, 50000.0f);
 	SetCameraScreenCenter(screen_center.x, screen_center.y);
-
-	//SetCameraPositionAndAngle(camera_position, aqua::DegToRad(angle_y), aqua::DegToRad(angle_x), aqua::DegToRad(0));
+	
 	SetCameraPositionAndTarget_UpVecY(camera_position,target_point);
+	
+	// EffekseerÇ…3Dï`âÊÇê›íËÇ∑ÇÈ
+	Effekseer_Sync3DSetting();
 	aqua::core::IDrawObject3D::DrawList();
-
+	SetWriteZBufferFlag(FALSE);
 	m_Surface.End();
 
 	int handle = m_Surface.GetTexture().GetResourceHandle();
