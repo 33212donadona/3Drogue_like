@@ -65,7 +65,7 @@ void CStage::CreateStageObject()
 				aqua::CVector3 pos;
 				pos = aqua::CVector3(j, 0, i) - aqua::CVector3(stage_half_size.x, 0, stage_half_size.y);
 				pos = pos * (float)m_StageObjectSize;
-				pos.y = 10;
+				pos.y = 5;
 
 				aqua::CreateGameObject<IObject>(this)->Initialize(pos);
 			}
