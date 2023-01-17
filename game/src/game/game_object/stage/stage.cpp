@@ -12,6 +12,7 @@ CStage::CStage(aqua::IGameObject* parent)
 	, m_RandStage(nullptr)
 {
 }
+
 /*
  *  èâä˙âª
  */
@@ -53,7 +54,7 @@ void CStage::Finalize()
  */
 void CStage::CreateStageObject()
 {
-	LodaStage();
+	LodaStageMap();
 
 	aqua::CPoint stage_half_size = m_StageSize;
 	stage_half_size.x = stage_half_size.x / 2;
@@ -67,56 +68,54 @@ void CStage::CreateStageObject()
 		map.x = aqua::Rand(m_StageSize.x - 1, 0);
 		map.y = aqua::Rand(m_StageSize.y - 1, 0);
 
-		if (m_StageMap[map.y][map.x] != 0)break;
+		map_reference = map;
 
-		for (int i = -1; i <= 1; i += 2)
+		if (m_StageMap[map.y][map.x] == 0)
 		{
-			map_reference.x = map.x + i;
-			if (map_reference.x < 0 || map_reference.x > m_StageSize.x)break;
-			if (m_StageMap[map.y][map_reference.x] == 1)
+			for (int i = -1; i <= 1; i += 2)
 			{
-				map.x = map_reference.x;
-				break;
+				map_reference.x = map.x + i;
+
+				if (map_reference.x > 0 && map_reference.x < m_StageSize.x)
+					if (m_StageMap[map.y][map_reference.x] == 1)break;
+
 			}
-			else
-				map_reference.x = map.x;
-		}
-		if (map.x != map_reference.x)
-		{
 			for (int j = -1; j <= 1; j += 2)
 			{
 				map_reference.y = map.y + j;
-				if (map_reference.y < 0 || map_reference.y > m_StageSize.y)break;
-				if (m_StageMap[map_reference.y][map.x] == 1)
-				{
-					map.y = map_reference.y;
-					break;
-				}
-				else
-					map_reference.y = map.y;
+
+				if (map_reference.y > 0 && map_reference.y < m_StageSize.y)
+					if (m_StageMap[map_reference.y][map.x] == 1)break;
+
 			}
 		}
-	} while (map != map_reference);
+	} while (map == map_reference);
 
-	m_StageMap[map.y][map.x] = 0;
+	m_StageMap[map_reference.y][map_reference.x] = 2;
 
 	for (int i = 0; i < m_StageSize.y; ++i)
 		for (int j = 0; j < m_StageSize.x; ++j)
-			if (m_StageMap[i][j] == 1)
+		{
+			if (m_StageMap[i][j] != 0)
 			{
 				aqua::CVector3 pos;
 				pos = aqua::CVector3(j, 0, i) - aqua::CVector3(stage_half_size.x, 0, stage_half_size.y);
 				pos = pos * (float)m_StageObjectSize;
 				pos.y = 5;
 
-				aqua::CreateGameObject<IObject>(this)->Initialize(pos);
+				if (m_StageMap[i][j] == 1)
+					aqua::CreateGameObject<CObjectRock>(this)->Initialize(pos);
+				if (m_StageMap[i][j] == 2)
+					aqua::CreateGameObject<CObjectTree>(this)->Initialize(pos);
+
 			}
+		}
 }
 
-void CStage::LodaStage()
+void CStage::LodaStageMap()
 {
 	aqua::CCSVLoader m_TemplateStage;
-	int num = 1;//aqua::Rand(m_max_template_stage, 0);
+	int num = 0;//aqua::Rand(m_max_template_stage, 0);
 
 	m_TemplateStage.Load(m_stage_commn_name + std::to_string(num) + ".csv");
 

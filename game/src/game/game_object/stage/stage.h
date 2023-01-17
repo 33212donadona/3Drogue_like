@@ -1,6 +1,7 @@
 #pragma once
 #include "aqua.h"
-#include "stage_object/object.h"
+#include "stage_object/rock/object_rock.h"
+#include "stage_object/tree/object_tree.h"
 class CStage : public aqua::IGameObject
 {
 public:
@@ -14,7 +15,7 @@ public:
 private:
 
 	void CreateStageObject();
-	void LodaStage();
+	void LodaStageMap();
 
 private:
 	aqua::CModel m_StageModel;
