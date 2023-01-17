@@ -23,7 +23,7 @@ void CStage::Initialize()
 	m_StageModel.scale = aqua::CVector3::ONE * 10;
 
 	m_StageModel.axis = aqua::CVector3(1.0f, 0.0f, 0.0f);
-	m_StageModel.angles.x = aqua::DegToRad(90.0f);
+	m_StageModel.angles = aqua::DegToRad(90.0f);
 
 	m_StageNum = 0;
 
@@ -44,6 +44,7 @@ void CStage::Finalize()
 
 	AQUA_SAFE_DELETE_ARRAY(m_RandStage);
 
+	m_StageMap.clear();
 	m_StageModel.Delete();
 }
 
@@ -57,6 +58,47 @@ void CStage::CreateStageObject()
 	aqua::CPoint stage_half_size = m_StageSize;
 	stage_half_size.x = stage_half_size.x / 2;
 	stage_half_size.y = stage_half_size.y / 2;
+
+	aqua::CPoint map;
+	aqua::CPoint map_reference;
+
+	do //åäå@ÇËñ@ÇÃèâä˙à íu
+	{
+		map.x = aqua::Rand(m_StageSize.x - 1, 0);
+		map.y = aqua::Rand(m_StageSize.y - 1, 0);
+
+		if (m_StageMap[map.y][map.x] != 0)break;
+
+		for (int i = -1; i <= 1; i += 2)
+		{
+			map_reference.x = map.x + i;
+			if (map_reference.x < 0 || map_reference.x > m_StageSize.x)break;
+			if (m_StageMap[map.y][map_reference.x] == 1)
+			{
+				map.x = map_reference.x;
+				break;
+			}
+			else
+				map_reference.x = map.x;
+		}
+		if (map.x != map_reference.x)
+		{
+			for (int j = -1; j <= 1; j += 2)
+			{
+				map_reference.y = map.y + j;
+				if (map_reference.y < 0 || map_reference.y > m_StageSize.y)break;
+				if (m_StageMap[map_reference.y][map.x] == 1)
+				{
+					map.y = map_reference.y;
+					break;
+				}
+				else
+					map_reference.y = map.y;
+			}
+		}
+	} while (map != map_reference);
+
+	m_StageMap[map.y][map.x] = 0;
 
 	for (int i = 0; i < m_StageSize.y; ++i)
 		for (int j = 0; j < m_StageSize.x; ++j)
@@ -74,7 +116,7 @@ void CStage::CreateStageObject()
 void CStage::LodaStage()
 {
 	aqua::CCSVLoader m_TemplateStage;
-	int num = aqua::Rand(m_max_template_stage, 0);
+	int num = 1;//aqua::Rand(m_max_template_stage, 0);
 
 	m_TemplateStage.Load(m_stage_commn_name + std::to_string(num) + ".csv");
 

@@ -1,16 +1,16 @@
-#include "money.h"
+#include "money_manager.h"
 #include "../bag/bag_data.h"
 
-const std::string CMoney::m_money_box_name = "data\\game_graph\\マネーバー.png";
-const int CMoney::m_font_size = 100;
-const float CMoney::m_easing_speed = 2.5f;
-const aqua::CVector2 CMoney::m_font_space = aqua::CVector2(25, 75);
+const std::string CMoneyManager::m_money_box_name = "data\\game_graph\\マネーバー.png";
+const int CMoneyManager::m_font_size = 100;
+const float CMoneyManager::m_easing_speed = 2.5f;
+const aqua::CVector2 CMoneyManager::m_font_space = aqua::CVector2(25, 75);
 
 /*
  *  コンストラクタ
  */
-CMoney::CMoney(aqua::IGameObject* parent)
-	:aqua::IGameObject(parent, "Money")
+CMoneyManager::CMoneyManager(aqua::IGameObject* parent)
+	:aqua::IGameObject(parent, "MoneyManager")
 	, m_PrevDeposit(0)
 {
 }
@@ -18,7 +18,7 @@ CMoney::CMoney(aqua::IGameObject* parent)
 /*
  *  初期化
  */
-void CMoney::Initialize()
+void CMoneyManager::Initialize()
 {
 	m_BagData = (CBagData*)aqua::FindGameObject("BagData");
 	m_MoneyBoxSprite.Create(m_money_box_name);
@@ -42,7 +42,7 @@ void CMoney::Initialize()
 /*
  *  更新
  */
-void CMoney::Update()
+void CMoneyManager::Update()
 {
 	DepositFluctuation();
 
@@ -58,7 +58,7 @@ void CMoney::Update()
 /*
  *  描画
  */
-void CMoney::Draw()
+void CMoneyManager::Draw()
 {
 	m_MoneyBoxSprite.Draw();
 	m_Deposit.Draw();
@@ -68,7 +68,7 @@ void CMoney::Draw()
 /*
  *  解放
  */
-void CMoney::Finalize()
+void CMoneyManager::Finalize()
 {
 	m_MoneyBoxSprite.Delete();
 	m_Deposit.Delete();
@@ -79,7 +79,7 @@ void CMoney::Finalize()
 /*
 *   預金残高計算
 */
-void CMoney::DepositFluctuation()
+void CMoneyManager::DepositFluctuation()
 {
 	if (m_PrevDeposit == m_BagData->GetDepositBalance() && !m_BagData)return;
 
@@ -119,7 +119,7 @@ void CMoney::DepositFluctuation()
 /*
 *   預金残高計算
 */
-void CMoney::DepositBalanceCalculation()
+void CMoneyManager::DepositBalanceCalculation()
 {
 	m_Deposit.text = std::to_string(m_BagData->GetDepositBalance());
 	m_Deposit.position.x = float(aqua::GetWindowWidth() - m_MoneyBoxSprite.GetTextureWidth() / 10 - m_Deposit.GetTextWidth());

@@ -65,6 +65,28 @@ namespace aqua
          */
         void    DebugLog( void );
 
+        /*!
+         *  @brief      等価演算子のオーバーロード
+         *
+         *  @param[in]  p   点クラス
+         *
+         *  @return     二つの点が等しい
+         *  @retval     true    等しい
+         *  @retval     false   等しくない
+         */
+        bool      operator==(aqua::CPoint p) { return x == p.x && y == p.y; };
+
+        /*!
+         *  @brief      不等演算子のオーバーロード
+         *
+         *  @param[in]  p   点クラス
+         *
+         *  @return     二つの点が等しくない
+         *  @retval     true    等しくない
+         *  @retval     false   等しい
+         */
+        bool      operator!=(aqua::CPoint p) { return x != p.x || y != p.y; };
+
         //! 要素がすべて0
         static const CPoint  ZERO;
     };

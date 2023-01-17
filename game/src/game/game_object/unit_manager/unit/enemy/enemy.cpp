@@ -32,7 +32,7 @@ void CEnemy::Initialize()
 void CEnemy::Update()
 {
 	aqua::CVector3 angle = m_UnitModel.position - m_PlayerModel->GetPosition();
-	m_UnitModel.angles.x = atan2(angle.x, angle.z);
+	m_UnitModel.angles = atan2(angle.x, angle.z);
 
 	IUnit::Update();
 

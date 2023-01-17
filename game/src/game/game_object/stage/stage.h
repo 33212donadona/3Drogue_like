@@ -16,7 +16,6 @@ private:
 	void CreateStageObject();
 	void LodaStage();
 
-
 private:
 	aqua::CModel m_StageModel;
 

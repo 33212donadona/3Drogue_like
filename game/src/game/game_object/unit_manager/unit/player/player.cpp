@@ -124,7 +124,7 @@ void CPlayer::Rotation()
 	else if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::D))
 		m_Angles = 90.0f;
 
-	m_UnitModel.angles.x = aqua::DegToRad(m_Angles);
+	m_UnitModel.angles = aqua::DegToRad(m_Angles);
 }
 /*
 *   ïêäÌ

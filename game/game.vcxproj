@@ -108,8 +108,8 @@
     <ClCompile Include="src\game\game_object\bag\bag.cpp" />
     <ClCompile Include="src\game\game_object\bag\bag_data.cpp" />
     <ClCompile Include="src\game\game_object\game_camera\game_camera.cpp" />
-    <ClCompile Include="src\game\game_object\money\money.cpp" />
-    <ClCompile Include="src\game\game_object\money\money.h" />
+    <ClCompile Include="src\game\game_object\money_manager\money._manager.cpp" />
+    <ClCompile Include="src\game\game_object\money_manager\money_manager.h" />
     <ClCompile Include="src\game\game_object\stage\stage.cpp" />
     <ClCompile Include="src\game\game_object\weapon_manager\weapon\weapon.cpp" />
     <ClCompile Include="src\game\game_object\weapon_manager\weapon_manager.cpp" />

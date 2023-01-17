@@ -19,7 +19,6 @@ namespace aqua
 			virtual void Draw() {}
 
 		private:
-
 			static std::list<IDrawObject3D*> m_DrawList;
 		};
 	}

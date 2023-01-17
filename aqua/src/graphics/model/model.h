@@ -37,6 +37,12 @@ namespace aqua
 	class CModel : public aqua::core::IDrawObject3D
 	{
 	public:
+
+		/*!
+		*  @brief      コンストラクタ
+		*/
+		CModel();
+
 		/*!
 		*  @brief       モデルを生成
 		*
@@ -134,11 +140,12 @@ namespace aqua
 			float r
 		);
 
-		aqua::CVector2 initial_angles;//! 初期回転値
+		float          initial_angles;//! 初期回転値
 		aqua::CVector3 initial_axis;  //! 初期回転軸
 
-		aqua::CVector2 angles;        //! 回転値
-		aqua::CVector3 axis;          //! 回転軸
+		float          angles;        //! 回転値
+		aqua::CVector3 axis;          //! 1つ目の回転軸
+
 
 		aqua::CVector3 position;      //! 座標
 		aqua::CVector3 scale;         //! 拡大率
@@ -149,23 +156,21 @@ namespace aqua
 
 		static const aqua::CMatrix m_Indent;               //! マトリクスの初期化
 
-		aqua::CObject3D  m_Object3D;			           //! モデル
+		aqua::CObject3D  m_Object3D;                       //! モデル
 		std::vector<int> m_AnimetionObject3D;              //! アニメーションモデル
-		aqua::CVector2 m_PrevAngles;                       //! 回転値
-		aqua::CVector2 m_PrevInitialAngles;                //! 回転値
+		float          m_PrevAngles;                       //! 回転値
+		float          m_PrevInitialAngles;                //! 回転値
 		aqua::CVector3 m_PrevPosition;
 		aqua::CVector3 m_PrevScale;
 
-		aqua::CMatrix m_MatrixRotation;
-		aqua::CMatrix m_InitialMatrixRotation;
-		aqua::CMatrix m_MatrixPosition;
-		aqua::CMatrix m_MatrixScale;
+		aqua::CMatrix m_MatrixRotation;                    //! 回転行列
+		aqua::CMatrix m_InitialMatrixRotation;             //! 回転行列
+		aqua::CMatrix m_MatrixPosition;                    //! 座標行列
+		aqua::CMatrix m_MatrixScale;                       //! 拡大行列
 
 		int m_ModelHandle;
 
 		int m_max_animetion;
-
-		int m_Anime[2];
 
 		int m_AttachIndex;
 

@@ -1,6 +1,13 @@
 #include "model.h"
 #include "../../aqua.h"
 
+/*
+*  コンストラクタ
+*/
+aqua::CModel::CModel()
+{
+}
+
 // 弓削に対して初めに作ったファイル検索の機能を追加して！！！！！
 void aqua::CModel::Create(const std::string& file_name, int anime_max, float add_frame)
 {
@@ -227,11 +234,11 @@ void aqua::CModel::Draw()
 
 	if (angles != m_PrevAngles)
 	{
-		m_MatrixRotation.AxisRotation(axis, angles.x);
+		m_MatrixRotation.AxisRotation(axis, angles);
 
 		if (initial_angles != m_PrevInitialAngles)
 		{
-			m_InitialMatrixRotation.AxisRotation(initial_axis, initial_angles.x);
+			m_InitialMatrixRotation.AxisRotation(initial_axis, initial_angles);
 			m_PrevInitialAngles = initial_angles;
 		}
 
