@@ -89,7 +89,7 @@ namespace aqua
          *  @param[in]  name        オブジェクト名
          *  @param[in]  category    カテゴリー
          */
-        IGameObject( IGameObject* parent, const std::string& name, const std::string& category );
+        IGameObject( IGameObject* parent, const std::string& name, const std::string& category);
 
         /*!
          *  @brief      デストラクタ

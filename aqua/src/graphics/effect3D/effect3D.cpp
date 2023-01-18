@@ -2,11 +2,6 @@
 /*!
  *  @file       effect3D.cpp
  *  @brief      Effekseer用3Dエフェクト
- *  @author     Kazuya Maruyama
- *  @date       2021/03/10
- *  @version    7.17
- *
- *  Copyright (c) 2013-2021, Kazuya Maruyama. All rights reserved.
  */
 
 #include "effect3D.h"
@@ -17,12 +12,12 @@
   */
 aqua::CEffect3D::
 CEffect3D(void)
-    : position(aqua::CVector3::ZERO)
-    , scale(aqua::CVector3::ONE)
-    , rotation(0.0f)
-    , color(aqua::CColor::WHITE)
-    , m_PlayingEffectHandle(AQUA_UNUSED_HANDLE)
-    , m_PlaySpeed(1.0f)
+	: position(aqua::CVector3::ZERO)
+	, scale(aqua::CVector3::ONE)
+	, rotation(aqua::CVector3::ZERO)
+	, color(aqua::CColor::WHITE)
+	, m_PlayingEffectHandle(AQUA_UNUSED_HANDLE)
+	, m_PlaySpeed(1.0f)
 {
 }
 
@@ -33,9 +28,9 @@ void
 aqua::CEffect3D::
 Create(const std::string& file_name)
 {
-    Delete();
+	Delete();
 
-    m_Effekseer.Load(file_name);
+	m_Effekseer.Load(file_name);
 }
 
 /*
@@ -45,15 +40,15 @@ void
 aqua::CEffect3D::
 Delete(void)
 {
-    // 再生速度を等倍に戻す
-    m_PlaySpeed = 1.0f;
+	// 再生速度を等倍に戻す
+	m_PlaySpeed = 1.0f;
 
-    if(m_PlayingEffectHandle != AQUA_UNUSED_HANDLE)
-        StopEffekseer3DEffect(m_PlayingEffectHandle);
+	if (m_PlayingEffectHandle != AQUA_UNUSED_HANDLE)
+		StopEffekseer3DEffect(m_PlayingEffectHandle);
 
-    m_PlayingEffectHandle = AQUA_UNUSED_HANDLE;
+	m_PlayingEffectHandle = AQUA_UNUSED_HANDLE;
 
-    m_Effekseer.Unload();
+	m_Effekseer.Unload();
 }
 
 /*
@@ -63,28 +58,28 @@ void
 aqua::CEffect3D::
 Update(void)
 {
-    // エフェクトが再生されていない
-    if (IsEffekseer3DEffectPlaying(m_PlayingEffectHandle) == AQUA_DX_ERROR)
-        return;
+	// エフェクトが再生されていない
+	if (IsEffekseer3DEffectPlaying(m_PlayingEffectHandle) == AQUA_DX_ERROR)
+		return;
 
-    // 表示位置を設定
-    SetPosPlayingEffekseer3DEffect(m_PlayingEffectHandle, position.x, position.y, position.z);
+	// 表示位置を設定
+	SetPosPlayingEffekseer3DEffect(m_PlayingEffectHandle, position.x, position.y, position.z);
 
-    // 拡大率を設定
-    SetScalePlayingEffekseer3DEffect(m_PlayingEffectHandle, scale.x, scale.y, scale.z);
+	// 拡大率を設定
+	SetScalePlayingEffekseer3DEffect(m_PlayingEffectHandle, scale.x, scale.y, scale.z);
 
-    // 回転値を設定
-    SetRotationPlayingEffekseer3DEffect(m_PlayingEffectHandle, 0.0f, rotation, 0.0f);
+	// 回転値を設定
+	SetRotationPlayingEffekseer3DEffect(m_PlayingEffectHandle, rotation.x, rotation.y, rotation.z);
 
-    // 色設定
-    SetColorPlayingEffekseer3DEffect(m_PlayingEffectHandle, color.red, color.green, color.blue, color.alpha);
+	// 色設定
+	SetColorPlayingEffekseer3DEffect(m_PlayingEffectHandle, color.red, color.green, color.blue, color.alpha);
 
 #ifdef AQUA_DEBUG
-    if (IsEffekseer3DEffectPlaying(m_PlayingEffectHandle) == AQUA_DX_ERROR)
-        return;
+	if (IsEffekseer3DEffectPlaying(m_PlayingEffectHandle) == AQUA_DX_ERROR)
+		return;
 
-    // DTSの速度調整に対応
-    SetSpeedPlayingEffekseer3DEffect(m_PlayingEffectHandle, m_PlaySpeed * core::CVisualDebugger::GetInstance().GetDebugDeltaTimeScale());
+	// DTSの速度調整に対応
+	SetSpeedPlayingEffekseer3DEffect(m_PlayingEffectHandle, m_PlaySpeed * core::CVisualDebugger::GetInstance().GetDebugDeltaTimeScale());
 #endif
 }
 
@@ -95,15 +90,18 @@ void
 aqua::CEffect3D::
 Draw(void)
 {
-    // エフェクトが再生されていない
-    if (IsEffekseer3DEffectPlaying(m_PlayingEffectHandle) == AQUA_DX_ERROR)
-        return;
+	// 非表示設定
+	if (!visible) return;
 
-    DrawEffekseer3D_Begin();
+	// エフェクトが再生されていない
+	if (IsEffekseer3DEffectPlaying(m_PlayingEffectHandle) == AQUA_DX_ERROR)
+		return;
 
-    DrawEffekseer3D_Draw(m_PlayingEffectHandle);
+	DrawEffekseer3D_Begin();
 
-    DrawEffekseer3D_End();
+	DrawEffekseer3D_Draw(m_PlayingEffectHandle);
+
+	DrawEffekseer3D_End();
 }
 
 /*
@@ -113,11 +111,11 @@ void
 aqua::CEffect3D::
 Play(void)
 {
-    if (m_PlayingEffectHandle != AQUA_UNUSED_HANDLE)
-        Stop();
+	if (m_PlayingEffectHandle != AQUA_UNUSED_HANDLE)
+		Stop();
 
-    // エフェクト再生
-    m_PlayingEffectHandle = PlayEffekseer3DEffect(m_Effekseer.GetResourceHandle());
+	// エフェクト再生
+	m_PlayingEffectHandle = PlayEffekseer3DEffect(m_Effekseer.GetResourceHandle());
 }
 
 /*
@@ -127,13 +125,13 @@ void
 aqua::CEffect3D::
 Stop(void)
 {
-    if (m_PlayingEffectHandle != AQUA_UNUSED_HANDLE)
-        return;
+	if (m_PlayingEffectHandle != AQUA_UNUSED_HANDLE)
+		return;
 
-    // エフェクトの停止
-    StopEffekseer3DEffect(m_PlayingEffectHandle);
+	// エフェクトの停止
+	StopEffekseer3DEffect(m_PlayingEffectHandle);
 
-    m_PlayingEffectHandle = AQUA_UNUSED_HANDLE;
+	m_PlayingEffectHandle = AQUA_UNUSED_HANDLE;
 }
 
 /*
@@ -143,7 +141,7 @@ bool
 aqua::CEffect3D::
 Finished(void)
 {
-    return IsEffekseer3DEffectPlaying(m_PlayingEffectHandle);
+	return IsEffekseer3DEffectPlaying(m_PlayingEffectHandle);
 }
 
 /*
@@ -153,7 +151,7 @@ float
 aqua::CEffect3D::
 GetPlayingSpeed(void)
 {
-    return m_PlaySpeed;
+	return m_PlaySpeed;
 }
 
 /*
@@ -163,14 +161,14 @@ void
 aqua::CEffect3D::
 SetPlayingSpeed(float speed)
 {
-    // エフェクトが再生されていない
-    if (IsEffekseer3DEffectPlaying(m_PlayingEffectHandle) == AQUA_DX_ERROR)
-        return;
+	// エフェクトが再生されていない
+	if (IsEffekseer3DEffectPlaying(m_PlayingEffectHandle) == AQUA_DX_ERROR)
+		return;
 
-    m_PlaySpeed = speed;
+	m_PlaySpeed = speed;
 
-    // 再生速度を設定
-    SetSpeedPlayingEffekseer3DEffect(m_PlayingEffectHandle, m_PlaySpeed);
+	// 再生速度を設定
+	SetSpeedPlayingEffekseer3DEffect(m_PlayingEffectHandle, m_PlaySpeed);
 }
 
 /*
@@ -178,7 +176,7 @@ SetPlayingSpeed(float speed)
  */
 int
 aqua::CEffect3D::
-GetResourceHandle( void ) const
+GetResourceHandle(void) const
 {
-    return m_Effekseer.GetResourceHandle( );
+	return m_Effekseer.GetResourceHandle();
 }

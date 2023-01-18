@@ -424,6 +424,8 @@ GameProcess( void )
     // EffekseerXV
     UpdateEffekseer2D();
 
+    UpdateEffekseer3D();
+
 #ifdef AQUA_DEBUG
     // ƒQ[ƒ€•`‰æ
     if (!debug.GetDebugPauseFlag())

@@ -8,6 +8,7 @@ namespace aqua
 		class IDrawObject3D
 		{
 		public:
+			bool visible;
 
 			static void DrawList();
 
@@ -18,7 +19,6 @@ namespace aqua
 			virtual void Draw() {}
 
 		private:
-
 			static std::list<IDrawObject3D*> m_DrawList;
 		};
 	}

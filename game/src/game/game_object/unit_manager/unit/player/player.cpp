@@ -30,7 +30,6 @@ void CPlayer::Initialize()
 	m_Magic = (IMagic*)aqua::CreateGameObject<CFireBall>(this);
 	m_UnitModel.axis = aqua::CVector3(0.0f, 1.0f, 0.0f);
 	if (m_Weapon)m_Weapon->Initialize();
-	if (m_Magic)m_Magic->Initialize();
 	m_MaxHitPoint = 100;
 
 	IUnit::Initialize();
@@ -57,7 +56,6 @@ void CPlayer::Update()
 void CPlayer::Finalize()
 {
 	if (m_Weapon)m_Weapon->Finalize();
-	if (m_Magic)m_Magic->Finalize();
 
 	IUnit::Finalize();
 }
@@ -126,7 +124,7 @@ void CPlayer::Rotation()
 	else if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::D))
 		m_Angles = 90.0f;
 
-	m_UnitModel.angles.x = aqua::DegToRad(m_Angles);
+	m_UnitModel.angles = aqua::DegToRad(m_Angles);
 }
 /*
 *   •Ší
@@ -153,7 +151,6 @@ void CPlayer::Weapon()
 	if (m_Magic)
 	{
 		m_Magic->SetPosition(pos);
-		m_Magic->Update();
 	}
 }
 

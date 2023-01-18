@@ -58,10 +58,6 @@ void CBag::Initialize()
 	m_SelectBox.color.alpha = 0;
 
 	m_EsingTime.Setup(m_scale_time);
-
-	m_Fire.Create("data\\effect\\magic_3.efkefc");
-	m_Fire.scale = aqua::CVector2::ONE * 100.0f;
-	m_Fire.Play();
 }
 /*
  *  çXêV
@@ -69,8 +65,6 @@ void CBag::Initialize()
 void CBag::Update()
 {
 	SelectInventory();
-
-	m_Fire.Update();
 }
 /*
  *  ï`âÊ
@@ -86,7 +80,6 @@ void CBag::Draw()
 
 		m_SelectBox.Draw();
 	}
-	m_Fire.Draw();
 }
 /*
  *  âï˙
@@ -102,7 +95,6 @@ void CBag::Finalize()
 	AQUA_SAFE_DELETE_ARRAY(m_ItemSprite);
 	AQUA_SAFE_DELETE_ARRAY(m_BagSprite);
 	m_BagData = nullptr;
-	m_Fire.Delete();
 }
 
 /*

@@ -8,6 +8,7 @@ void aqua::core::IDrawObject3D::DrawList()
 }
 
 aqua::core::IDrawObject3D::IDrawObject3D()
+	: visible(true)
 {
 	m_DrawList.push_back(this);
 }

@@ -1,23 +1,21 @@
 #include "object.h"
 
-IObject::IObject(aqua::IGameObject* parent)
-	:aqua::IGameObject(parent,"Sphere")
+IObject::IObject(aqua::IGameObject* parent, std::string name)
+	:aqua::IGameObject(parent,"Sphere",name)
 {
 }
 
 void IObject::Initialize(aqua::CVector3 position)
 {
-	m_Model.Create("data\\stage\\object", 0);
-	m_Model.position = position;
-	m_Model.scale = aqua::CVector3::ONE * 2.0f;
-	m_Model.axis.y = 1.0f;
 }
 
 void IObject::Update()
 {
+	IGameObject::Update();
 }
 
 void IObject::Finalize()
 {
 	m_Model.Delete();
+	IGameObject::Finalize();
 }
