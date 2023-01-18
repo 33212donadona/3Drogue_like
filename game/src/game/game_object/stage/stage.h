@@ -19,6 +19,15 @@ private:
 	void SpaceAlgorithms();
 	void AutoMapCreate();
 
+	/*
+	*  @brief  マップ分割
+	* 
+	* @param[in] min_stage_size ステージマップの始点
+	* @param[in] max_stage_size ステージマップの終点
+	* @param[in] max_partition  分割する最大回数
+	*/
+	void MapPartition(aqua::CPoint stage_size_first, aqua::CPoint stage_size_end,int max_partition);
+
 private:
 	aqua::CModel m_StageModel;
 

@@ -32,12 +32,15 @@ void CStage::Initialize()
 
 	CreateStageObject();
 }
+
 /*
  *  更新
  */
 void CStage::Update()
 {
+
 }
+
 /*
  *  解放
  */
@@ -56,7 +59,7 @@ void CStage::Finalize()
  */
 void CStage::CreateStageObject()
 {
-	LodaStageMap();
+	//LodaStageMap();
 	AutoMapCreate();
 
 	aqua::CPoint stage_half_size = m_StageSize;
@@ -173,6 +176,10 @@ void CStage::SpaceAlgorithms()
 	} while (map == map_reference);
 
 	m_StageMap[map_reference.y][map_reference.x] = 2;
+
+	// ステージに空間を作る
+
+
 }
 
 /*
@@ -180,7 +187,55 @@ void CStage::SpaceAlgorithms()
 */
 void CStage::AutoMapCreate()
 {
+	// ステージマップをオブジェクトで埋める
 	m_StageMap.assign(m_map_size.y, std::vector<int>(m_map_size.x, 1));
 
+	if (m_StageObjectSize != m_map_object_space)
+		m_StageObjectSize = m_map_object_space;
 
+	if (m_StageSize.x != m_map_size.x)
+		m_StageSize.x = m_map_size.x;
+
+	if (m_StageSize.y != m_map_size.y)
+		m_StageSize.y = m_map_size.y;
+
+
+	MapPartition(aqua::CPoint(0, 0), m_StageSize, 2);
+}
+
+void CStage::MapPartition(aqua::CPoint stage_size_first, aqua::CPoint stage_size_end, int max_partition)
+{
+	if (max_partition <= 0)return;
+	if (max_partition > 4)return;
+
+	bool width_flag = max_partition % 2;
+
+	aqua::CPoint first = stage_size_first;
+	aqua::CPoint end = stage_size_end;
+
+	if (first.x > end.x / 2 || first.y > end.y / 2)
+	{
+		first = stage_size_end;
+		end = stage_size_first;
+	}
+
+	// 横に分割
+	if (width_flag)
+		first.y = end.y / 2;
+	// 縦に分割
+	else
+		first.x = end.x / 2;
+
+	for (int y = first.y; y < end.y; y++)
+		for (int x = first.x; x < end.x; x++)
+			m_StageMap[y][x] = width_flag;
+
+	// 横に分割
+	if (width_flag)
+		end.y = first.y - first.y / 2;
+	// 縦に分割
+	else
+		end.x = first.x - first.x / 2;
+
+	MapPartition(first, end, max_partition - 1);
 }

@@ -64,6 +64,66 @@ namespace aqua
          *  @brief      デバッグログに値を表示する
          */
         void    DebugLog( void );
+        /*!
+         *  @brief      加算演算子のオーバーロード
+         *
+         *  @param[in]  p   点クラス
+         *
+         *  @return     点クラス
+         */
+        CPoint& operator+=(const CPoint& v)
+        {
+            x += v.x;
+            y += v.y;
+
+            return *this;
+        }
+
+        /*!
+         *  @brief      減算演算子のオーバーロード
+         *
+         *  @param[in]  p   点クラス         
+         *
+         *
+         *  @return     点クラス
+         */
+        CPoint& operator-=(const CPoint& v)
+        {
+            x -= v.x;
+            y -= v.y;
+            
+            return *this;
+        }
+
+        /*!
+         *  @brief      乗算演算子のオーバーロード
+         *
+         *  @param[in]  scalar  スカラー値
+         *
+         *  @return     点クラス
+         */
+        CPoint& operator*=(float scalar)
+        {
+            x *= scalar;
+            y *= scalar;
+
+            return *this;
+        }
+
+         /*!
+         *  @brief      徐算演算子のオーバーロード
+         *
+         *  @param[in]  scalar  スカラー値
+         *
+         *  @return     点クラス
+         */
+        CPoint& operator/=(float scalar)
+        {
+            x /= scalar;
+            y /= scalar;
+
+            return *this;
+        }
 
         /*!
          *  @brief      等価演算子のオーバーロード
@@ -86,6 +146,24 @@ namespace aqua
          *  @retval     false   等しい
          */
         bool      operator!=(aqua::CPoint p) { return x != p.x || y != p.y; };
+
+        /*!
+         *  @brief      減算演算子のオーバーロード
+         *
+         *  @param[in]  p   点クラス
+         *
+         *  @return     点クラス
+         */
+        CPoint     operator-(aqua::CPoint p)const { return aqua::CPoint(x - p.x, y - p.y); }
+
+        /*!
+         *  @brief      加算演算子のオーバーロード
+         *
+         *  @param[in]  p   点クラス
+         *
+         *  @return     点クラス
+         */
+        CPoint     operator+(aqua::CPoint p)const { return aqua::CPoint(x + p.x, y + p.y); }
 
         //! 要素がすべて0
         static const CPoint  ZERO;

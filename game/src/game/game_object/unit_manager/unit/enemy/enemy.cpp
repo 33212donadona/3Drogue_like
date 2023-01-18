@@ -64,6 +64,6 @@ void CEnemy::CheckHitDamage(float hit_damage, aqua::CVector3 hit_pos_first, aqua
 void CEnemy::Algorithms()
 {
 	aqua::CVector3 angle = m_UnitModel.position - m_PlayerModel->GetPosition();
-	m_UnitModel.angles.x = atan2(angle.x, angle.z);
+	m_UnitModel.angles = atan2(angle.x, angle.z);
 
 }
