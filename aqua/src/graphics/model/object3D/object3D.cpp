@@ -14,6 +14,7 @@ aqua::CObject3D::CObject3D(const CObject3D& model)
 
 	m_Object3DResorce = model.m_Object3DResorce;
 
+	// 参照カウンタ加算
 	m_Object3DResorce->AddReference();
 }
 
@@ -68,13 +69,13 @@ float aqua::CObject3D::GetAnimeTotalTime(int a_i)
 	return m_Object3DResorce->GetAnimeTotalTime(a_i);
 }
 
-aqua::CObject3D& aqua::CObject3D::operator=(const CObject3D& texture)
+aqua::CObject3D& aqua::CObject3D::operator=(const CObject3D& model)
 {
 	// テクスチャを持っていたら参照を減算
 	if (m_Object3DResorce)
 		m_Object3DResorce->RemoveReference();
 
-	m_Object3DResorce = texture.m_Object3DResorce;
+	m_Object3DResorce = model.m_Object3DResorce;
 
 	// 参照カウンタ加算
 	m_Object3DResorce->AddReference();

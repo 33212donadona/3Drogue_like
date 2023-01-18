@@ -1,7 +1,13 @@
+
+/*!
+ *  @file       object3D_resorce.cpp
+ *  @brief      3Dモデルリソース
+ */
+
 #include "object3D_resorce.h"
 #include "../object3D_manager/object3D_manager.h"
-#include "../../../debug/debug.h"
-#include "../../../utility/utility.h"
+#include "../../../../debug/debug.h"
+#include "../../../../utility/utility.h"
 #include <DxLib.h>
 
 aqua::core::CObject3DResorce::CObject3DResorce()
@@ -12,7 +18,6 @@ aqua::core::CObject3DResorce::CObject3DResorce()
 
 void aqua::core::CObject3DResorce::Load(const std::string& file_name, int index)
 {
-
 	// モデル読み込み
 	if(m_Enabel)
 		m_ResourceHandle = MV1DuplicateModel(m_ResourceHandle);

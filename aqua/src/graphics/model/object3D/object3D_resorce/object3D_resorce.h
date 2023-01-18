@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\..\..\resources\resources.h"
+#include "..\..\..\..\resources\resources.h"
 
 namespace aqua
 {

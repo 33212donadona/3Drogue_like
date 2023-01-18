@@ -1,7 +1,7 @@
 #include "object3D_manager.h"
 #include "../object3D_resorce/object3D_resorce.h"
-#include "..\..\..\debug\debug.h"
-#include "..\..\..\utility\memory\memory.h"
+#include "..\..\..\..\debug\debug.h"
+#include "..\..\..\..\utility\memory\memory.h"
 
 aqua::core::CObject3DManager&
 aqua::core::CObject3DManager::GetInstance(void)

@@ -74,7 +74,7 @@ namespace aqua
          *
          *  @param[in]  texture     ƒ‚ƒfƒ‹ƒNƒ‰ƒX
          */
-        CObject3D& operator=(const CObject3D& texture);
+        CObject3D& operator=(const CObject3D& model);
 
     private:
 
