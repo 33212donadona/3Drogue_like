@@ -31,11 +31,7 @@ void CEnemy::Initialize()
  */
 void CEnemy::Update()
 {
-	aqua::CVector3 angle = m_UnitModel.position - m_PlayerModel->GetPosition();
-	m_UnitModel.angles.x = atan2(angle.x, angle.z);
-
 	IUnit::Update();
-
 }
 /*
  *  ‰ð•ú
@@ -63,4 +59,11 @@ void CEnemy::CheckHitDamage(float hit_damage, aqua::CVector3 hit_pos_first, aqua
 		if (!gbc)
 			m_DamageFlag = false;
 	}
+}
+
+void CEnemy::Algorithms()
+{
+	aqua::CVector3 angle = m_UnitModel.position - m_PlayerModel->GetPosition();
+	m_UnitModel.angles.x = atan2(angle.x, angle.z);
+
 }
