@@ -98,6 +98,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\game\game_object\stage\stage_object\tower\object_tower.cpp" />
     <ClCompile Include="src\game\game_object\stage\stage_object\tree\object_tree.cpp" />
     <ClCompile Include="src\game\game_object\stage\stage_object\rock\object_rock.cpp" />
     <ClCompile Include="src\game\game_object\stage\stage_object\object.cpp" />
@@ -120,6 +121,7 @@
     <ClCompile Include="src\game\game_object\unit_manager\unit\unit.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\game\game_object\stage\stage_object\tower\object_tower.h" />
     <ClInclude Include="src\game\game_object\stage\stage_object\tree\object_tree.h" />
     <ClInclude Include="src\game\game_object\stage\stage_object\rock\object_rock.h" />
     <ClInclude Include="src\game\game_object\stage\stage_object\object.h" />

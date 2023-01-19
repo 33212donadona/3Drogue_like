@@ -82,7 +82,8 @@ void CStage::CreateStageObject()
 					aqua::CreateGameObject<CObjectRock>(this)->Initialize(pos);
 				if (m_StageMap[i][j] == 2)
 					aqua::CreateGameObject<CObjectTree>(this)->Initialize(pos);
-
+				if (m_StageMap[i][j] == 3)
+					aqua::CreateGameObject<CObjectTower>(this)->Initialize(pos);
 			}
 		}
 	}
@@ -188,7 +189,7 @@ void CStage::SpaceAlgorithms()
 void CStage::AutoMapCreate()
 {
 	// ステージマップをオブジェクトで埋める
-	m_StageMap.assign(m_map_size.y, std::vector<int>(m_map_size.x, 1));
+	m_StageMap.assign(m_map_size.y, std::vector<int>(m_map_size.x, 0));
 
 	if (m_StageObjectSize != m_map_object_space)
 		m_StageObjectSize = m_map_object_space;
@@ -200,7 +201,7 @@ void CStage::AutoMapCreate()
 		m_StageSize.y = m_map_size.y;
 
 
-	MapPartition(aqua::CPoint(0, 0), m_StageSize, 2);
+	MapPartition(aqua::CPoint(0, 0), m_StageSize, 3);
 }
 
 void CStage::MapPartition(aqua::CPoint stage_size_first, aqua::CPoint stage_size_end, int max_partition)
@@ -213,29 +214,20 @@ void CStage::MapPartition(aqua::CPoint stage_size_first, aqua::CPoint stage_size
 	aqua::CPoint first = stage_size_first;
 	aqua::CPoint end = stage_size_end;
 
-	if (first.x > end.x / 2 || first.y > end.y / 2)
-	{
-		first = stage_size_end;
-		end = stage_size_first;
-	}
-
 	// 横に分割
 	if (width_flag)
-		first.y = end.y / 2;
+	{
+		first.y = end.y / std::pow(2, 4 - max_partition) + first.y;
+	}
 	// 縦に分割
 	else
-		first.x = end.x / 2;
+	{
+		first.x = end.x / std::pow(2, 4 - max_partition) + first.x;
+	}
 
 	for (int y = first.y; y < end.y; y++)
 		for (int x = first.x; x < end.x; x++)
-			m_StageMap[y][x] = width_flag;
-
-	// 横に分割
-	if (width_flag)
-		end.y = first.y - first.y / 2;
-	// 縦に分割
-	else
-		end.x = first.x - first.x / 2;
+			m_StageMap[y][x] = max_partition;
 
 	MapPartition(first, end, max_partition - 1);
 }

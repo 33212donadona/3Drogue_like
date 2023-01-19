@@ -1,6 +1,7 @@
 #pragma once
 #include "aqua.h"
 #include "stage_object/rock/object_rock.h"
+#include "stage_object/tower/object_tower.h"
 #include "stage_object/tree/object_tree.h"
 class CStage : public aqua::IGameObject
 {
