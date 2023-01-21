@@ -13,6 +13,7 @@ public:
 	void Update() override;
 	void Finalize() override;
 
+	aqua::CVector3 GetArePosition(aqua::CPoint stage_data);
 private:
 
 	void CreateStageObject();
@@ -32,15 +33,17 @@ private:
 private:
 	aqua::CModel m_StageModel;
 
-	static const int m_max_stage;
-	static const int m_max_template_stage;
-	static const int m_map_object_space;
-	static const aqua::CPoint m_map_size;
-	static const std::string m_stage_commn_name;
+	static const int		  m_max_stage;           //! 
+	static const int		  m_max_template_stage;	 //! 
+	static const int		  m_map_object_space;	 //! 
+	static const aqua::CPoint m_map_size;		     //! 
+	static const std::string  m_stage_commn_name;    //! 
 
-	std::vector<std::vector<int>> m_StageMap;
-	aqua::CPoint  m_StageSize;
-	int           m_StageObjectSize;
-	aqua::CModel* m_RandStage;
-	int m_StageNum;
+	std::vector<std::vector<int>> m_StageMap;        //! 
+	std::vector<aqua::CPoint>     m_FirstPosition;	 //! 
+	std::vector<aqua::CPoint>     m_EndPosition;	 //! 
+	aqua::CPoint			      m_StageSize;		 //! 
+	aqua::CModel*			      m_RandStage;		 //! 
+	int						      m_StageObjectSize; //! 
+	int						      m_StageNum;        //! 
 };

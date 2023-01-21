@@ -7,6 +7,7 @@
 #include "../unit.h"
 
 class CEnemy;
+class CStage;
 
 class CPlayer : public IUnit
 {
@@ -38,6 +39,7 @@ private:
 
 	IWeapon* m_Weapon;
 	IMagic* m_Magic;
+	CStage* m_Stage;
 	float m_Angles;
 	int   m_MagicFrame;
 	int Animetion;

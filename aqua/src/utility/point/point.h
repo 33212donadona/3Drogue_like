@@ -102,7 +102,7 @@ namespace aqua
          *
          *  @return     点クラス
          */
-        CPoint& operator*=(float scalar)
+        CPoint& operator*=(int scalar)
         {
             x *= scalar;
             y *= scalar;
@@ -117,7 +117,7 @@ namespace aqua
          *
          *  @return     点クラス
          */
-        CPoint& operator/=(float scalar)
+        CPoint& operator/=(int scalar)
         {
             x /= scalar;
             y /= scalar;

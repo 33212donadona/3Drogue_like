@@ -98,6 +98,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\game\game_object\scene_manager\scene\2_select\select.cpp" />
+    <ClCompile Include="src\game\game_object\common_data\common_data.cpp" />
+    <ClCompile Include="src\game\game_object\scene_manager\scene\1_title\title.cpp" />
+    <ClCompile Include="src\game\game_object\scene_manager\scene\3_game_main\game_main.cpp" />
+    <ClCompile Include="src\game\game_object\scene_manager\scene\4_result\result.cpp" />
+    <ClCompile Include="src\game\game_object\scene_manager\scene\scene.cpp" />
+    <ClCompile Include="src\game\game_object\scene_manager\scene_manager.cpp" />
+    <ClCompile Include="src\game\game_object\sound_manager\game_sound_manager.cpp" />
     <ClCompile Include="src\game\game_object\stage\stage_object\tower\object_tower.cpp" />
     <ClCompile Include="src\game\game_object\stage\stage_object\tree\object_tree.cpp" />
     <ClCompile Include="src\game\game_object\stage\stage_object\rock\object_rock.cpp" />
@@ -121,6 +129,15 @@
     <ClCompile Include="src\game\game_object\unit_manager\unit\unit.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\game\game_object\scene_manager\scene\2_select\select.h" />
+    <ClInclude Include="src\game\game_object\common_data\common_data.h" />
+    <ClInclude Include="src\game\game_object\scene_manager\scene\1_title\title.h" />
+    <ClInclude Include="src\game\game_object\scene_manager\scene\3_game_main\game_main.h" />
+    <ClInclude Include="src\game\game_object\scene_manager\scene\4_result\result.h" />
+    <ClInclude Include="src\game\game_object\scene_manager\scene\scene.h" />
+    <ClInclude Include="src\game\game_object\scene_manager\scene_manager.h" />
+    <ClInclude Include="src\game\game_object\sound_manager\game_sound_id.h" />
+    <ClInclude Include="src\game\game_object\sound_manager\game_sound_manager.h" />
     <ClInclude Include="src\game\game_object\stage\stage_object\tower\object_tower.h" />
     <ClInclude Include="src\game\game_object\stage\stage_object\tree\object_tree.h" />
     <ClInclude Include="src\game\game_object\stage\stage_object\rock\object_rock.h" />

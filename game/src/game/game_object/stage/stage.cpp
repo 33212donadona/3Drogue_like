@@ -25,8 +25,7 @@ void CStage::Initialize()
 	m_StageModel.Create("data\\stage\\stage_w", 0);
 	m_StageModel.scale = aqua::CVector3::ONE * 10;
 
-	m_StageModel.axis = aqua::CVector3(1.0f, 0.0f, 0.0f);
-	m_StageModel.angles = aqua::DegToRad(90.0f);
+	m_StageModel.axis = aqua::CVector3(0.0f,1.0f, 0.0f);
 
 	m_StageNum = 0;
 
@@ -54,13 +53,32 @@ void CStage::Finalize()
 	m_StageModel.Delete();
 }
 
+aqua::CVector3 CStage::GetArePosition(aqua::CPoint stage_data)
+{
+	aqua::CPoint area = stage_data;
+
+	area.x = aqua::Limit(area.x, 0, m_StageSize.x - 1);
+	area.y = aqua::Limit(area.y, 0, m_StageSize.y - 1);
+
+	if (m_StageMap[area.y][area.x] != 0)return aqua::CVector3::ZERO;
+
+	aqua::CVector3 pos(area.x, 0, area.y);
+	pos -= aqua::CVector3(m_StageSize.x / 2, 0, m_StageSize.y / 2);
+	pos = pos * (float)m_StageObjectSize;
+	pos.y = 5.0f;
+
+	return pos;
+}
+
 /*
  *  ステージ生成
  */
 void CStage::CreateStageObject()
 {
-	//LodaStageMap();
-	AutoMapCreate();
+	if(aqua::Rand(true,false))
+		LodaStageMap();
+	else
+		AutoMapCreate();
 
 	aqua::CPoint stage_half_size = m_StageSize;
 	stage_half_size.x = stage_half_size.x / 2;
@@ -74,8 +92,7 @@ void CStage::CreateStageObject()
 			if (m_StageMap[i][j] != 0)
 			{
 				aqua::CVector3 pos;
-				pos = aqua::CVector3(j, 0, i) - aqua::CVector3(stage_half_size.x, 0, stage_half_size.y);
-				pos = pos * (float)m_StageObjectSize;
+				pos = (aqua::CVector3(j, 0, i) - aqua::CVector3(stage_half_size.x, 0, stage_half_size.y)) * (float)m_StageObjectSize;
 				pos.y = 5.0f;
 
 				if (m_StageMap[i][j] == 1)
@@ -109,7 +126,6 @@ void CStage::LodaStageMap()
 
 	if (m_StageSize.y != m_TemplateStage.GetInteger(2, 0))
 		m_StageSize.y = m_TemplateStage.GetInteger(2, 0);
-
 
 	std::vector<int> c;
 	for (int rows = 0; rows < m_StageSize.y; rows++)
@@ -189,7 +205,7 @@ void CStage::SpaceAlgorithms()
 void CStage::AutoMapCreate()
 {
 	// ステージマップをオブジェクトで埋める
-	m_StageMap.assign(m_map_size.y, std::vector<int>(m_map_size.x, 0));
+	m_StageMap.assign(m_map_size.y, std::vector<int>(m_map_size.x, 1));
 
 	if (m_StageObjectSize != m_map_object_space)
 		m_StageObjectSize = m_map_object_space;
@@ -201,33 +217,92 @@ void CStage::AutoMapCreate()
 		m_StageSize.y = m_map_size.y;
 
 
-	MapPartition(aqua::CPoint(0, 0), m_StageSize, 3);
+	MapPartition(aqua::CPoint(0, 0), m_StageSize,aqua::Rand(10,3));
+
+	int vector_size = m_FirstPosition.size();
+
+	// マップに道を作る
+	for (int i = 1; i < vector_size; i++)
+	{
+		int back = i - 1;
+
+		if (m_FirstPosition[back].x < m_FirstPosition[i].x)
+		{
+			for (int x = m_FirstPosition[back].x; x <= m_FirstPosition[i].x; x++)
+			{
+				if (m_StageMap[m_FirstPosition[back].y][x] != 0)
+					m_StageMap[m_FirstPosition[back].y][x] = 0;
+			}
+		}
+		else
+		{
+			for (int x = m_FirstPosition[i].x; x <= m_FirstPosition[back].x; x++)
+			{
+				if (m_StageMap[m_FirstPosition[i].y][x] != 0)
+					m_StageMap[m_FirstPosition[i].y][x] = 0;
+			}
+		}
+
+		if (m_FirstPosition[back].y < m_FirstPosition[i].y)
+		{
+			for (int y = m_FirstPosition[back].y; y <= m_FirstPosition[i].y + 1; y++)
+			{
+				if (m_StageMap[y][m_FirstPosition[back].x] != 0)
+					m_StageMap[y][m_FirstPosition[back].x] = 0;
+			}
+		}
+		else
+		{
+			for (int y = m_FirstPosition[i].y; y <= m_FirstPosition[back].y + 1; y++)
+			{
+				if (m_StageMap[y][m_FirstPosition[i].x] != 0)
+					m_StageMap[y][m_FirstPosition[i].x] = 0;
+			}
+		}
+	}
 }
 
 void CStage::MapPartition(aqua::CPoint stage_size_first, aqua::CPoint stage_size_end, int max_partition)
 {
 	if (max_partition <= 0)return;
-	if (max_partition > 4)return;
 
-	bool width_flag = max_partition % 2;
+	aqua::CPoint s = stage_size_end - stage_size_first;
+	if (s.x < 5 || s.y < 5)return;
 
+	bool width_flag = aqua::Rand(1, 0);
+
+	// 始点
 	aqua::CPoint first = stage_size_first;
-	aqua::CPoint end = stage_size_end;
+	// 終点
+	aqua::CPoint end2 = stage_size_end;
 
 	// 横に分割
 	if (width_flag)
 	{
-		first.y = end.y / std::pow(2, 4 - max_partition) + first.y;
+		first.y = aqua::Rand(stage_size_end.y / 4, 0) + stage_size_end.y / 2;
+		end2.y = first.y - 1;
 	}
 	// 縦に分割
 	else
 	{
-		first.x = end.x / std::pow(2, 4 - max_partition) + first.x;
+		first.x = aqua::Rand(stage_size_end.x / 4, 0) + stage_size_end.x / 2;
+		end2.x = first.x - 1;
 	}
 
-	for (int y = first.y; y < end.y; y++)
-		for (int x = first.x; x < end.x; x++)
-			m_StageMap[y][x] = max_partition;
 
-	MapPartition(first, end, max_partition - 1);
+	for (int y = first.y; y < stage_size_end.y; y++)
+		for (int x = first.x; x < stage_size_end.x; x++)
+			m_StageMap[y][x] = 1;
+
+	aqua::CPoint rand = aqua::CPoint(aqua::Rand(2, 1), aqua::Rand(2, 1));
+
+	for (int y = first.y + rand.y; y < stage_size_end.y - rand.y; y++)
+		for (int x = first.x + rand.x; x < stage_size_end.x - rand.x; x++)
+			m_StageMap[y][x] = 0;
+
+	m_FirstPosition.push_back(first + rand);
+
+
+	MapPartition(first, stage_size_end, max_partition - 1);
+	MapPartition(stage_size_first, end2, max_partition - 1);
 }

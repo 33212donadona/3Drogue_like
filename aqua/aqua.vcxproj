@@ -33,9 +33,9 @@
     <ClCompile Include="src\graphics\font\font_resource\font_resource.cpp" />
     <ClCompile Include="src\graphics\label\label.cpp" />
     <ClCompile Include="src\graphics\model\model.cpp" />
-    <ClCompile Include="src\graphics\model\object3D\object3D.cpp" />
-    <ClCompile Include="src\graphics\model\object3D\object3D_manager\object3D_manager.cpp" />
-    <ClCompile Include="src\graphics\model\object3D\object3D_resorce\object3D_resorce.cpp" />
+    <ClCompile Include="src\graphics\object3D\object3D.cpp" />
+    <ClCompile Include="src\graphics\object3D\object3D_manager\object3D_manager.cpp" />
+    <ClCompile Include="src\graphics\object3D\object3D_resorce\object3D_resorce.cpp" />
     <ClCompile Include="src\graphics\primitive\box_primitive\box_primitive.cpp" />
     <ClCompile Include="src\graphics\primitive\circle_primitive\circle_primitive.cpp" />
     <ClCompile Include="src\graphics\primitive\line_primitive\line_primitive.cpp" />
@@ -95,9 +95,9 @@
     <ClInclude Include="src\graphics\graphic_filter\graphic_filter.h" />
     <ClInclude Include="src\graphics\label\label.h" />
     <ClInclude Include="src\graphics\model\model.h" />
-    <ClInclude Include="src\graphics\model\object3D\object3D.h" />
-    <ClInclude Include="src\graphics\model\object3D\object3D_manager\object3D_manager.h" />
-    <ClInclude Include="src\graphics\model\object3D\object3D_resorce\object3D_resorce.h" />
+    <ClInclude Include="src\graphics\object3D\object3D.h" />
+    <ClInclude Include="src\graphics\object3D\object3D_manager\object3D_manager.h" />
+    <ClInclude Include="src\graphics\object3D\object3D_resorce\object3D_resorce.h" />
     <ClInclude Include="src\graphics\primitive\box_primitive\box_primitive.h" />
     <ClInclude Include="src\graphics\primitive\circle_primitive\circle_primitive.h" />
     <ClInclude Include="src\graphics\primitive\line_primitive\line_primitive.h" />

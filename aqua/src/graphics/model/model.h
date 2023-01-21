@@ -4,7 +4,7 @@
 #include "..\graphic_filter\graphic_filter.h"
 #include "../draw_object_3d/draw_object_3d.h"
 #include "..\..\mathematics\mathematics.h"
-#include "object3D/object3D.h"
+#include "..\object3D/object3D.h"
 
 /*!
  *  @file       model.h

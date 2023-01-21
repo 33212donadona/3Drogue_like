@@ -32,6 +32,7 @@ void IUnit::Update()
 void IUnit::Finalize()
 {
 	m_UnitModel.Delete();
+	IGameObject::Finalize();
 }
 
 /*

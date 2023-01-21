@@ -1,5 +1,6 @@
 #include "player.h"
 #include "../enemy/enemy.h"
+#include "../../../stage/stage.h"
 
 const int CPlayer::m_max_animetion = 6;
 const float CPlayer::m_shot_animetion_frame = 50.0f;
@@ -28,8 +29,21 @@ void CPlayer::Initialize()
 
 	m_Weapon = (IWeapon*)aqua::CreateGameObject<CSword>(this);
 	m_Magic = (IMagic*)aqua::CreateGameObject<CFireBall>(this);
+	m_Stage = (CStage*)aqua::FindGameObject("Stage");
+
+	bool pos_flag = true;
+	
+	while (pos_flag)
+	{
+		m_UnitModel.position = m_Stage->GetArePosition(aqua::CPoint(aqua::Rand(21, 1),aqua::Rand(21,1)));
+
+		pos_flag = m_UnitModel.position == aqua::CVector3::ZERO;
+	}
+
 	m_UnitModel.axis = aqua::CVector3(0.0f, 1.0f, 0.0f);
+
 	if (m_Weapon)m_Weapon->Initialize();
+
 	m_MaxHitPoint = 100;
 
 	IUnit::Initialize();
