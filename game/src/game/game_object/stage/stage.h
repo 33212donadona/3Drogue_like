@@ -12,8 +12,23 @@ public:
 	void Initialize() override;
 	void Update() override;
 	void Finalize() override;
-
+	/*
+	*  @brief  何もない空間
+	*
+	* @param[in] stage_data 参照する配列の要素数
+	* @return    何もない空間	
+	*/
 	aqua::CVector3 GetArePosition(aqua::CPoint stage_data);
+	/*
+	*  @brief  オブジェクトの有無
+	*
+	*  @param[in] position 座標
+	* 
+	*  @retval true    オブジェクト発見
+    *  @retval false   オブジェクト未発見
+	*/
+	bool CheckObject(aqua::CVector3 position);
+
 private:
 
 	void CreateStageObject();

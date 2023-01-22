@@ -153,6 +153,7 @@ aqua::CollisionInfo aqua::CModel::GetBoneCollision
 	sphele = GetBonePosistion(GetBoneIndex(bone_name));
 
 	int index;
+
 	if (MV1GetFrameName(m_ModelHandle, GetBoneIndex(bone_name)) == bone_name)
 		index = GetBoneIndex(bone_name);
 	else
@@ -167,9 +168,10 @@ aqua::CollisionInfo aqua::CModel::GetBoneCollision
 	return info;
 }
 
-aqua::CollisionInfo aqua::CModel::GetBoneCollision(
+aqua::CollisionInfo aqua::CModel::GetBoneCapsuleCollision(
 	std::string bone_name, 
-	aqua::CVector3 m_position, 
+	aqua::CVector3 top_position,
+	aqua::CVector3 bottom_position,
 	float r
 )
 {
@@ -184,22 +186,19 @@ aqua::CollisionInfo aqua::CModel::GetBoneCollision(
 	else
 		index = 0;
 
-	aqua::CVector3 low_position = m_position;
-	low_position.y = 0;
-
 	coll_result_poly = MV1CollCheck_Capsule
 	(
 		m_ModelHandle,
 		index,
-		m_position,
-		low_position,
+		top_position,
+		bottom_position,
 		r
 	);
 
 	int num = coll_result_poly.HitNum;
 
 	if (coll_result_poly.Dim && coll_result_poly.Dim[num].HitFlag)
-		distance = m_position - coll_result_poly.Dim[num].HitPosition;
+		distance = top_position - coll_result_poly.Dim[num].HitPosition;
 
 	distance.x = abs(distance.x);
 	distance.y = abs(distance.y);

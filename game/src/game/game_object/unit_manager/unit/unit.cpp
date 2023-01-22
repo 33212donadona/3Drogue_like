@@ -12,7 +12,6 @@ void IUnit::Initialize()
 {
 	m_UnitModel.scale = aqua::CVector3::ONE * 0.1f;
 	m_UnitModel.axis.y = 1.0f;
-	m_HitPoint = m_MaxHitPoint;
 
 	IGameObject::Initialize();
 }
@@ -23,7 +22,14 @@ void IUnit::Initialize()
 void IUnit::Update()
 {
 	m_UnitModel.AnimationUpdata();
+
 	IGameObject::Update();
+
+	if (m_State == STATE::DEAD)
+		DeleteObject();
+
+	if (m_HitPoint <= 0)
+		m_State = STATE::DEAD;
 }
 
 /*

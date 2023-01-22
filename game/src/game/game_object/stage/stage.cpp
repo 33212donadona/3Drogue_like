@@ -25,7 +25,7 @@ void CStage::Initialize()
 	m_StageModel.Create("data\\stage\\stage_w", 0);
 	m_StageModel.scale = aqua::CVector3::ONE * 10;
 
-	m_StageModel.axis = aqua::CVector3(0.0f,1.0f, 0.0f);
+	m_StageModel.axis = aqua::CVector3(0.0f, 1.0f, 0.0f);
 
 	m_StageNum = 0;
 
@@ -70,12 +70,25 @@ aqua::CVector3 CStage::GetArePosition(aqua::CPoint stage_data)
 	return pos;
 }
 
+bool CStage::CheckObject(aqua::CVector3 position)
+{
+	aqua::CPoint area;
+
+	area.x = position.x / m_StageObjectSize + m_StageSize.x / 2;
+	area.y = position.z / m_StageObjectSize + m_StageSize.y / 2;
+
+	area.x = aqua::Limit(area.x, 0, m_StageSize.x - 1);
+	area.y = aqua::Limit(area.y, 0, m_StageSize.y - 1);
+
+	return m_StageMap[area.y][area.x] != 0;
+}
+
 /*
  *  ステージ生成
  */
 void CStage::CreateStageObject()
 {
-	if(aqua::Rand(true,false))
+	if (aqua::Rand(true, false))
 		LodaStageMap();
 	else
 		AutoMapCreate();
@@ -217,7 +230,7 @@ void CStage::AutoMapCreate()
 		m_StageSize.y = m_map_size.y;
 
 
-	MapPartition(aqua::CPoint(0, 0), m_StageSize,aqua::Rand(10,3));
+	MapPartition(aqua::CPoint(0, 0), m_StageSize, aqua::Rand(10, 3));
 
 	int vector_size = m_FirstPosition.size();
 

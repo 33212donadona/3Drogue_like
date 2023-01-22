@@ -133,10 +133,11 @@ namespace aqua
 		*  @param[in]   position Å@  ç¿ïW
 		*  @param[in]   r            îºåa
 		*/
-		CollisionInfo    GetBoneCollision
+		CollisionInfo    GetBoneCapsuleCollision
 		(
 			std::string bone_name,
-			aqua::CVector3 position,
+			aqua::CVector3 top_position,
+			aqua::CVector3 bottom_position,
 			float r
 		);
 

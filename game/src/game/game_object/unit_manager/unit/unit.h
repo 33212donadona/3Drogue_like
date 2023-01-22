@@ -25,14 +25,14 @@ public:
 
 private:
 
-	float m_HitPoint;
-	float m_Attack;
+	STATE m_State;
 
 protected:
 
+	float m_HitPoint;
+	float m_Attack;
 	aqua::CVector3 m_position;
 	aqua::CModel m_UnitModel;
 	int m_MaxAnimetion;
-	float m_MaxHitPoint;
 };
 

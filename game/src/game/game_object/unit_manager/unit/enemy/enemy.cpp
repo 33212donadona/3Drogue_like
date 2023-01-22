@@ -1,6 +1,7 @@
 #include "enemy.h"
 #include "../player/player.h"
-
+#include "../../../weapon_manager/weapon/weapon.h"
+#include "../../../weapon_manager/weapon/sword/sword.h"
 const float CEnemy::m_max_hit_point = 100.0f;
 const float CEnemy::m_attack = 10.0f;
 
@@ -9,7 +10,7 @@ const float CEnemy::m_attack = 10.0f;
  */
 CEnemy::CEnemy(aqua::IGameObject* parent)
 	:IUnit(parent, "Enemy")
-	, m_DamageFlag(false)
+	, m_DamageFlag(true)
 	, m_PlayerModel(nullptr)
 {
 }
@@ -22,7 +23,7 @@ void CEnemy::Initialize()
 
 	m_UnitModel.Create("data\\model\\Enemy", 4);
 	m_UnitModel.position = aqua::CVector3(0.0f, 0.0f, 75.0f);
-	m_MaxHitPoint = 100.0f;
+	m_HitPoint = 100.0f;
 	
 	IUnit::Initialize();
 }
@@ -31,6 +32,20 @@ void CEnemy::Initialize()
  */
 void CEnemy::Update()
 {
+	Algorithms();
+
+	if (m_PlayerModel->CheckHit(m_UnitModel.GetBonePosistion(6), m_UnitModel.GetBonePosistion(69)) && !m_DamageFlag)
+	{
+		m_HitPoint -= 50;
+		m_DamageFlag = true;
+	}
+
+	if (m_DamageFlag)
+	{
+		if (!m_PlayerModel->CheckHit(m_UnitModel.GetBonePosistion(6), m_UnitModel.GetBonePosistion(69)))
+			m_DamageFlag = false;
+	}
+
 	IUnit::Update();
 }
 /*

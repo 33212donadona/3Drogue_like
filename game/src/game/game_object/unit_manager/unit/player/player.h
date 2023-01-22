@@ -22,6 +22,17 @@ public:
 
 	int GetAnimetionNum();
 
+	/*!
+	*  @brief 武器との衝突検知
+	*
+	*  @param[in] first_pos   線分の初め
+	*  @param[in] end_pos     線分の終わり
+	*
+	*  @retval true    武器と衝突した
+	*  @retval false   武器と衝突しなかった
+	*/
+	bool CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos);
+
 private:
 
 	void AnimetionWork();       //! アニメーション

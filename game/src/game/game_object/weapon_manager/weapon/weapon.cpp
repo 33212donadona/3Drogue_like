@@ -25,3 +25,8 @@ void IWeapon::SetMatrix(aqua::CMatrix model_matrix)
 {
 	m_ModelMatrix = model_matrix;
 }
+
+bool IWeapon::CheckHitWeapon(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
+{
+	return m_WeaponModel.GetBoneCapsuleCollision("Collision.000",first_pos, end_pos,3).HitFlag || m_WeaponModel.GetBoneCapsuleCollision("Collision.001", first_pos, end_pos, 3).HitFlag;
+}

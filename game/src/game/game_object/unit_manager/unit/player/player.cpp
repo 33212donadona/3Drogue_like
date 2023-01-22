@@ -31,20 +31,17 @@ void CPlayer::Initialize()
 	m_Magic = (IMagic*)aqua::CreateGameObject<CFireBall>(this);
 	m_Stage = (CStage*)aqua::FindGameObject("Stage");
 
-	bool pos_flag = true;
-	
-	while (pos_flag)
+	//‰ŠúˆÊ’uÝ’è
+	while (m_UnitModel.position == aqua::CVector3::ZERO)
 	{
-		m_UnitModel.position = m_Stage->GetArePosition(aqua::CPoint(aqua::Rand(21, 1),aqua::Rand(21,1)));
-
-		pos_flag = m_UnitModel.position == aqua::CVector3::ZERO;
+		m_UnitModel.position = m_Stage->GetArePosition(aqua::CPoint(aqua::Rand(21, 1), aqua::Rand(21, 1)));
 	}
 
 	m_UnitModel.axis = aqua::CVector3(0.0f, 1.0f, 0.0f);
 
 	if (m_Weapon)m_Weapon->Initialize();
 
-	m_MaxHitPoint = 100;
+	m_HitPoint = 100;
 
 	IUnit::Initialize();
 }
@@ -79,6 +76,11 @@ void CPlayer::Finalize()
 int CPlayer::GetAnimetionNum()
 {
 	return Animetion;
+}
+
+bool CPlayer::CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
+{
+	return m_Weapon->CheckHitWeapon(first_pos, end_pos) && aqua::keyboard::Button(aqua::keyboard::KEY_ID::Z);
 }
 
 /*
@@ -116,11 +118,18 @@ void CPlayer::AnimetionWork()
 */
 void CPlayer::Move()
 {
-	m_UnitModel.position.x += aqua::keyboard::Button(aqua::keyboard::KEY_ID::A) - aqua::keyboard::Button(aqua::keyboard::KEY_ID::D);
-	m_UnitModel.position.z += aqua::keyboard::Button(aqua::keyboard::KEY_ID::S) - aqua::keyboard::Button(aqua::keyboard::KEY_ID::W);
+	int x = aqua::keyboard::Button(aqua::keyboard::KEY_ID::A) - aqua::keyboard::Button(aqua::keyboard::KEY_ID::D);
+	int z = aqua::keyboard::Button(aqua::keyboard::KEY_ID::S) - aqua::keyboard::Button(aqua::keyboard::KEY_ID::W);
 
-	m_UnitModel.position.x = aqua::Limit(m_UnitModel.position.x, -95.0f, 95.0f);
-	m_UnitModel.position.z = aqua::Limit(m_UnitModel.position.z, -95.0f, 95.0f);
+
+	if (m_Stage->CheckObject(m_UnitModel.position + aqua::CVector3((float)x * 4.5f, 0.0f, 0.0f)))
+		x = 0;
+
+	if (m_Stage->CheckObject(m_UnitModel.position + aqua::CVector3(0.0f, 0.0f, (float)z * 4.5f)))
+		z = 0;
+
+	m_UnitModel.position.x = aqua::Limit(m_UnitModel.position.x + x, -95.0f, 95.0f);
+	m_UnitModel.position.z = aqua::Limit(m_UnitModel.position.z + z, -95.0f, 95.0f);
 }
 /*
 *   ‰ñ“]
