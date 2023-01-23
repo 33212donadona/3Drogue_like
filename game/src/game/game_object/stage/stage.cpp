@@ -74,8 +74,8 @@ bool CStage::CheckObject(aqua::CVector3 position)
 {
 	aqua::CPoint area;
 
-	area.x = position.x / m_StageObjectSize + m_StageSize.x / 2;
-	area.y = position.z / m_StageObjectSize + m_StageSize.y / 2;
+	area.x = (int)(position.x / m_StageObjectSize + m_StageSize.x / 2);
+	area.y = (int)(position.z / m_StageObjectSize + m_StageSize.y / 2);
 
 	area.x = aqua::Limit(area.x, 0, m_StageSize.x - 1);
 	area.y = aqua::Limit(area.y, 0, m_StageSize.y - 1);
@@ -232,7 +232,7 @@ void CStage::AutoMapCreate()
 
 	MapPartition(aqua::CPoint(0, 0), m_StageSize, aqua::Rand(10, 3));
 
-	int vector_size = m_FirstPosition.size();
+	int vector_size = (int)m_FirstPosition.size();
 
 	// É}ÉbÉvÇ…ìπÇçÏÇÈ
 	for (int i = 1; i < vector_size; i++)

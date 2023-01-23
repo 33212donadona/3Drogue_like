@@ -10,15 +10,19 @@ CUnitManager::CUnitManager(aqua::IGameObject* parent)
 
 void CUnitManager::Initialize()
 {
-	aqua::CreateGameObject<CPlayer>(this);
-	aqua::CreateGameObject<CEnemy>(this);
+	m_Player = aqua::CreateGameObject<CPlayer>(this);
+	m_EnemyList.push_back(aqua::CreateGameObject<CEnemy>(this));
 
 	IGameObject::Initialize();
 }
 
 void CUnitManager::Update()
 {
-	IGameObject::Update();
+	m_Player->Update();
+	for (auto& elem : m_EnemyList)
+	{
+		elem->Update();
+	}
 }
 
 void CUnitManager::Finalize()

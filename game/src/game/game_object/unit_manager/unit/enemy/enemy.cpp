@@ -36,7 +36,7 @@ void CEnemy::Update()
 
 	if (m_PlayerModel->CheckHit(m_UnitModel.GetBonePosistion(6), m_UnitModel.GetBonePosistion(69)) && !m_DamageFlag)
 	{
-		m_HitPoint -= 50;
+		m_HitPoint -= 100.0f;
 		m_DamageFlag = true;
 	}
 

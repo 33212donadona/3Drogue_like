@@ -29,7 +29,7 @@ namespace aqua
          *
          *  @param[in]  file_name   ファイル名
          */
-        void    Load(const std::string & file_name,int index = 0);
+        void    Load(const std::string & file_name);
 
         /*!
          *  @brief      モデルの解放

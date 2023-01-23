@@ -18,13 +18,13 @@ aqua::CObject3D::CObject3D(const CObject3D& model)
 	m_Object3DResorce->AddReference();
 }
 
-void aqua::CObject3D::Load(const std::string& file_name, int index)
+void aqua::CObject3D::Load(const std::string& file_name)
 {
 	// モデルリソース退避
 	core::CObject3DResorce* object_3d = m_Object3DResorce;
 
 	// モデルマネージャからモデル取得
-	m_Object3DResorce = core::CObject3DManager::GetInstance().Load(file_name, index);
+	m_Object3DResorce = core::CObject3DManager::GetInstance().Load(file_name);
 
 	if (object_3d)
 	{

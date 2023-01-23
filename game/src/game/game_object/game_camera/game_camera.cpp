@@ -40,6 +40,8 @@ void CGameCamera::Draw()
 {
 	m_Camera.Draw();
 
+#ifdef DEBUG
+
 	aqua::CLabel cl;
 	cl.Create(20);
 	cl.color = aqua::CColor::BLUE;
@@ -50,4 +52,6 @@ void CGameCamera::Draw()
 
 	cl.Draw();
 	cl.Delete();
+#endif
+
 }

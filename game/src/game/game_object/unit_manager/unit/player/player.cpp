@@ -25,7 +25,7 @@ void CPlayer::Initialize()
 {
 	m_UnitModel.Create("data\\model\\Bot", m_max_animetion);
 
-	Animetion = 0;
+	Animetion = 2;
 
 	m_Weapon = (IWeapon*)aqua::CreateGameObject<CSword>(this);
 	m_Magic = (IMagic*)aqua::CreateGameObject<CFireBall>(this);
@@ -37,7 +37,7 @@ void CPlayer::Initialize()
 		m_UnitModel.position = m_Stage->GetArePosition(aqua::CPoint(aqua::Rand(21, 1), aqua::Rand(21, 1)));
 	}
 
-	m_UnitModel.axis = aqua::CVector3(0.0f, 1.0f, 0.0f);
+	m_UnitModel.AttachAnimation(Animetion);
 
 	if (m_Weapon)m_Weapon->Initialize();
 
@@ -53,10 +53,6 @@ void CPlayer::Update()
 {
 	AnimetionWork();
 
-	Move();
-
-	Rotation();
-
 	Weapon();
 
 	IUnit::Update();
@@ -69,6 +65,15 @@ void CPlayer::Finalize()
 	if (m_Weapon)m_Weapon->Finalize();
 
 	IUnit::Finalize();
+}
+/*
+*  動きの更新
+*/
+void CPlayer::MoveUpdata()
+{
+	Move();
+
+	Rotation();
 }
 /*
  *  アニメーション番号
@@ -94,10 +99,7 @@ void CPlayer::AnimetionWork()
 		aqua::keyboard::Button(aqua::keyboard::KEY_ID::S) ||
 		aqua::keyboard::Button(aqua::keyboard::KEY_ID::D)
 		)
-	{
 		Animetion = 2;
-	}
-
 	else if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::Z))
 		Animetion = 3;
 	else if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::X))
@@ -121,7 +123,6 @@ void CPlayer::Move()
 	int x = aqua::keyboard::Button(aqua::keyboard::KEY_ID::A) - aqua::keyboard::Button(aqua::keyboard::KEY_ID::D);
 	int z = aqua::keyboard::Button(aqua::keyboard::KEY_ID::S) - aqua::keyboard::Button(aqua::keyboard::KEY_ID::W);
 
-
 	if (m_Stage->CheckObject(m_UnitModel.position + aqua::CVector3((float)x * 4.5f, 0.0f, 0.0f)))
 		x = 0;
 
@@ -131,6 +132,7 @@ void CPlayer::Move()
 	m_UnitModel.position.x = aqua::Limit(m_UnitModel.position.x + x, -95.0f, 95.0f);
 	m_UnitModel.position.z = aqua::Limit(m_UnitModel.position.z + z, -95.0f, 95.0f);
 }
+
 /*
 *   回転
 */

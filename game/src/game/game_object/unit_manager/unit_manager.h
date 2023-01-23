@@ -2,6 +2,8 @@
 #include "aqua.h"
 
 class IUnit;
+class CEnemy;
+class CPlayer;
 
 class CUnitManager :public aqua::IGameObject
 {
@@ -15,6 +17,7 @@ public:
 	void Finalize() override;
 
 private:
-	IUnit* m_Player;
+	CPlayer* m_Player;
+	std::list<CEnemy*> m_EnemyList;
 };
 

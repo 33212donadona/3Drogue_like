@@ -15,9 +15,6 @@ void aqua::CModel::Create(const std::string& file_name, int anime_max, float add
 	m_max_animetion = anime_max;
 	m_AddFrame = add_frame;
 
-	//if (m_max_animetion > 0)
-	//	m_AnimetionObject3D = AQUA_NEW aqua::CObject3D[m_max_animetion];
-
 	if (file_name == "")return;
 
 	m_Object3D.Load(file_name + ".mv1");
@@ -29,13 +26,14 @@ void aqua::CModel::Create(const std::string& file_name, int anime_max, float add
 	for (int i = 0; i <= MV1GetFrameNum(m_ModelHandle); i++)
 		MV1SetupCollInfo(m_ModelHandle, i, 2, 2, 2);
 
+	int handle = 0;
+
 	for (int f_i = 0; f_i < m_max_animetion; ++f_i)
 	{
 		std::string name;
-		aqua::CObject3D model;
 		name = file_name + "_" + std::to_string(f_i / 10) + std::to_string(f_i) + ".mv1";
-		model.Load(name);
-		m_AnimetionObject3D.push_back(model.GetResourceHandle());
+		handle = MV1LoadModel(name.c_str());
+		m_AnimetionObject3D.push_back(handle);
 	}
 
 	m_MatrixPosition.SetTranslate(position);
@@ -48,9 +46,12 @@ void aqua::CModel::Create(const std::string& file_name, int anime_max, float add
 
 void aqua::CModel::Delete()
 {
+	if (!m_AnimetionObject3D.empty() && m_AttachIndex >= 0)
+		m_Object3D.Detach(m_AnimetionObject3D[m_AttachIndex]);
+
 	m_Object3D.Unload();
 
-	if (m_max_animetion > 0)
+	if (!m_AnimetionObject3D.empty())
 		m_AnimetionObject3D.clear();
 }
 
@@ -66,9 +67,7 @@ int aqua::CModel::GetBoneIndex(std::string bone_name)
 
 void aqua::CModel::ChengeFrameVisible(std::string frame_name, bool visible_flag)
 {
-	int frame_index = GetBoneIndex(frame_name);
-
-	MV1SetFrameVisible(m_ModelHandle, frame_index, visible_flag);
+	MV1SetFrameVisible(m_ModelHandle, GetBoneIndex(frame_name), visible_flag);
 }
 
 int aqua::CModel::GetMaxAnimationIndex()
@@ -79,11 +78,11 @@ int aqua::CModel::GetMaxAnimationIndex()
 void aqua::CModel::AttachAnimation(int index)
 {
 	if (m_AttachIndex == index || m_max_animetion <= 0)return;
-	if (m_AttachIndex >= 0)m_Object3D.Detach(0);
 	if (m_AttachIndex != index)m_Frame = 0.0f;
+
 	//! ÉäÉ\Å[ÉXÇ…èëÇ´çûÇﬁ
-	m_AttachIndex = index;
-	m_AttachIndex = aqua::Limit(m_AttachIndex, 0, m_max_animetion - 1);
+	m_AttachIndex = aqua::Limit(index, 0, m_max_animetion - 1);
+	m_Object3D.Detach(0);
 
 	m_Object3D.ReAttach(0, m_AnimetionObject3D[m_AttachIndex]);
 	m_MaxTime = m_Object3D.GetAnimeTotalTime(0);
@@ -169,7 +168,7 @@ aqua::CollisionInfo aqua::CModel::GetBoneCollision
 }
 
 aqua::CollisionInfo aqua::CModel::GetBoneCapsuleCollision(
-	std::string bone_name, 
+	std::string bone_name,
 	aqua::CVector3 top_position,
 	aqua::CVector3 bottom_position,
 	float r

@@ -20,6 +20,11 @@ public:
 	void Update() override;
 	void Finalize() override;
 
+	/*
+	*  @brief “®‚«‚ÌXV
+	*/
+	void MoveUpdata()override;
+
 	int GetAnimetionNum();
 
 	/*!

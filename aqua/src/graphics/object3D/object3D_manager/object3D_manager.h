@@ -29,7 +29,7 @@ namespace aqua
 			 *
 			 *  @return     テクスチャリソースクラス
 			 */
-			CObject3DResorce* Load(const std::string& file_name, int index = 0);
+			CObject3DResorce* Load(const std::string& file_name);
 
 			/*!
 			 *  @brief      テクスチャの解放

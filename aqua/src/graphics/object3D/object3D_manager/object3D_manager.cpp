@@ -11,7 +11,7 @@ aqua::core::CObject3DManager::GetInstance(void)
 }
 
 aqua::core::CObject3DResorce*
-aqua::core::CObject3DManager::Load(const std::string& file_name, int index)
+aqua::core::CObject3DManager::Load(const std::string& file_name)
 {
 	// 3Dモデル検索
 	CObject3DResorce* object_3d = Find(file_name);
@@ -22,7 +22,8 @@ aqua::core::CObject3DManager::Load(const std::string& file_name, int index)
 		object_3d = AQUA_NEW CObject3DResorce();
 
 		// 読み込み
-		object_3d->Load(file_name, index);
+		object_3d->Load(file_name);
+
 		// 3Dモデルリストに追加
 		m_Object3DList.push_back(object_3d);
 

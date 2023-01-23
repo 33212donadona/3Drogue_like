@@ -98,7 +98,7 @@ void CTitle::Update(void)
 	//////////////////////////////////////////////////////////////////////////////////// 
 
 	m_DesignBoxUp.position.y = aqua::easing::OutQuintic(m_EasingTimer.GetTime(), m_EasingTimer.GetLimit(), aqua::GetWindowHeight() / 2.0f - m_DesignBoxUp.GetTextureHeight() / 2.0f, aqua::GetWindowHeight() / 2 - 15.0f);
-	m_DesignBoxDown.position.y = aqua::easing::OutQuintic(m_EasingTimer.GetTime(), m_EasingTimer.GetLimit(), aqua::GetWindowHeight() / 2 - m_DesignBoxUp.GetTextureHeight() / 2, aqua::GetWindowHeight() / 2 + m_DesignBoxDown.GetTextureHeight() / 3 - 100.0f);
+	m_DesignBoxDown.position.y = aqua::easing::OutQuintic(m_EasingTimer.GetTime(), m_EasingTimer.GetLimit(),(float)aqua::GetWindowHeight() / 2 - m_DesignBoxUp.GetTextureHeight() / 2, aqua::GetWindowHeight() / 2 + m_DesignBoxDown.GetTextureHeight() / 3 - 100.0f);
 	m_DesignBox.color.alpha = (unsigned char)aqua::easing::OutQuintic(m_EasingTimer.GetTime(), m_EasingTimer.GetLimit(), 255, 0);
 	m_DesignBox.scale.x = aqua::easing::OutQuintic(m_EasingTimer.GetTime(), m_EasingTimer.GetLimit(), 1, 0);
 	m_DesignBoxUp.color.alpha = (unsigned char)aqua::easing::OutQuintic(m_EasingTimer.GetTime(), m_EasingTimer.GetLimit(), 255, 0);
