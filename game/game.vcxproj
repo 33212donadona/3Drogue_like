@@ -98,6 +98,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\game\game_object\input\input.cpp" />
     <ClCompile Include="src\game\game_object\select_back_ground\select_back_ground.cpp" />
     <ClCompile Include="src\game\game_object\scene_manager\scene\2_select\select.cpp" />
     <ClCompile Include="src\game\game_object\common_data\common_data.cpp" />
@@ -130,6 +131,7 @@
     <ClCompile Include="src\game\game_object\unit_manager\unit\unit.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\game\game_object\input\input.h" />
     <ClInclude Include="src\game\game_object\select_back_ground\select_back_ground.h" />
     <ClInclude Include="src\game\game_object\scene_manager\scene\2_select\select.h" />
     <ClInclude Include="src\game\game_object\common_data\common_data.h" />

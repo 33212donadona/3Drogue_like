@@ -5,9 +5,9 @@
 #include "scene/3_game_main/game_main.h"
 #include "scene/4_result/result.h"
 #include "../common_data/common_data.h"
+#include "../input/input.h"
 
 CSceneManager::CSceneManager(aqua::IGameObject* parent)
-// parent(game)
 	: aqua::IGameObject(parent, "SceneManager")
 	, m_CurrentScene_P(nullptr)
 	, m_NextScene(SCENE_ID::DUMMY)
@@ -26,6 +26,7 @@ void CSceneManager::Initialize(void)
 
 void CSceneManager::Update(void)
 {
+	Input::Updata();
 	// 生成したシーンの更新処理を行う
 	IGameObject::Update();
 
