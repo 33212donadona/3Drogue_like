@@ -141,7 +141,7 @@ void CTitle::Update(void)
 	// スペースでゲームシーンへ移動
 	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::SPACE))
 	{
-		((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::GAMEMAIN);
+		((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::SELECT);
 	}
 }
 

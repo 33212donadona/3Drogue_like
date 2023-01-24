@@ -49,6 +49,8 @@ void CSceneManager::Update(void)
 	{
 	case SCENE_ID::TITLE:		m_CurrentScene_P = aqua::CreateGameObject<CTitle>(this);
 		IGameObject::Initialize(); break;
+	case SCENE_ID::SELECT:		m_CurrentScene_P = aqua::CreateGameObject<CSelect>(this);
+		IGameObject::Initialize(); break;
 	case SCENE_ID::GAMEMAIN:	m_CurrentScene_P = aqua::CreateGameObject<CGameMain>(this);
 		IGameObject::Initialize(); break;
 	case SCENE_ID::RESULT:		m_CurrentScene_P = aqua::CreateGameObject<CResult>(this);

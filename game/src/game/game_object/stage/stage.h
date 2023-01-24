@@ -16,7 +16,7 @@ public:
 	*  @brief  ‰½‚à‚È‚¢‹óŠÔ
 	*
 	* @param[in] stage_data QÆ‚·‚é”z—ñ‚Ì—v‘f”
-	* @return    ‰½‚à‚È‚¢‹óŠÔ	
+	* @return    ‰½‚à‚È‚¢‹óŠÔ
 	*/
 	aqua::CVector3 GetArePosition(aqua::CPoint stage_data);
 	/*
