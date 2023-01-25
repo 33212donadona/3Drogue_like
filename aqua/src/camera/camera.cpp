@@ -9,6 +9,7 @@ void aqua::CCamera::Create(int width, int height)
 	m_Rect.top = 0;
 	m_Rect.right = m_Surface.GetTexture().GetWidth();
 	m_Rect.bottom = m_Surface.GetTexture().GetHeight();
+	m_BackGraphHandle = 0;
 }
 
 void aqua::CCamera::Draw()
@@ -21,11 +22,17 @@ void aqua::CCamera::Draw()
 	SetWriteZBufferFlag(TRUE);
 	SetCameraNearFar(1.0f, 50000.0f);
 	SetCameraScreenCenter(screen_center.x, screen_center.y);
-	
-	SetCameraPositionAndTarget_UpVecY(camera_position,target_point);
-	
+
+	SetCameraPositionAndTarget_UpVecY(camera_position, target_point);
+
 	// EffekseerÇ…3Dï`âÊÇê›íËÇ∑ÇÈ
 	Effekseer_Sync3DSetting();
+
+	// îwåiâÊëúï`âÊ
+	if (m_BackGraphHandle != 0)
+		DrawGraph(0, 0, m_BackGraphHandle, false);
+	
+	ClearDrawScreenZBuffer();
 	aqua::core::IDrawObject3D::DrawList();
 	SetWriteZBufferFlag(FALSE);
 
@@ -33,13 +40,13 @@ void aqua::CCamera::Draw()
 
 	int handle = m_Surface.GetTexture().GetResourceHandle();
 
-	DrawGraph((int)screen_position.x,(int)screen_position.y,handle, false);
+	DrawGraph((int)screen_position.x, (int)screen_position.y, handle, false);
 
 }
 
 aqua::CCamera::CCamera()
 {
 	screen_position = aqua::CVector2::ZERO;
-	
+
 	screen_center = { 1920 / 2,1080 / 2 };
 }

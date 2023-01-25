@@ -1,6 +1,7 @@
 #include "player.h"
 #include "../enemy/enemy.h"
 #include "../../../stage/stage.h"
+#include "../../../input/input.h"
 
 const int CPlayer::m_max_animetion = 6;
 const float CPlayer::m_shot_animetion_frame = 50.0f;
@@ -93,18 +94,13 @@ bool CPlayer::CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
  */
 void CPlayer::AnimetionWork()
 {
-	if (
-		aqua::keyboard::Button(aqua::keyboard::KEY_ID::W) ||
-		aqua::keyboard::Button(aqua::keyboard::KEY_ID::A) ||
-		aqua::keyboard::Button(aqua::keyboard::KEY_ID::S) ||
-		aqua::keyboard::Button(aqua::keyboard::KEY_ID::D)
-		)
+	if (Input::Horizotal() || Input::Vertical())
 		Animetion = 2;
-	else if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::Z))
+	else if (Input::Button(Input::KEY_ID::B))
 		Animetion = 3;
-	else if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::X))
+	else if (Input::Button(Input::KEY_ID::B))
 		Animetion = 4;
-	else if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::C))
+	else if (Input::Button(Input::KEY_ID::B))
 	{
 		Animetion = 5;
 
@@ -120,16 +116,16 @@ void CPlayer::AnimetionWork()
 */
 void CPlayer::Move()
 {
-	int x = aqua::keyboard::Button(aqua::keyboard::KEY_ID::A) - aqua::keyboard::Button(aqua::keyboard::KEY_ID::D);
-	int z = aqua::keyboard::Button(aqua::keyboard::KEY_ID::S) - aqua::keyboard::Button(aqua::keyboard::KEY_ID::W);
+	float x = Input::Horizotal();
+	float z = Input::Vertical();
 
-	if (m_Stage->CheckObject(m_UnitModel.position + aqua::CVector3((float)x * 4.5f, 0.0f, 0.0f)))
-		x = 0;
+	if (m_Stage->CheckObject(m_UnitModel.position + aqua::CVector3(-x * 4.5f, 0.0f, 0.0f)))
+		x = 0.0f;
 
-	if (m_Stage->CheckObject(m_UnitModel.position + aqua::CVector3(0.0f, 0.0f, (float)z * 4.5f)))
-		z = 0;
+	if (m_Stage->CheckObject(m_UnitModel.position + aqua::CVector3(0.0f, 0.0f, z * 4.5f)))
+		z = 0.0f;
 
-	m_UnitModel.position.x = aqua::Limit(m_UnitModel.position.x + x, -95.0f, 95.0f);
+	m_UnitModel.position.x = aqua::Limit(m_UnitModel.position.x - x, -95.0f, 95.0f);
 	m_UnitModel.position.z = aqua::Limit(m_UnitModel.position.z + z, -95.0f, 95.0f);
 }
 
@@ -138,18 +134,10 @@ void CPlayer::Move()
 */
 void CPlayer::Rotation()
 {
-	int Horizotal = aqua::keyboard::Button(aqua::keyboard::KEY_ID::D) - aqua::keyboard::Button(aqua::keyboard::KEY_ID::A);
+	if (Input::Horizotal() || Input::Vertical())
+		m_Angles = atan2(Input::Horizotal(), -Input::Vertical());
 
-	if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::W))
-		m_Angles = Horizotal * 45.0f;
-	else if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::S))
-		m_Angles = 180 - Horizotal * 45.0f;
-	else if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::A))
-		m_Angles = 270.0f;
-	else if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::D))
-		m_Angles = 90.0f;
-
-	m_UnitModel.angles = aqua::DegToRad(m_Angles);
+	m_UnitModel.angles = m_Angles;
 }
 /*
 *   ïêäÌ

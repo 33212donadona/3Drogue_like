@@ -30,6 +30,8 @@ void CSelectBackGround::Initialize()
 		m_EffectSprite[efc_i].anchor = 
 			aqua::CVector2(m_EffectSprite[efc_i].GetTextureWidth(), m_EffectSprite[efc_i].GetTextureHeight()) / 2.0f;
 	}
+
+	m_BackGroundSurface.Create(aqua::GetWindowWidth(), aqua::GetWindowHeight());
 }
 
 void CSelectBackGround::Update()
@@ -57,11 +59,13 @@ void CSelectBackGround::Update()
 
 void CSelectBackGround::Draw()
 {
+	m_BackGroundSurface.Begin();
 	for (int sky_i = 0; sky_i < m_max_sky; sky_i++)
 		m_ScrollSkySprite[sky_i].Draw();
 
 	for (int efc_i = 0; efc_i < m_max_effect; efc_i++)
 		m_EffectSprite[efc_i].Draw();
+	m_BackGroundSurface.End();
 }
 
 void CSelectBackGround::Finalize()
@@ -71,4 +75,13 @@ void CSelectBackGround::Finalize()
 
 	for (int efc_i = 0; efc_i < m_max_effect; efc_i++)
 		m_EffectSprite[efc_i].Delete();
+
+	AQUA_SAFE_DELETE_ARRAY(m_ScrollSkySprite);
+	AQUA_SAFE_DELETE_ARRAY(m_EffectSprite);
+
+}
+
+int CSelectBackGround::GetBackGround()
+{
+	return m_BackGroundSurface.GetTexture().GetResourceHandle();
 }

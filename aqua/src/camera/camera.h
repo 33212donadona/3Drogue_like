@@ -30,7 +30,10 @@ namespace aqua
 		CCamera();
 		~CCamera() = default;
 
+		int            m_BackGraphHandle;
+
 	private:
+
 		aqua::CSurface m_Surface;
 		aqua::CRect    m_Rect;
 	};

@@ -12,8 +12,5 @@ public:
 	void Update()		override;
 	void Draw()			override;
 	void Finalize()		override;
-
-private:
-
 };
 

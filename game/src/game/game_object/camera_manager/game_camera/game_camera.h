@@ -1,9 +1,9 @@
 #pragma once
 #include "aqua.h"
-
+#include "../camera.h"
 class CPlayer;
 
-class CGameCamera : public aqua::IGameObject
+class CGameCamera : public ICamera
 {
 public :
 	CGameCamera(aqua::IGameObject* parent);
@@ -15,6 +15,5 @@ public :
 
 private:
 	static const aqua::CVector3 m_camera_position;
-	aqua::CCamera m_Camera;
 	CPlayer* m_PlayerClass;
 };

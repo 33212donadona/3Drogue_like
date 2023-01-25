@@ -98,7 +98,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\game\game_object\camera_manager\camera.cpp" />
+    <ClCompile Include="src\game\game_object\camera_manager\select_camera\select_camera.cpp" />
     <ClCompile Include="src\game\game_object\input\input.cpp" />
+    <ClCompile Include="src\game\game_object\scene_manager\scene\2_select\select_system\select_system.cpp" />
     <ClCompile Include="src\game\game_object\select_back_ground\select_back_ground.cpp" />
     <ClCompile Include="src\game\game_object\scene_manager\scene\2_select\select.cpp" />
     <ClCompile Include="src\game\game_object\common_data\common_data.cpp" />
@@ -120,7 +123,7 @@
     <ClCompile Include="src\game\game.cpp" />
     <ClCompile Include="src\game\game_object\bag\bag.cpp" />
     <ClCompile Include="src\game\game_object\bag\bag_data.cpp" />
-    <ClCompile Include="src\game\game_object\game_camera\game_camera.cpp" />
+    <ClCompile Include="src\game\game_object\camera_manager\game_camera\game_camera.cpp" />
     <ClCompile Include="src\game\game_object\money_manager\money._manager.cpp" />
     <ClCompile Include="src\game\game_object\money_manager\money_manager.h" />
     <ClCompile Include="src\game\game_object\stage\stage.cpp" />
@@ -131,7 +134,10 @@
     <ClCompile Include="src\game\game_object\unit_manager\unit\unit.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\game\game_object\camera_manager\camera.h" />
+    <ClInclude Include="src\game\game_object\camera_manager\select_camera\select_camera.h" />
     <ClInclude Include="src\game\game_object\input\input.h" />
+    <ClInclude Include="src\game\game_object\scene_manager\scene\2_select\select_system\select_system.h" />
     <ClInclude Include="src\game\game_object\select_back_ground\select_back_ground.h" />
     <ClInclude Include="src\game\game_object\scene_manager\scene\2_select\select.h" />
     <ClInclude Include="src\game\game_object\common_data\common_data.h" />
@@ -154,7 +160,7 @@
     <ClInclude Include="src\game\game.h" />
     <ClInclude Include="src\game\game_object\bag\bag.h" />
     <ClInclude Include="src\game\game_object\bag\bag_data.h" />
-    <ClInclude Include="src\game\game_object\game_camera\game_camera.h" />
+    <ClInclude Include="src\game\game_object\camera_manager\game_camera\game_camera.h" />
     <ClInclude Include="src\game\game_object\stage\stage.h" />
     <ClInclude Include="src\game\game_object\stage\stage_id.h" />
     <ClInclude Include="src\game\game_object\weapon_manager\weapon\weapon.h" />

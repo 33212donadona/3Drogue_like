@@ -4,7 +4,7 @@
 #include "../../../money_manager/money_manager.h"
 #include "../../../bag/bag.h"
 #include "../../../bag/bag_data.h"
-#include "../../../game_camera\game_camera.h"
+#include "../../../camera_manager/game_camera/game_camera.h"
 #include "../../../sound_manager/game_sound_manager.h"
 
 CGameMain::CGameMain(IGameObject* parent)

@@ -64,7 +64,7 @@ bool Input::Out(KEY_ID key_id)
 
 /*“ü—Í’†‚Ìo—Í*/
 
-bool Input::Keep(KEY_ID key_id)
+bool Input::Button(KEY_ID key_id)
 {
 	return m_InputKey[(int)key_id];
 }
@@ -76,10 +76,12 @@ float Input::Horizotal(ANALOG_STICK_ID stick_id)
 	int ded = 0;
 
 	stick_id == ANALOG_STICK_ID::LEFT ?
-		ded = m_LeftStick.x * 1000 :
-		ded = m_RightStick.x * 1000;
+		ded = m_LeftStick.x * 10 :
+		ded = m_RightStick.x * 10;
 
-	return ded / 1000.0f;
+
+
+	return ded / 10.0f;
 }
 
 /*‚’¼“ü—Í*/
@@ -89,8 +91,8 @@ float Input::Vertical(ANALOG_STICK_ID stick_id)
 	int ded = 0;
 
 	stick_id == ANALOG_STICK_ID::LEFT ?
-		ded = m_LeftStick.y * 1000 :
-		ded = m_RightStick.y * 1000;
+		ded = m_LeftStick.y * 10 :
+		ded = m_RightStick.y * 10;
 
-	return ded / 1000.0f;
+	return ded / 10.0f;
 }

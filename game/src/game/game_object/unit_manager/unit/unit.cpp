@@ -75,6 +75,8 @@ void IUnit::Update()
 void IUnit::Finalize()
 {
 	m_UnitModel.Delete();
+	m_SummonEffect.Delete();
+	m_DeadEffect.Delete();
 	IGameObject::Finalize();
 }
 /*
