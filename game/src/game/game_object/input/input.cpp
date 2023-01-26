@@ -13,35 +13,35 @@ void Input::Updata()
 		m_PrevInputKey[i] = m_InputKey[i];
 
 	m_InputKey[(int)KEY_ID::A] =
-		key::Button(key::KEY_ID::RETURN) || 
+		key::Button(key::KEY_ID::X) || 
 		con::Button(con::DEVICE_ID::P1,con::BUTTON_ID::A);
 
 	m_InputKey[(int)KEY_ID::B] =
-		key::Button(key::KEY_ID::RETURN) ||
+		key::Button(key::KEY_ID::Z) ||
 		con::Button(con::DEVICE_ID::P1, con::BUTTON_ID::B);
 
 	m_InputKey[(int)KEY_ID::X] =
-		key::Button(key::KEY_ID::RETURN) ||
+		key::Button(key::KEY_ID::C) ||
 		con::Button(con::DEVICE_ID::P1, con::BUTTON_ID::X);
 
 	m_InputKey[(int)KEY_ID::Y] =
-		key::Button(key::KEY_ID::RETURN) ||
+		key::Button(key::KEY_ID::V) ||
 		con::Button(con::DEVICE_ID::P1, con::BUTTON_ID::Y);
 
 	m_InputKey[(int)KEY_ID::R] =
-		key::Button(key::KEY_ID::RETURN) ||
+		key::Button(key::KEY_ID::RIGHT) ||
 		con::Button(con::DEVICE_ID::P1, con::BUTTON_ID::RIGHT_SHOULDER);
 
 	m_InputKey[(int)KEY_ID::ZR] =
-		key::Button(key::KEY_ID::RETURN) ||
+		key::Button(key::KEY_ID::A) ||
 		con::GetTriggerRight(con::DEVICE_ID::P1);
 
 	m_InputKey[(int)KEY_ID::L] =
-		key::Button(key::KEY_ID::RETURN) ||
+		key::Button(key::KEY_ID::LEFT) ||
 		con::Button(con::DEVICE_ID::P1, con::BUTTON_ID::LEFT_SHOULDER);
 
 	m_InputKey[(int)KEY_ID::ZL] =
-		key::Button(key::KEY_ID::RETURN) ||
+		key::Button(key::KEY_ID::D) ||
 		con::GetTriggerLeft(con::DEVICE_ID::P1);
 
 	m_LeftStick = con::GetAnalogStickLeft(con::DEVICE_ID::P1);

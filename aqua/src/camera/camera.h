@@ -27,13 +27,15 @@ namespace aqua
 
 		void        Draw();
 
+		void        Delete();
+
 		CCamera();
 		~CCamera() = default;
 
-		int            m_BackGraphHandle;
+		aqua::CSprite  m_BackGraph;
 
 	private:
-
+		int m_ShadowMapHandle;     //! シャドーマップハンドル
 		aqua::CSurface m_Surface;
 		aqua::CRect    m_Rect;
 	};

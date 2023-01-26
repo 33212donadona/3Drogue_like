@@ -86,7 +86,7 @@ int CPlayer::GetAnimetionNum()
 
 bool CPlayer::CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
 {
-	return m_Weapon->CheckHitWeapon(first_pos, end_pos) && aqua::keyboard::Button(aqua::keyboard::KEY_ID::Z);
+	return m_Weapon->CheckHitWeapon(first_pos, end_pos) && Input::Button(Input::KEY_ID::B);
 }
 
 /*
@@ -94,20 +94,17 @@ bool CPlayer::CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
  */
 void CPlayer::AnimetionWork()
 {
-	if (Input::Horizotal() || Input::Vertical())
-		Animetion = 2;
-	else if (Input::Button(Input::KEY_ID::B))
-		Animetion = 3;
-	else if (Input::Button(Input::KEY_ID::B))
-		Animetion = 4;
-	else if (Input::Button(Input::KEY_ID::B))
+	if (!Input::Button(Input::KEY_ID::B))
 	{
-		Animetion = 5;
-
-		m_ShotMagic = m_UnitModel.AnimetionFinished(m_shot_animetion_frame);
+		if (Input::Horizotal() || Input::Vertical())
+			Animetion = 2;
+		else
+			Animetion = 0;
 	}
-	else
-		Animetion = 0;
+
+	if (!Input::Horizotal() || !Input::Vertical())
+		if (Input::Button(Input::KEY_ID::B))
+			Animetion = 3;
 
 	m_UnitModel.AttachAnimation(Animetion);
 }
@@ -116,16 +113,21 @@ void CPlayer::AnimetionWork()
 */
 void CPlayer::Move()
 {
-	float x = Input::Horizotal();
+	float x = -Input::Horizotal();
 	float z = Input::Vertical();
 
-	if (m_Stage->CheckObject(m_UnitModel.position + aqua::CVector3(-x * 4.5f, 0.0f, 0.0f)))
+	if (m_Stage->CheckObject(m_UnitModel.position + aqua::CVector3(x * 4.5f, 0.0f, 0.0f)))
 		x = 0.0f;
 
 	if (m_Stage->CheckObject(m_UnitModel.position + aqua::CVector3(0.0f, 0.0f, z * 4.5f)))
 		z = 0.0f;
 
-	m_UnitModel.position.x = aqua::Limit(m_UnitModel.position.x - x, -95.0f, 95.0f);
+	if (Input::Button(Input::KEY_ID::B))
+	{
+		x = 0.0f;
+		z = 0.0f;
+	}
+	m_UnitModel.position.x = aqua::Limit(m_UnitModel.position.x + x, -95.0f, 95.0f);
 	m_UnitModel.position.z = aqua::Limit(m_UnitModel.position.z + z, -95.0f, 95.0f);
 }
 
@@ -134,8 +136,9 @@ void CPlayer::Move()
 */
 void CPlayer::Rotation()
 {
-	if (Input::Horizotal() || Input::Vertical())
-		m_Angles = atan2(Input::Horizotal(), -Input::Vertical());
+	if (!Input::Button(Input::KEY_ID::B))
+		if (Input::Horizotal() || Input::Vertical())
+			m_Angles = atan2(Input::Horizotal(), -Input::Vertical());
 
 	m_UnitModel.angles = m_Angles;
 }
@@ -153,7 +156,7 @@ void CPlayer::Weapon()
 	if (m_ShotMagic)
 	{
 		m_MagicFrame += 2;
-		pos -= aqua::CVector3(sin(aqua::DegToRad(m_Angles)), 0.0f, cos(aqua::DegToRad(m_Angles))) * (float)m_MagicFrame;
+		pos -= aqua::CVector3(sin(m_Angles), 0.0f, cos(m_Angles)) * (float)m_MagicFrame;
 	}
 	else
 		m_MagicFrame = 0;

@@ -35,10 +35,11 @@ private:
 	static const float m_summon_max_time;       //! 召喚処理の最大時間
 	static const float m_dead_max_time;         //! 死亡処理の最大時間
 	static const float m_first_position_height; //! 初めの高さ
+	static const int   m_max_dead_effect;       //! 最大死亡エフェクト数
 	STATE              m_State;                 //! ユニットの状態
 	aqua::CTimer       m_EffectTime;            //! エフェクト時間
 	aqua::CEffect3D    m_SummonEffect;          //! 召喚エフェクト
-	aqua::CEffect3D    m_DeadEffect;            //! 死亡エフェクト
+	aqua::CEffect3D*   m_DeadEffect;            //! 死亡エフェクト
 
 
 

@@ -13,8 +13,7 @@ public :
 	void Draw() override;
 	void Finalize() override;
 
-	int GetBackGround();
-
+	aqua::CSurface& GetBackGround();
 
 private:
 	static const int m_max_sky;             //! ‹ó‰æ‘œ‚ÌÅ‘å”

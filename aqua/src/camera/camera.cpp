@@ -9,7 +9,15 @@ void aqua::CCamera::Create(int width, int height)
 	m_Rect.top = 0;
 	m_Rect.right = m_Surface.GetTexture().GetWidth();
 	m_Rect.bottom = m_Surface.GetTexture().GetHeight();
-	m_BackGraphHandle = 0;
+	m_ShadowMapHandle = MakeShadowMap(width, height); //! シャドウマップ
+	// ライトの方向を設定
+	SetLightDirection(aqua::CVector3(0.5f, -0.5f, 0.5f));
+
+	// シャドウマップが想定するライトの方向もセット
+	SetShadowMapLightDirection(m_ShadowMapHandle, aqua::CVector3(0.5f, -0.5f, 0.5f));
+
+	// シャドウマップに描画する範囲を設定
+	SetShadowMapDrawArea(m_ShadowMapHandle, aqua::CVector3(-1000.0f, -1.0f, -1000.0f), aqua::CVector3(1000.0f, 1000.0f, 1000.0f));
 }
 
 void aqua::CCamera::Draw()
@@ -28,13 +36,20 @@ void aqua::CCamera::Draw()
 	// Effekseerに3D描画を設定する
 	Effekseer_Sync3DSetting();
 
-	// 背景画像描画
-	if (m_BackGraphHandle != 0)
-		DrawGraph(0, 0, m_BackGraphHandle, false);
-	
+	// シャドウマップへの描画
+	ShadowMap_DrawSetup(m_ShadowMapHandle);
 	ClearDrawScreenZBuffer();
 	aqua::core::IDrawObject3D::DrawList();
+	ShadowMap_DrawEnd();
+
+	// 背景画像描画
+	m_BackGraph.Draw();
+
+	ClearDrawScreenZBuffer();
+	SetUseShadowMap(1, m_ShadowMapHandle);
+	aqua::core::IDrawObject3D::DrawList();
 	SetWriteZBufferFlag(FALSE);
+	SetUseShadowMap(1, -1);
 
 	m_Surface.End();
 
@@ -42,6 +57,12 @@ void aqua::CCamera::Draw()
 
 	DrawGraph((int)screen_position.x, (int)screen_position.y, handle, false);
 
+}
+
+void aqua::CCamera::Delete()
+{
+	m_BackGraph.Delete();
+	DeleteShadowMap(m_ShadowMapHandle);
 }
 
 aqua::CCamera::CCamera()

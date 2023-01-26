@@ -81,7 +81,7 @@ void CSelectBackGround::Finalize()
 
 }
 
-int CSelectBackGround::GetBackGround()
+aqua::CSurface& CSelectBackGround::GetBackGround()
 {
-	return m_BackGroundSurface.GetTexture().GetResourceHandle();
+	return m_BackGroundSurface;
 }

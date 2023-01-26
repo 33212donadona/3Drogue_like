@@ -1,5 +1,5 @@
 #include "magic.h"
-
+#include "../../input/input.h"
 IMagic::IMagic(aqua::IGameObject* parent, std::string name)
 	:aqua::IGameObject(parent, name, "Magic")
 	, m_MagicRotationi(0)
@@ -15,7 +15,7 @@ void IMagic::Initialize()
 
 void IMagic::Update()
 {
-	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::C) && m_MagicEffect.Finished())
+	if (Input::In(Input::KEY_ID::X) && m_MagicEffect.Finished())
 		m_MagicEffect.Play();
 
 	m_MagicEffect.position = m_Position;

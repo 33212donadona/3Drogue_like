@@ -1,6 +1,6 @@
 #include "select_camera.h"
 #include "../../select_back_ground/select_back_ground.h"
-const aqua::CVector3 CSelsectCamera::m_camera_position = aqua::CVector3(0, 75, 25);
+const aqua::CVector3 CSelsectCamera::m_camera_position = aqua::CVector3(0, 40, 25);
 
 /*
  *  コンストラクタ
@@ -18,7 +18,7 @@ void CSelsectCamera::Initialize()
 
 	m_Camera.Create(aqua::GetWindowSize().x, aqua::GetWindowSize().y);
 	m_Camera.camera_position = m_camera_position;
-	m_Camera.m_BackGraphHandle = m_BackGround->GetBackGround();
+	m_Camera.m_BackGraph.Create(m_BackGround->GetBackGround());
 
 	ICamera::Initialize();
 }
@@ -34,21 +34,15 @@ void CSelsectCamera::Update()
  */
 void CSelsectCamera::Draw()
 {
-	m_Camera.m_BackGraphHandle = m_BackGround->GetBackGround();
 	ICamera::Draw();
 
-#ifdef DEBUG
+#ifdef AQUA_DEBUG
 
-	aqua::CLabel cl;
-	cl.Create(20);
-	cl.color = aqua::CColor::BLUE;
-	cl.text = std::to_string(m_PlayerClass->GetAnimetionNum()) + "\n" +
-		"x:" + std::to_string(m_Camera.camera_position.x) + "\n"
-		"y:" + std::to_string(m_Camera.camera_position.y) + "\n"
-		"z:" + std::to_string(m_Camera.camera_position.z) + "\n";
-
-	cl.Draw();
-	cl.Delete();
 #endif
 
+}
+
+void CSelsectCamera::Finalize()
+{
+	m_Camera.Delete();
 }
