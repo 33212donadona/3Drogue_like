@@ -14,17 +14,17 @@ void CSelect::Initialize()
 	aqua::CreateGameObject<CSelectSystem>(this);
 	aqua::CreateGameObject<CSelsectCamera>(this);
 
-
 	aqua::IGameObject::Initialize();
 }
 
 void CSelect::Update()
 {
 	// スペースでゲームシーンへ移動
-	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::SPACE))
+	if (((CSelectSystem*)aqua::FindGameObject("SelectSystem"))->GetSelsectLavel())
 	{
 		((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::GAMEMAIN);
 	}
+
 	aqua::IGameObject::Update();
 }
 

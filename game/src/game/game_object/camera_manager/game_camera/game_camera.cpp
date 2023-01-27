@@ -1,6 +1,7 @@
 #include "game_camera.h"
 #include "../../unit_manager/unit/player/player.h"
 #include "../../input/input.h"
+#include "../../common_data/common_data.h"
 const aqua::CVector3 CGameCamera::m_camera_position = aqua::CVector3(0, 75, 25);
 
 /*
@@ -16,6 +17,7 @@ CGameCamera::CGameCamera(aqua::IGameObject* parent)
 void CGameCamera::Initialize()
 {
 	m_PlayerClass = (CPlayer*)aqua::FindGameObject("Player");
+	m_CommonData = (CCommonData*)aqua::FindGameObject("CommonData");
 	m_Camera.Create(aqua::GetWindowSize().x, aqua::GetWindowSize().y);
 
 	if (m_PlayerClass)
@@ -52,7 +54,8 @@ void CGameCamera::Draw()
 		"y:" + std::to_string(m_Camera.camera_position.y) + "\n"
 		"z:" + std::to_string(m_Camera.camera_position.z) + "\n"
 		"x:" + std::to_string(Input::Horizotal()) + "\n"
-		"y:" + std::to_string(Input::Vertical()) + "\n";
+		"y:" + std::to_string(Input::Vertical()) + "\n"
+		"s:" + std::to_string(m_CommonData->GetData().max_stage) + "\n";
 
 	cl.Draw();
 	cl.Delete();

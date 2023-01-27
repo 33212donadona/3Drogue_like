@@ -49,14 +49,16 @@ void CSceneManager::Update(void)
 	switch (m_NextScene)
 	{
 	case SCENE_ID::TITLE:		m_CurrentScene_P = aqua::CreateGameObject<CTitle>(this);
-		IGameObject::Initialize(); break;
+		 break;
 	case SCENE_ID::SELECT:		m_CurrentScene_P = aqua::CreateGameObject<CSelect>(this);
-		IGameObject::Initialize(); break;
+		break;
 	case SCENE_ID::GAMEMAIN:	m_CurrentScene_P = aqua::CreateGameObject<CGameMain>(this);
-		IGameObject::Initialize(); break;
+		 break;
 	case SCENE_ID::RESULT:		m_CurrentScene_P = aqua::CreateGameObject<CResult>(this);
-		IGameObject::Initialize(); break;
+		break;
 	}
+
+	IGameObject::Initialize();
 
 	// ÉVÅ[ÉìÇê∂ê¨ÇµÇΩÇÁDUMMYÇ…ñﬂÇ∑
 	m_NextScene = SCENE_ID::DUMMY;

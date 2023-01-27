@@ -29,7 +29,7 @@ void CGameMain::Initialize()
 void CGameMain::Update()
 {
 	if(aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::SPACE))
-		((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::GAMEMAIN);
+		((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::RESULT);
 
 	aqua::IGameObject::Update();
 }
