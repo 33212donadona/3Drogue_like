@@ -2,6 +2,7 @@
 #include "../camera.h"
 
 class CSelectBackGround;
+class CSelectSystem;
 
 class CSelsectCamera : public ICamera
 {
@@ -17,4 +18,5 @@ public :
 private:
 	static const aqua::CVector3 m_camera_position;
 	CSelectBackGround* m_BackGround;
+	CSelectSystem*     m_System;
 };

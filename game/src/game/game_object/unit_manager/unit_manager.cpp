@@ -4,7 +4,7 @@
 
 
 CUnitManager::CUnitManager(aqua::IGameObject* parent)
-	:aqua::IGameObject(parent,"UnitManager")
+	:aqua::IGameObject(parent, "UnitManager")
 {
 }
 
@@ -13,15 +13,34 @@ void CUnitManager::Initialize()
 	m_Player = aqua::CreateGameObject<CPlayer>(this);
 	m_EnemyList.push_back(aqua::CreateGameObject<CEnemy>(this));
 
+	m_EnemyDeleteCount = m_EnemyList.size();
 	IGameObject::Initialize();
 }
 
 void CUnitManager::Update()
 {
 	m_Player->Update();
-	for (auto& elem : m_EnemyList)
+
+	int enemy = 0;
+
+	if (!m_EnemyList.empty())
 	{
-		elem->Update();
+		for (auto& elem : m_EnemyList)
+		{
+			if (elem->GetDead())
+				enemy++;
+			else
+				elem->Update();
+		}
+	}
+
+	if (enemy == m_EnemyDeleteCount)
+	{
+		for (auto& elem : m_EnemyList)
+		{
+			elem->Finalize();
+		}
+		m_EnemyList.clear();
 	}
 }
 
@@ -30,3 +49,7 @@ void CUnitManager::Finalize()
 	IGameObject::Finalize();
 }
 
+bool CUnitManager::EmptyEnemyList()
+{
+	return m_EnemyList.empty();
+}

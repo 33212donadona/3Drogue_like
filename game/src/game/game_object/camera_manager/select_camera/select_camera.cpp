@@ -1,5 +1,6 @@
 #include "select_camera.h"
 #include "../../select_back_ground/select_back_ground.h"
+#include "../../scene_manager/scene/2_select/select_system/select_system.h"
 const aqua::CVector3 CSelsectCamera::m_camera_position = aqua::CVector3(0, 40, 25);
 
 /*
@@ -15,6 +16,7 @@ CSelsectCamera::CSelsectCamera(aqua::IGameObject* parent)
 void CSelsectCamera::Initialize()
 {
 	m_BackGround = (CSelectBackGround*)aqua::FindGameObject("SelectBackGround");
+	m_System     = (CSelectSystem*)aqua::FindGameObject("SelectSystem");
 
 	m_Camera.Create(aqua::GetWindowSize().x, aqua::GetWindowSize().y);
 	m_Camera.camera_position = m_camera_position;
@@ -27,6 +29,12 @@ void CSelsectCamera::Initialize()
  */
 void CSelsectCamera::Update()
 {
+	// カメラの中心を設定
+	m_Camera.target_point = m_System->GetTargetPosition();
+	// カメラの位置更新
+	m_Camera.camera_position.x = m_camera_position.x + m_System->GetTargetPosition().x;
+	m_Camera.camera_position.z = m_camera_position.z + m_System->GetTargetPosition().z;
+
 	ICamera::Update();
 }
 /*
@@ -35,14 +43,9 @@ void CSelsectCamera::Update()
 void CSelsectCamera::Draw()
 {
 	ICamera::Draw();
-
-#ifdef AQUA_DEBUG
-
-#endif
-
 }
 
 void CSelsectCamera::Finalize()
 {
-	m_Camera.Delete();
+	ICamera::Finalize();
 }

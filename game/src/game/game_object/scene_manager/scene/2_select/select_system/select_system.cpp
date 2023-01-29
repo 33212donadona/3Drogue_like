@@ -8,7 +8,7 @@ const float CSelectSystem::m_max_easing_time = 2.0f;
 
 CSelectSystem::CSelectSystem(IGameObject* parent)
 	:aqua::IGameObject(parent, "SelectSystem")
-	, m_SelsectLevel(1)
+	, m_SelsectLevel(0)
 	, m_PrevSelsectLevel(0)
 {
 }
@@ -40,15 +40,7 @@ void CSelectSystem::Initialize()
 
 void CSelectSystem::Update()
 {
-	if (m_SelsectLevel != m_PrevSelsectLevel)
-	{
-		for (int m_i = 0; m_i < m_CountModel; m_i++)
-		{
-			m_SelectModel[m_i].position.x = (m_i - int(m_CountModel / 2) + m_SelsectLevel - 1) * m_object_space.x;
-			m_SelectModel[m_i].position.z = (m_i % 2 - 1) * m_object_space.y;
-		}
-	}
-	else
+	if(m_SelsectLevel == m_PrevSelsectLevel)
 	{
 		m_SelsectLevel += Input::In(Input::KEY_ID::ZL) - Input::In(Input::KEY_ID::ZR);
 		m_SelsectLevel = aqua::Limit(m_SelsectLevel, 0, 2);
@@ -92,7 +84,6 @@ void CSelectSystem::Finalize()
 		m_SelectModel[m_i].Delete();
 
 	AQUA_SAFE_DELETE_ARRAY(m_SelectModel);
-	//AQUA_SAFE_DELETE_ARRAY(m_CommonData);
 
 	m_SelectPointer.Delete();
 }
@@ -103,10 +94,15 @@ bool CSelectSystem::GetSelsectLavel()
 
 	if (sl)
 	{
-		CommonData cd;
+		CommonDataInfo cd = m_CommonData->GetData();
 		cd.max_stage = (m_SelsectLevel + 1) * 10;
 		m_CommonData->SetData(cd);
 	}
 
 	return sl;
+}
+
+aqua::CVector3 CSelectSystem::GetTargetPosition()
+{
+	return m_SelectPointer.position;
 }

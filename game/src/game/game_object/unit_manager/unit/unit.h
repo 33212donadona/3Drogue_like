@@ -17,10 +17,10 @@ public:
 	*/
 	virtual void MoveUpdata(){};
 
-
 	float GetAttack();
+	float GetHitPoint();
 	aqua::CVector3 GetPosition();
-
+	bool  GetDead();
 public:
 
 	enum class STATE
@@ -41,8 +41,6 @@ private:
 	aqua::CEffect3D    m_SummonEffect;          //! 召喚エフェクト
 	aqua::CEffect3D*   m_DeadEffect;            //! 死亡エフェクト
 
-
-
 	/*
 	*  @brief 召喚
 	*/
@@ -60,5 +58,7 @@ protected:
 	aqua::CVector3 m_position;
 	aqua::CModel m_UnitModel;
 	int m_MaxAnimetion;
+	bool DeadFlag;
+
 };
 

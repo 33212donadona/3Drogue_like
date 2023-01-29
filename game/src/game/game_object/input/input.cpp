@@ -13,11 +13,11 @@ void Input::Updata()
 		m_PrevInputKey[i] = m_InputKey[i];
 
 	m_InputKey[(int)KEY_ID::A] =
-		key::Button(key::KEY_ID::X) || 
-		con::Button(con::DEVICE_ID::P1,con::BUTTON_ID::A);
+		mou::Button(mou::BUTTON_ID::RIGHT) ||
+		con::Button(con::DEVICE_ID::P1, con::BUTTON_ID::A);
 
 	m_InputKey[(int)KEY_ID::B] =
-		key::Button(key::KEY_ID::Z) ||
+		mou::Button(mou::BUTTON_ID::LEFT) ||
 		con::Button(con::DEVICE_ID::P1, con::BUTTON_ID::B);
 
 	m_InputKey[(int)KEY_ID::X] =
@@ -44,8 +44,25 @@ void Input::Updata()
 		key::Button(key::KEY_ID::D) ||
 		con::GetTriggerLeft(con::DEVICE_ID::P1);
 
-	m_LeftStick = con::GetAnalogStickLeft(con::DEVICE_ID::P1);
-	m_RightStick = con::GetAnalogStickRight(con::DEVICE_ID::P1);
+		m_LeftStick.x = float(key::Button(key::KEY_ID::D) - key::Button(key::KEY_ID::A));
+		m_LeftStick.y = float(key::Button(key::KEY_ID::S) - key::Button(key::KEY_ID::W));
+	//if (key::Button(key::KEY_ID::A) || key::Button(key::KEY_ID::D) || key::Button(key::KEY_ID::W) || key::Button(key::KEY_ID::S))
+	//{
+	//}
+	if (con::GetAnalogStickLeft(con::DEVICE_ID::P1).x || con::GetAnalogStickLeft(con::DEVICE_ID::P1).y)
+		m_LeftStick = con::GetAnalogStickLeft(con::DEVICE_ID::P1);
+
+
+	if (key::Button(key::KEY_ID::LSHIFT))
+	{
+		if (key::Button(key::KEY_ID::A) || key::Button(key::KEY_ID::D) || key::Button(key::KEY_ID::W) || key::Button(key::KEY_ID::S))
+		{
+			m_RightStick.x = float(key::Button(key::KEY_ID::D) - key::Button(key::KEY_ID::A));
+			m_RightStick.y = float(key::Button(key::KEY_ID::S) - key::Button(key::KEY_ID::W));
+		}
+	}
+	else if (con::GetAnalogStickRight(con::DEVICE_ID::P1).x || con::GetAnalogStickRight(con::DEVICE_ID::P1).y)
+		m_RightStick = con::GetAnalogStickRight(con::DEVICE_ID::P1);
 }
 
 /*âüÇ≥ÇÍÇΩéûÇÃÇ›ÇÃèoóÕ*/

@@ -7,6 +7,8 @@ const int IUnit::m_max_dead_effect = 10;
 IUnit::IUnit(aqua::IGameObject* parent, std::string name)
 	:aqua::IGameObject(parent, name, "Unit")
 	, m_State(STATE::SUMMON)
+	, DeadFlag(false)
+	, m_HitPoint(0.0f)
 {
 }
 /*
@@ -85,12 +87,12 @@ void IUnit::Finalize()
 {
 	m_UnitModel.Delete();
 	m_SummonEffect.Delete();
-	for (int e_i = 0; e_i < m_max_dead_effect; e_i++)
-		m_DeadEffect[e_i].Delete();
+
+	if (m_DeadEffect)
+		for (int e_i = 0; e_i < m_max_dead_effect; e_i++)
+			m_DeadEffect[e_i].Delete();
 
 	AQUA_SAFE_DELETE_ARRAY(m_DeadEffect);
-
-	IGameObject::Finalize();
 }
 /*
 *  ¢Š«ˆ—
@@ -128,7 +130,10 @@ void IUnit::Dead()
 	);
 
 	if (m_DeadEffect[0].Finished())
+	{
 		DeleteObject();
+		DeadFlag = true;
+	}
 
 	for (int e_i = 0; e_i < m_max_dead_effect; e_i++)
 		m_DeadEffect[e_i].Update();
@@ -146,10 +151,19 @@ float IUnit::GetAttack()
 {
 	return m_Attack;
 }
+float IUnit::GetHitPoint()
+{
+	return m_HitPoint;
+}
 /*
  *  À•WŽæ“¾
  */
 aqua::CVector3 IUnit::GetPosition()
 {
 	return m_UnitModel.position;
+}
+
+bool IUnit::GetDead()
+{
+	return DeadFlag;
 }

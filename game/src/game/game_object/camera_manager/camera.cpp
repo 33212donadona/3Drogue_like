@@ -23,5 +23,6 @@ void ICamera::Draw()
 
 void ICamera::Finalize()
 {
+	m_Camera.Delete();
 	IGameObject::Finalize();
 }

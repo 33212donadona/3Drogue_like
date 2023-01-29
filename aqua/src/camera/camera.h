@@ -35,8 +35,9 @@ namespace aqua
 		aqua::CSprite  m_BackGraph;
 
 	private:
+		static const int m_updata_shadow;
 		int m_ShadowMapHandle;     //! シャドーマップハンドル
+		int m_DrawFrame;
 		aqua::CSurface m_Surface;
-		aqua::CRect    m_Rect;
 	};
 }

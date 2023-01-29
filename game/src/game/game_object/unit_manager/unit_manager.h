@@ -16,8 +16,11 @@ public:
 	void Update() override;
 	void Finalize() override;
 
+	bool EmptyEnemyList();
+
 private:
 	CPlayer* m_Player;
 	std::list<CEnemy*> m_EnemyList;
+	int m_EnemyDeleteCount;
 };
 

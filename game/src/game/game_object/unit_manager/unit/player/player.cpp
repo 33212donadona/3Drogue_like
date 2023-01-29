@@ -14,6 +14,7 @@ const float CPlayer::m_attack = 50.0f;
 CPlayer::CPlayer(aqua::IGameObject* parent)
 	:IUnit(parent, "Player")
 	, m_Angles(0.0f)
+	, m_Attack(false)
 	, m_ShotMagic(false)
 	, m_Weapon(nullptr)
 	, m_Magic(nullptr)
@@ -94,7 +95,7 @@ bool CPlayer::CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
  */
 void CPlayer::AnimetionWork()
 {
-	if (!Input::Button(Input::KEY_ID::B))
+	if (!m_Attack)
 	{
 		if (Input::Horizotal() || Input::Vertical())
 			Animetion = 2;
@@ -103,8 +104,17 @@ void CPlayer::AnimetionWork()
 	}
 
 	if (!Input::Horizotal() || !Input::Vertical())
-		if (Input::Button(Input::KEY_ID::B))
+		if (Input::In(Input::KEY_ID::B) && !m_Attack)
+		{
+			m_Attack = true;
 			Animetion = 3;
+		}
+
+	if (m_Attack && m_UnitModel.AnimetionFinished())
+	{
+		m_Attack = false;
+		Animetion = 0;
+	}
 
 	m_UnitModel.AttachAnimation(Animetion);
 }

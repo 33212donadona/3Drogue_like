@@ -44,21 +44,26 @@ void CGameCamera::Draw()
 {
 	ICamera::Draw();
 
-//#ifdef DEBUG
-
+#ifdef AQUA_DEBUG
 	aqua::CLabel cl;
 	cl.Create(20);
 	cl.color = aqua::CColor::BLUE;
 	cl.text = std::to_string(m_PlayerClass->GetAnimetionNum()) + "\n" +
-		"x:" + std::to_string(m_Camera.camera_position.x) + "\n"
-		"y:" + std::to_string(m_Camera.camera_position.y) + "\n"
-		"z:" + std::to_string(m_Camera.camera_position.z) + "\n"
-		"x:" + std::to_string(Input::Horizotal()) + "\n"
-		"y:" + std::to_string(Input::Vertical()) + "\n"
-		"s:" + std::to_string(m_CommonData->GetData().max_stage) + "\n";
+		"x:" + std::to_string(m_Camera.camera_position.x) + "\n"+
+		"y:" + std::to_string(m_Camera.camera_position.y) + "\n"+
+		"z:" + std::to_string(m_Camera.camera_position.z) + "\n"+
+		"H:" + std::to_string(Input::Horizotal()) + "\n"+
+		"V:" + std::to_string(Input::Vertical()) + "\n"	+
+		"C:" + std::to_string(m_CommonData->GetData().crea_stage) + "\n"+
+		"S:" + std::to_string(m_CommonData->GetData().max_stage);
 
 	cl.Draw();
 	cl.Delete();
-//#endif
+#endif
 
+}
+
+void CGameCamera::Finalize()
+{
+	ICamera::Finalize();
 }
