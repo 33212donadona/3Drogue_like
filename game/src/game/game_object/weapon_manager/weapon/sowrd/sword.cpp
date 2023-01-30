@@ -18,11 +18,13 @@ void CSword::Update()
 
 void CSword::Finalize()
 {
+	m_SwordModel.Delete();
 }
 
 bool CSword::CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
 {
-	return m_SwordModel.GetBoneCapsuleCollision("Collision_000", first_pos, end_pos,3).HitFlag;
+	return m_SwordModel.GetBoneCapsuleCollision("Collision_000", first_pos, end_pos,3).HitFlag || 
+		m_SwordModel.GetBoneCapsuleCollision("Collision_001", first_pos, end_pos, 3).HitFlag;
 }
 
 void CSword::SetMatrix(aqua::CMatrix& matrix)

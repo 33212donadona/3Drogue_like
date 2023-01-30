@@ -13,7 +13,7 @@ void CUnitManager::Initialize()
 	m_Player = aqua::CreateGameObject<CPlayer>(this);
 	m_EnemyList.push_back(aqua::CreateGameObject<CEnemy>(this));
 
-	m_EnemyDeleteCount = m_EnemyList.size();
+	m_EnemyDeleteCount = (int)m_EnemyList.size();
 	IGameObject::Initialize();
 }
 

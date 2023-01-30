@@ -1,6 +1,8 @@
 #pragma once
 #include "aqua.h"
 
+class CStage;
+
 class IUnit : public aqua::IGameObject
 {
 public:
@@ -59,6 +61,7 @@ protected:
 	aqua::CModel m_UnitModel;
 	int m_MaxAnimetion;
 	bool DeadFlag;
+	CStage* m_Stage;
 
 };
 

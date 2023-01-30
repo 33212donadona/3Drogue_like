@@ -26,7 +26,7 @@ void CPlayer::Initialize()
 {
 	m_UnitModel.Create("data\\model\\Bot", m_max_animetion);
 	m_Weapon = (IWeapon*)aqua::CreateGameObject<CSword>(this);
-	Animetion = 2;
+	Animetion = 0;
 	
 	m_Stage = (CStage*)aqua::FindGameObject("Stage");
 
@@ -50,11 +50,12 @@ void CPlayer::Initialize()
  */
 void CPlayer::Update()
 {
-	AnimetionWork();
 
 	Weapon();
 
 	IUnit::Update();
+
+	m_UnitModel.AttachAnimation(Animetion);
 }
 /*
  *  ‰ð•ú
@@ -70,6 +71,8 @@ void CPlayer::Finalize()
 */
 void CPlayer::MoveUpdata()
 {
+	AnimetionWork();
+
 	Move();
 
 	Rotation();
@@ -84,7 +87,7 @@ int CPlayer::GetAnimetionNum()
 
 bool CPlayer::CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
 {
-	return m_Weapon->CheckHit(first_pos, end_pos) && Input::Button(Input::KEY_ID::B);
+	return m_Weapon->CheckHit(first_pos, end_pos) && m_Attack;
 }
 
 /*
@@ -103,17 +106,17 @@ void CPlayer::AnimetionWork()
 	if (!Input::Horizotal() || !Input::Vertical())
 		if (Input::In(Input::KEY_ID::B) && !m_Attack)
 		{
-			m_Attack = true;
 			Animetion = 3;
+			m_Attack = true;
 		}
 
-	m_UnitModel.AttachAnimation(Animetion);
-
-	if (m_Attack && m_UnitModel.AnimetionFinished())
+	if (m_Attack && m_UnitModel.AnimetionFinished(60.0f))
 	{
 		m_Attack = false;
 		Animetion = 0;
 	}
+	
+
 }
 /*
 *   ˆÚ“®
@@ -154,6 +157,7 @@ void CPlayer::Rotation()
 */
 void CPlayer::Weapon()
 {
+	m_Weapon->SetMatrix(m_UnitModel.GetBoneMatrix(35));
 }
 
 void CPlayer::Collision()

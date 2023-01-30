@@ -41,9 +41,9 @@ void CSelectBackGround::Update()
 		m_ScrollSkySprite[sky_i].position.x -= m_sprite_move_speed;
 
 		if (m_ScrollSkySprite[sky_i].position.x <= -m_ScrollSkySprite[sky_i].GetTextureWidth())
-			m_ScrollSkySprite[sky_i].position.x = m_ScrollSkySprite[sky_i].GetTextureWidth();
+			m_ScrollSkySprite[sky_i].position.x = (float)m_ScrollSkySprite[sky_i].GetTextureWidth();
 	}
-	m_EffectRota = (m_EffectRota + 0.25);
+	m_EffectRota = (m_EffectRota + 0.25f);
 
 	if (m_EffectRota >= 360.0f)
 		m_EffectRota = 0.0f;
