@@ -74,7 +74,7 @@ namespace Input
 	*  @retval     true    —£‚³‚ê‚½
 	*  @retval     false   —£‚³‚ê‚Ä‚¢‚È‚¢
 	*/
-	bool Keep(KEY_ID key_id);
+	bool Button(KEY_ID key_id);
 
 	/*
 	*  @brief   …•½“ü—Í

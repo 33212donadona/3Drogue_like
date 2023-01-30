@@ -2,10 +2,13 @@
 const float IUnit::m_summon_max_time = 2.0f;
 const float IUnit::m_dead_max_time = 2.0f;
 const float IUnit::m_first_position_height = -20.0f;
+const int IUnit::m_max_dead_effect = 10;
 
 IUnit::IUnit(aqua::IGameObject* parent, std::string name)
 	:aqua::IGameObject(parent, name, "Unit")
 	, m_State(STATE::SUMMON)
+	, DeadFlag(false)
+	, m_HitPoint(0.0f)
 {
 }
 /*
@@ -25,8 +28,13 @@ void IUnit::Initialize()
 	m_SummonEffect.position = m_UnitModel.position;
 	m_SummonEffect.position.y = 0.0f;
 
-	m_DeadEffect.Create("data\\effect\\summon.efkefc");
-	m_DeadEffect.scale = m_SummonEffect.scale;
+	m_DeadEffect = AQUA_NEW aqua::CEffect3D[m_max_dead_effect];
+
+	for (int e_i = 0; e_i < 3; e_i++)
+	{
+		m_DeadEffect[e_i].Create("data\\effect\\death.efkefc");
+		m_DeadEffect[e_i].scale = m_SummonEffect.scale / 2.0f;
+	}
 
 	IGameObject::Initialize();
 }
@@ -42,7 +50,7 @@ void IUnit::Update()
 		Summon();
 		break;
 	case IUnit::STATE::MOVE:
-		
+
 		if (m_EffectTime.Finished())
 			m_EffectTime.Reset();
 
@@ -51,12 +59,15 @@ void IUnit::Update()
 		if (m_HitPoint <= 0)
 		{
 			m_State = STATE::DEAD;
-			m_DeadEffect.position = m_UnitModel.position;
-			m_DeadEffect.Play();
+			for (int e_i = 0; e_i < m_max_dead_effect; e_i++)
+			{
+				m_DeadEffect[e_i].position = m_UnitModel.position;
+				m_DeadEffect[e_i].Play();
+			}
 		}
 		break;
 	case IUnit::STATE::DEAD:
-		
+
 		Dead();
 
 		break;
@@ -75,7 +86,13 @@ void IUnit::Update()
 void IUnit::Finalize()
 {
 	m_UnitModel.Delete();
-	IGameObject::Finalize();
+	m_SummonEffect.Delete();
+
+	if (m_DeadEffect)
+		for (int e_i = 0; e_i < m_max_dead_effect; e_i++)
+			m_DeadEffect[e_i].Delete();
+
+	AQUA_SAFE_DELETE_ARRAY(m_DeadEffect);
 }
 /*
 *  ¢Š«ˆ—
@@ -112,10 +129,15 @@ void IUnit::Dead()
 		m_first_position_height
 	);
 
-	if (m_DeadEffect.Finished())
+	if (m_DeadEffect[0].Finished())
+	{
 		DeleteObject();
+		DeadFlag = true;
+	}
 
-	m_DeadEffect.Update();
+	for (int e_i = 0; e_i < m_max_dead_effect; e_i++)
+		m_DeadEffect[e_i].Update();
+
 	m_EffectTime.Update();
 
 	if (m_EffectTime.Finished())
@@ -129,10 +151,19 @@ float IUnit::GetAttack()
 {
 	return m_Attack;
 }
+float IUnit::GetHitPoint()
+{
+	return m_HitPoint;
+}
 /*
  *  À•WŽæ“¾
  */
 aqua::CVector3 IUnit::GetPosition()
 {
 	return m_UnitModel.position;
+}
+
+bool IUnit::GetDead()
+{
+	return DeadFlag;
 }

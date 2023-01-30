@@ -61,4 +61,5 @@ private:
 	int Animetion;
 
 	bool m_ShotMagic;
+	bool m_Attack;
 };

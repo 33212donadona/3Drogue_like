@@ -2,6 +2,8 @@
 
 #include "../../scene_manager.h"
 
+class CSelectSystem;
+
 class CSelect : public IScene
 {
 public:
@@ -14,6 +16,6 @@ public:
 	void Finalize()		override;
 
 private:
-
+	CSelectSystem* m_SelectSystem;
 };
 

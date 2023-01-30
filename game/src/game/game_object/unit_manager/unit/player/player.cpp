@@ -1,6 +1,7 @@
 #include "player.h"
 #include "../enemy/enemy.h"
 #include "../../../stage/stage.h"
+#include "../../../input/input.h"
 
 const int CPlayer::m_max_animetion = 6;
 const float CPlayer::m_shot_animetion_frame = 50.0f;
@@ -13,6 +14,7 @@ const float CPlayer::m_attack = 50.0f;
 CPlayer::CPlayer(aqua::IGameObject* parent)
 	:IUnit(parent, "Player")
 	, m_Angles(0.0f)
+	, m_Attack(false)
 	, m_ShotMagic(false)
 	, m_Weapon(nullptr)
 	, m_Magic(nullptr)
@@ -85,7 +87,7 @@ int CPlayer::GetAnimetionNum()
 
 bool CPlayer::CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
 {
-	return m_Weapon->CheckHitWeapon(first_pos, end_pos) && aqua::keyboard::Button(aqua::keyboard::KEY_ID::Z);
+	return m_Weapon->CheckHitWeapon(first_pos, end_pos) && Input::Button(Input::KEY_ID::B);
 }
 
 /*
@@ -93,25 +95,26 @@ bool CPlayer::CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
  */
 void CPlayer::AnimetionWork()
 {
-	if (
-		aqua::keyboard::Button(aqua::keyboard::KEY_ID::W) ||
-		aqua::keyboard::Button(aqua::keyboard::KEY_ID::A) ||
-		aqua::keyboard::Button(aqua::keyboard::KEY_ID::S) ||
-		aqua::keyboard::Button(aqua::keyboard::KEY_ID::D)
-		)
-		Animetion = 2;
-	else if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::Z))
-		Animetion = 3;
-	else if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::X))
-		Animetion = 4;
-	else if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::C))
+	if (!m_Attack)
 	{
-		Animetion = 5;
-
-		m_ShotMagic = m_UnitModel.AnimetionFinished(m_shot_animetion_frame);
+		if (Input::Horizotal() || Input::Vertical())
+			Animetion = 2;
+		else
+			Animetion = 0;
 	}
-	else
+
+	if (!Input::Horizotal() || !Input::Vertical())
+		if (Input::In(Input::KEY_ID::B) && !m_Attack)
+		{
+			m_Attack = true;
+			Animetion = 3;
+		}
+
+	if (m_Attack && m_UnitModel.AnimetionFinished())
+	{
+		m_Attack = false;
 		Animetion = 0;
+	}
 
 	m_UnitModel.AttachAnimation(Animetion);
 }
@@ -120,15 +123,20 @@ void CPlayer::AnimetionWork()
 */
 void CPlayer::Move()
 {
-	int x = aqua::keyboard::Button(aqua::keyboard::KEY_ID::A) - aqua::keyboard::Button(aqua::keyboard::KEY_ID::D);
-	int z = aqua::keyboard::Button(aqua::keyboard::KEY_ID::S) - aqua::keyboard::Button(aqua::keyboard::KEY_ID::W);
+	float x = -Input::Horizotal();
+	float z = Input::Vertical();
 
-	if (m_Stage->CheckObject(m_UnitModel.position + aqua::CVector3((float)x * 4.5f, 0.0f, 0.0f)))
-		x = 0;
+	if (m_Stage->CheckObject(m_UnitModel.position + aqua::CVector3(x * 4.5f, 0.0f, 0.0f)))
+		x = 0.0f;
 
-	if (m_Stage->CheckObject(m_UnitModel.position + aqua::CVector3(0.0f, 0.0f, (float)z * 4.5f)))
-		z = 0;
+	if (m_Stage->CheckObject(m_UnitModel.position + aqua::CVector3(0.0f, 0.0f, z * 4.5f)))
+		z = 0.0f;
 
+	if (Input::Button(Input::KEY_ID::B))
+	{
+		x = 0.0f;
+		z = 0.0f;
+	}
 	m_UnitModel.position.x = aqua::Limit(m_UnitModel.position.x + x, -95.0f, 95.0f);
 	m_UnitModel.position.z = aqua::Limit(m_UnitModel.position.z + z, -95.0f, 95.0f);
 }
@@ -138,18 +146,11 @@ void CPlayer::Move()
 */
 void CPlayer::Rotation()
 {
-	int Horizotal = aqua::keyboard::Button(aqua::keyboard::KEY_ID::D) - aqua::keyboard::Button(aqua::keyboard::KEY_ID::A);
+	if (!Input::Button(Input::KEY_ID::B))
+		if (Input::Horizotal() || Input::Vertical())
+			m_Angles = atan2(Input::Horizotal(), -Input::Vertical());
 
-	if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::W))
-		m_Angles = Horizotal * 45.0f;
-	else if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::S))
-		m_Angles = 180 - Horizotal * 45.0f;
-	else if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::A))
-		m_Angles = 270.0f;
-	else if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::D))
-		m_Angles = 90.0f;
-
-	m_UnitModel.angles = aqua::DegToRad(m_Angles);
+	m_UnitModel.angles = m_Angles;
 }
 /*
 *   ïêäÌ
@@ -165,7 +166,7 @@ void CPlayer::Weapon()
 	if (m_ShotMagic)
 	{
 		m_MagicFrame += 2;
-		pos -= aqua::CVector3(sin(aqua::DegToRad(m_Angles)), 0.0f, cos(aqua::DegToRad(m_Angles))) * (float)m_MagicFrame;
+		pos -= aqua::CVector3(sin(m_Angles), 0.0f, cos(m_Angles)) * (float)m_MagicFrame;
 	}
 	else
 		m_MagicFrame = 0;
