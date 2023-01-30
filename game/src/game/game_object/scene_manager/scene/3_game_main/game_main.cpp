@@ -32,6 +32,8 @@ void CGameMain::Initialize()
 
 void CGameMain::Update()
 {
+	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::Z))
+		((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::RESULT);
 
 	if (m_UnitManager->EmptyEnemyList())
 	{

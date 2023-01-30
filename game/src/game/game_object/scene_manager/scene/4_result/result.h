@@ -18,4 +18,8 @@ public:
 	void Finalize(void)	override;
 
 private:
+
+	aqua::CSprite m_ScoreBoardSprite;
+	aqua::CSprite m_BackGroundFirst;
+	aqua::CSprite m_BackGroundSecond;
 };

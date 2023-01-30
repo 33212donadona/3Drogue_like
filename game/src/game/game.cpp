@@ -12,7 +12,7 @@
 #include "game.h"
 #include "game_object/scene_manager/scene_manager.h"
 
-const unsigned int CGame::m_clear_color = 0xff000000;
+const unsigned int CGame::m_clear_color = 0xff797979;
 
 /*
  *  コンストラクタ

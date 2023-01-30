@@ -8,6 +8,8 @@ CTitle::CTitle(aqua::IGameObject* parent)
 
 void CTitle::Initialize(void)
 {
+	
+
 	m_SoundManager = (CGameSoundManager*)aqua::FindGameObject("GameSoundManager");
 	m_SoundManager->Play(SoundID::TITLE_BGM);
 	m_TitleSprite.Create("data\\title_graph\\title.png");
@@ -71,6 +73,12 @@ void CTitle::Initialize(void)
 
 void CTitle::Update(void)
 {
+	// スペースでゲームシーンへ移動
+	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::SPACE))
+	{
+		((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::SELECT);
+	}
+
 	if (!m_TitleStartTimer.Finished())
 	{
 		m_DesignBox.color.alpha++;
