@@ -13,7 +13,7 @@ void CResult::Initialize(void)
 	m_BackGroundFirst.Create("data/result_bg.png");
 	m_BackGroundSecond.Create("data/result_bg.png");
 
-	m_BackGroundSecond.position.x = aqua::GetWindowWidth();
+	m_BackGroundSecond.position.x = (float)aqua::GetWindowWidth();
 }
 
 void CResult::Update(void)

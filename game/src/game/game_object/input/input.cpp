@@ -93,8 +93,8 @@ float Input::Horizotal(ANALOG_STICK_ID stick_id)
 	int ded = 0;
 
 	stick_id == ANALOG_STICK_ID::LEFT ?
-		ded = m_LeftStick.x * 10.0f :
-		ded = m_RightStick.x * 10.0f;
+		ded = int(m_LeftStick.x * 10.0f ):
+		ded = int(m_RightStick.x * 10.0f);
 
 
 
@@ -108,8 +108,8 @@ float Input::Vertical(ANALOG_STICK_ID stick_id)
 	int ded = 0;
 
 	stick_id == ANALOG_STICK_ID::LEFT ?
-		ded = m_LeftStick.y * 10.0f:
-		ded = m_RightStick.y * 10.0f;
+		ded = int(m_LeftStick.y * 10.0f ):
+		ded = int(m_RightStick.y * 10.0f);
 
 	return ded / 10.0f;
 }

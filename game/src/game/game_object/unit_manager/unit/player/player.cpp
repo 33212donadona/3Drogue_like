@@ -42,6 +42,8 @@ void CPlayer::Initialize()
 
 	m_HitPoint = 100;
 
+	m_Weapon->SetMatrix(m_UnitModel.GetBoneMatrix(35));
+
 	IUnit::Initialize();
 }
 
