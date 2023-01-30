@@ -1,9 +1,7 @@
 #pragma once
 #include "aqua.h"
 #include "../../../weapon_manager/weapon/weapon.h"
-#include "../../../weapon_manager/weapon/sword/sword.h"
-#include "../../../weapon_manager/magic/magic.h"
-#include "../../../weapon_manager/magic/fire_ball/fire_ball.h"
+#include "../../../weapon_manager/weapon/sowrd/sword.h"
 #include "../unit.h"
 
 class CEnemy;
@@ -54,7 +52,6 @@ private:
 
 
 	IWeapon* m_Weapon;
-	IMagic* m_Magic;
 	CStage* m_Stage;
 	float m_Angles;
 	int   m_MagicFrame;

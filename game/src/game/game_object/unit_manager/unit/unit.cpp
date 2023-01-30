@@ -65,6 +65,7 @@ void IUnit::Update()
 				m_DeadEffect[e_i].Play();
 			}
 		}
+
 		break;
 	case IUnit::STATE::DEAD:
 

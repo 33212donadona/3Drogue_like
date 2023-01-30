@@ -1,7 +1,5 @@
 #include "enemy.h"
 #include "../player/player.h"
-#include "../../../weapon_manager/weapon/weapon.h"
-#include "../../../weapon_manager/weapon/sword/sword.h"
 const float CEnemy::m_max_hit_point = 100.0f;
 const float CEnemy::m_attack = 10.0f;
 
@@ -55,25 +53,6 @@ void CEnemy::Finalize()
 {
 	m_PlayerModel = nullptr;
 	IUnit::Finalize();
-}
-
-void CEnemy::Damage(float hit_damage)
-{
-}
-
-void CEnemy::CheckHitDamage(float hit_damage, aqua::CVector3 hit_pos_first, aqua::CVector3 hit_pos_end)
-{
-	bool gbc = m_UnitModel.GetBoneCollision("mixamorig:Hips", 20, hit_pos_first, hit_pos_end).HitFlag;
-
-	if (!m_DamageFlag && gbc)
-		m_DamageFlag = true;
-
-	if (m_DamageFlag)
-	{
-		Damage(hit_damage);
-		if (!gbc)
-			m_DamageFlag = false;
-	}
 }
 
 void CEnemy::Algorithms()

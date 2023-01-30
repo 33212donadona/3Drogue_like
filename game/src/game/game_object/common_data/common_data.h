@@ -11,7 +11,7 @@ public:
 	~CCommonData() = default;
 
 	void SetData(CommonDataInfo common_data);
-	void SetData(int max_stage,int crea_stage);
+	void SetData(int max_stage,int crea_stage,int easy,int normal,int hard,float game_crea_time);
 	CommonDataInfo GetData();
 
 private:

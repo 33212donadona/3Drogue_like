@@ -17,7 +17,6 @@ CPlayer::CPlayer(aqua::IGameObject* parent)
 	, m_Attack(false)
 	, m_ShotMagic(false)
 	, m_Weapon(nullptr)
-	, m_Magic(nullptr)
 {
 }
 /*
@@ -26,11 +25,9 @@ CPlayer::CPlayer(aqua::IGameObject* parent)
 void CPlayer::Initialize()
 {
 	m_UnitModel.Create("data\\model\\Bot", m_max_animetion);
-
-	Animetion = 2;
-
 	m_Weapon = (IWeapon*)aqua::CreateGameObject<CSword>(this);
-	m_Magic = (IMagic*)aqua::CreateGameObject<CFireBall>(this);
+	Animetion = 2;
+	
 	m_Stage = (CStage*)aqua::FindGameObject("Stage");
 
 	//‰ŠúˆÊ’uÝ’è
@@ -87,7 +84,7 @@ int CPlayer::GetAnimetionNum()
 
 bool CPlayer::CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
 {
-	return m_Weapon->CheckHitWeapon(first_pos, end_pos) && Input::Button(Input::KEY_ID::B);
+	return m_Weapon->CheckHit(first_pos, end_pos) && Input::Button(Input::KEY_ID::B);
 }
 
 /*
@@ -110,13 +107,13 @@ void CPlayer::AnimetionWork()
 			Animetion = 3;
 		}
 
+	m_UnitModel.AttachAnimation(Animetion);
+
 	if (m_Attack && m_UnitModel.AnimetionFinished())
 	{
 		m_Attack = false;
 		Animetion = 0;
 	}
-
-	m_UnitModel.AttachAnimation(Animetion);
 }
 /*
 *   ˆÚ“®
@@ -157,27 +154,6 @@ void CPlayer::Rotation()
 */
 void CPlayer::Weapon()
 {
-	if (m_Weapon)m_Weapon->SetMatrix(m_UnitModel.GetBoneMatrix(42));
-
-	if (m_Weapon)m_Weapon->Update();
-
-	aqua::CVector3 pos = m_UnitModel.GetBonePosistion(40);
-
-	if (m_ShotMagic)
-	{
-		m_MagicFrame += 2;
-		pos -= aqua::CVector3(sin(m_Angles), 0.0f, cos(m_Angles)) * (float)m_MagicFrame;
-	}
-	else
-		m_MagicFrame = 0;
-
-	if (m_MagicFrame >= 100)
-		m_ShotMagic = false;
-
-	if (m_Magic)
-	{
-		m_Magic->SetPosition(pos);
-	}
 }
 
 void CPlayer::Collision()
