@@ -5,6 +5,10 @@ CCommonData::CCommonData(aqua::IGameObject* parent)
 {
 	m_MapData.max_stage = 10;
 	m_MapData.crea_stage = 0;
+	m_MapData.easy = 0;
+	m_MapData.normal = 0;
+	m_MapData.hard = 0;
+	m_MapData.game_crea_time = 0.0f;
 }
 
 void CCommonData::SetData(CommonDataInfo common_data)
