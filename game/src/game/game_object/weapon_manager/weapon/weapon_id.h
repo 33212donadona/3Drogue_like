@@ -3,8 +3,10 @@ enum class WEAPON_ID
 {
 	SWORD,
 	MAGIC,
+	MONEY,
 	MAX
 };
+
 struct WEAPON_STATE
 {
 	WEAPON_ID id;

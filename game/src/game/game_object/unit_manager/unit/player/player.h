@@ -5,7 +5,7 @@
 #include "../unit.h"
 
 class CEnemy;
-class CStage;
+
 
 class CPlayer : public IUnit
 {
@@ -50,9 +50,8 @@ private:
 	static const float m_max_hit_point;
 	static const float m_attack;
 
-
 	IWeapon* m_Weapon;
-	CStage* m_Stage;
+
 	float m_Angles;
 	int   m_MagicFrame;
 	int Animetion;

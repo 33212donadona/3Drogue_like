@@ -11,10 +11,10 @@ void aqua::CCamera::Create(int width, int height)
 
 	m_ShadowMapHandle = MakeShadowMap(width, height); //! シャドウマップ
 	// ライトの方向を設定
-	SetLightDirection(aqua::CVector3(0.5f, -0.5f, 0.5f));
+	SetLightDirection(aqua::CVector3(0.5f, -0.5f,0.5f));
 
 	// シャドウマップが想定するライトの方向もセット
-	SetShadowMapLightDirection(m_ShadowMapHandle, aqua::CVector3(0.5f, -0.5f, 0.5f));
+	SetShadowMapLightDirection(m_ShadowMapHandle, aqua::CVector3(0.0f,-1.0f, 0.5f));
 
 	// シャドウマップに描画する範囲を設定
 	SetShadowMapDrawArea(m_ShadowMapHandle, aqua::CVector3(-1000.0f, -1.0f, -1000.0f), aqua::CVector3(1000.0f, 1000.0f, 1000.0f));

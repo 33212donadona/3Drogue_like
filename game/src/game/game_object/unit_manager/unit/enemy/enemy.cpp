@@ -1,5 +1,7 @@
 #include "enemy.h"
 #include "../player/player.h"
+#include "../../../stage/stage.h"
+
 const float CEnemy::m_max_hit_point = 100.0f;
 const float CEnemy::m_attack = 10.0f;
 
@@ -19,9 +21,17 @@ void CEnemy::Initialize()
 {
 	m_PlayerModel = (CPlayer*)aqua::FindGameObject("Player");
 
+	m_Stage = (CStage*)aqua::FindGameObject("Stage");
+
 	m_UnitModel.Create("data\\model\\Enemy", 4);
-	m_UnitModel.position = aqua::CVector3(0.0f, 0.0f, 75.0f);
 	m_HitPoint = 100.0f;
+
+	//‰ŠúˆÊ’uÝ’è
+	while (m_UnitModel.position == aqua::CVector3::ZERO)
+	{
+		m_UnitModel.position = m_Stage->GetArePosition(aqua::CPoint(aqua::Rand(21, 1), aqua::Rand(21, 1)));
+	}
+
 	
 	IUnit::Initialize();
 }

@@ -1,4 +1,6 @@
 #include "unit.h"
+#include "../../stage/stage.h"
+
 const float IUnit::m_summon_max_time = 2.0f;
 const float IUnit::m_dead_max_time = 2.0f;
 const float IUnit::m_first_position_height = -20.0f;

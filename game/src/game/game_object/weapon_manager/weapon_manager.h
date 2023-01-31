@@ -1,5 +1,8 @@
 #include "aqua.h"
 
+enum class WEAPON_ID;
+class IWeapon;
+
 class CWeaponManager : public aqua::IGameObject
 {
 public:
@@ -11,6 +14,10 @@ public:
 	void Update() override;
 	void Finalize() override;
 
-	void SetWeapon();
+	void SetWeapon(WEAPON_ID weapon_id);
+	bool CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos);
 
+private:
+	IWeapon* m_Weapon;
+	WEAPON_ID m_NowWeapon;
 };
