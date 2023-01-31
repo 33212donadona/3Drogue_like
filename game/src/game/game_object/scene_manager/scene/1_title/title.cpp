@@ -74,9 +74,9 @@ void CTitle::Initialize(void)
 void CTitle::Update(void)
 {
 	// スペースでゲームシーンへ移動
-	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::SPACE))
+	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::L))
 	{
-		((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::SELECT);
+		((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::RESULT);
 	}
 
 	if (!m_TitleStartTimer.Finished())

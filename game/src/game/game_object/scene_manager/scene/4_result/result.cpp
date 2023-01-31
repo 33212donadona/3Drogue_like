@@ -11,19 +11,40 @@ CResult::CResult(IGameObject* parent)
 void CResult::Initialize(void)
 {
 	m_ScoreBoardSprite.Create("data/score_board.png");
-	m_BackGroundFirst.Create("data/result_bg.png");
-	m_BackGroundSecond.Create("data/result_bg.png");
+	m_ScoreBoardSprite.position.x = -1000;
+
+	m_BackGround.Create("data/abeb.png");
+
+	m_BackGroundFirst.Create("data/abea.png");
+	m_BackGroundSecond.Create("data/abea.png");
 
 	m_BackGroundSecond.position.x = aqua::GetWindowWidth();
 
-	m_Label.Create(150);
-	m_Label.position.y = 200;
+	m_Label.Create(50);
+	m_Label.position.x = 600;
+	m_Label.position.y = 290;
+	m_Label.color.alpha = 0;
+
 	m_ClearTime = ((CCommonData*)aqua::FindGameObject("CommonData"))->GetData().game_crea_time;
+
 	m_Label.text = std::to_string(m_ClearTime);
+
+	m_EasingTimer.Setup(0.5f);
 }
 
 void CResult::Update(void)
 {
+	if (!m_EasingTimer.Finished())
+	{
+		m_EasingTimer.Update();
+	}
+	else
+	{
+		m_Label.color.alpha+=5;
+	}
+
+	m_ScoreBoardSprite.position.x = aqua::easing::InCubic(m_EasingTimer.GetTime(), m_EasingTimer.GetLimit(),-1000, 0);
+
 	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::SPACE))
 		((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::TITLE);
 
@@ -39,12 +60,12 @@ void CResult::Update(void)
 
 void CResult::Draw(void)
 {
-	m_BackGroundSecond.Draw();
+	m_BackGround.Draw();
 	m_BackGroundFirst.Draw();
+	m_BackGroundSecond.Draw();
 	m_ScoreBoardSprite.Draw();
 
 	m_Label.Draw();
-
 	IScene::Draw();
 }
 

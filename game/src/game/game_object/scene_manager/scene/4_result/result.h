@@ -35,8 +35,12 @@ private: // 非公開メンバ関数
 	// 背景スプライト（２枚目）
 	aqua::CSprite m_BackGroundSecond;
 
+	aqua::CSprite m_BackGround;
+
 	aqua::CLabel m_Label;
 
 	// ゲームクリア時間
 	float m_ClearTime;
+
+	aqua::CTimer m_EasingTimer;
 };
