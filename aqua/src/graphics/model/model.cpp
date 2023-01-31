@@ -120,7 +120,7 @@ aqua::CollisionInfo aqua::CModel::GetBoneCollision(
 	// ñﬂÇËílÇÃïœêî
 	aqua::CollisionInfo info;
 	// ãÖÇÃíÜêSì_
-	aqua::CVector3 sphele = GetBonePosistion(GetBoneIndex(bone_name));
+	aqua::CVector3 sphele = GetBonePosition(GetBoneIndex(bone_name));
 	// ãÖÇ∆ê¸ï™ÇÃãóó£
 	float distance;
 	float end_distance;
@@ -149,7 +149,7 @@ aqua::CollisionInfo aqua::CModel::GetBoneCollision
 	MV1_COLL_RESULT_POLY coll_result_poly;
 	aqua::CVector3 sphele;
 
-	sphele = GetBonePosistion(GetBoneIndex(bone_name));
+	sphele = GetBonePosition(GetBoneIndex(bone_name));
 
 	int index;
 
@@ -259,14 +259,26 @@ void aqua::CModel::Draw()
 	IDrawObject3D::Draw();
 }
 
-aqua::CVector3 aqua::CModel::GetBonePosistion(int bone_index)
+aqua::CVector3 aqua::CModel::GetBonePosition(int bone_index)
 {
 	return MV1GetFramePosition(m_ModelHandle, bone_index);
 }
+aqua::CVector3 aqua::CModel::GetBonePosition(std::string bone_name)
+{
+	int index = GetBoneIndex(bone_name);
 
+	return MV1GetFramePosition(m_ModelHandle, index);
+}
 aqua::CMatrix aqua::CModel::GetBoneMatrix(int bone_index)
 {
 	return MV1GetFrameLocalWorldMatrix(m_ModelHandle, bone_index);
+}
+
+aqua::CMatrix aqua::CModel::GetBoneMatrix(std::string bone_name)
+{
+	int index = GetBoneIndex(bone_name);
+
+	return MV1GetFrameLocalWorldMatrix(m_ModelHandle, index);
 }
 
 void aqua::CModel::SetMatrix(aqua::CMatrix m)

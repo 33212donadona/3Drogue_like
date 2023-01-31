@@ -1,6 +1,7 @@
 #pragma once
 enum class WEAPON_ID
 {
+	FIST,
 	SWORD,
 	MAGIC,
 	MONEY,

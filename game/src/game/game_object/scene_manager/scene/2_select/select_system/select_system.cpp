@@ -16,7 +16,7 @@ CSelectSystem::CSelectSystem(IGameObject* parent)
 void CSelectSystem::Initialize()
 {
 	m_CommonData = (CCommonData*)aqua::FindGameObject("CommonData");
-	m_CountModel = m_CommonData->GetData().selct_max_mode;
+	m_CountModel = m_CommonData->GetSelectMaxCreaTarget();
 	m_SelectModel = AQUA_NEW aqua::CModel[m_CountModel];
 
 	for (int m_i = 0; m_i < m_CountModel; m_i++)
@@ -32,6 +32,7 @@ void CSelectSystem::Initialize()
 	m_SelectPointer.axis.y = 1.0f;
 	m_SelectPointer.angles = aqua::DegToRad(180);
 	m_SelectPointer.scale = aqua::CVector3::ONE * 0.1f;
+	m_SelectPointer.position = m_SelectModel[m_SelsectLevel].position;
 	m_SelectPointer.position.y += 1.0f;
 	m_SelectPointer.AttachAnimation(2);
 
@@ -95,7 +96,7 @@ bool CSelectSystem::GetSelsectLavel()
 	if (sl)
 	{
 		CommonDataInfo cd = m_CommonData->GetData();
-		cd.max_stage = (m_SelsectLevel + 1) * 10;
+		cd.crea_target = (m_SelsectLevel + 1) * 10;
 		m_CommonData->SetData(cd);
 	}
 

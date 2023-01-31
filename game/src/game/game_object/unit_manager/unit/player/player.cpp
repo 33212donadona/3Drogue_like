@@ -1,4 +1,6 @@
 #include "player.h"
+#include "../../../weapon_manager/weapon_manager.h"
+#include "../../../weapon_manager/weapon/weapon_id.h"
 #include "../enemy/enemy.h"
 #include "../../../stage/stage.h"
 #include "../../../input/input.h"
@@ -16,7 +18,7 @@ CPlayer::CPlayer(aqua::IGameObject* parent)
 	, m_Angles(0.0f)
 	, m_Attack(false)
 	, m_ShotMagic(false)
-	, m_Weapon(nullptr)
+	, m_WeaponManager(nullptr)
 {
 }
 /*
@@ -25,7 +27,9 @@ CPlayer::CPlayer(aqua::IGameObject* parent)
 void CPlayer::Initialize()
 {
 	m_UnitModel.Create("data\\model\\Bot", m_max_animetion);
-	m_Weapon = (IWeapon*)aqua::CreateGameObject<CSword>(this);
+	
+	m_WeaponManager = aqua::CreateGameObject<CWeaponManager>(this);
+
 	Animetion = 0;
 	
 	m_Stage = (CStage*)aqua::FindGameObject("Stage");
@@ -38,11 +42,11 @@ void CPlayer::Initialize()
 
 	m_UnitModel.AttachAnimation(Animetion);
 
-	if (m_Weapon)m_Weapon->Initialize();
+	if (m_WeaponManager)m_WeaponManager->SetWeapon(WEAPON_ID::SWORD);
 
 	m_HitPoint = 100;
 
-	m_Weapon->SetMatrix(m_UnitModel.GetBoneMatrix(35));
+	m_WeaponManager->SetHandMatrix(m_UnitModel,"mixamorig:RightHandThumb1");
 
 	IUnit::Initialize();
 }
@@ -64,7 +68,7 @@ void CPlayer::Update()
  */
 void CPlayer::Finalize()
 {
-	if (m_Weapon)m_Weapon->Finalize();
+	if (m_WeaponManager)m_WeaponManager->Finalize();
 
 	IUnit::Finalize();
 }
@@ -89,7 +93,17 @@ int CPlayer::GetAnimetionNum()
 
 bool CPlayer::CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
 {
-	return m_Weapon->CheckHit(first_pos, end_pos) && m_Attack;
+	return m_WeaponManager->CheckHit(first_pos, end_pos) && m_Attack;
+}
+
+float CPlayer::GetAngle()
+{
+	return m_Angles;
+}
+
+bool CPlayer::GetAttackFlag()
+{
+	return m_Attack;
 }
 
 /*
@@ -134,11 +148,12 @@ void CPlayer::Move()
 	if (m_Stage->CheckObject(m_UnitModel.position + aqua::CVector3(0.0f, 0.0f, z * 4.5f)))
 		z = 0.0f;
 
-	if (Input::Button(Input::KEY_ID::B))
+	if (m_Attack)
 	{
 		x = 0.0f;
 		z = 0.0f;
 	}
+
 	m_UnitModel.position.x = aqua::Limit(m_UnitModel.position.x + x, -95.0f, 95.0f);
 	m_UnitModel.position.z = aqua::Limit(m_UnitModel.position.z + z, -95.0f, 95.0f);
 }
@@ -148,7 +163,7 @@ void CPlayer::Move()
 */
 void CPlayer::Rotation()
 {
-	if (!Input::Button(Input::KEY_ID::B))
+	if (!m_Attack)
 		if (Input::Horizotal() || Input::Vertical())
 			m_Angles = atan2(Input::Horizotal(), -Input::Vertical());
 
@@ -159,7 +174,8 @@ void CPlayer::Rotation()
 */
 void CPlayer::Weapon()
 {
-	m_Weapon->SetMatrix(m_UnitModel.GetBoneMatrix(35));
+	m_WeaponManager->SetHandMatrix(m_UnitModel,"mixamorig:RightHandThumb1");
+	//m_Weapon->SetMatrix(m_UnitModel.GetBoneMatrix(35));
 }
 
 void CPlayer::Collision()

@@ -1,4 +1,5 @@
 #include "game_main.h"
+
 #include "../../../common_data/common_data.h"
 #include "../../../unit_manager/unit_manager.h"
 #include "../../../stage/stage.h"
@@ -10,6 +11,8 @@
 
 CGameMain::CGameMain(IGameObject* parent)
 	:IScene(parent, "GameMain")
+	, m_Frame(0.0f)
+	, m_Timer(0.0f)
 {
 }
 
@@ -25,13 +28,19 @@ void CGameMain::Initialize()
 	aqua::CreateGameObject<CBag>(this);
 
 	m_CommonData = (CCommonData*)aqua::FindGameObject("CommonData");
-	m_GameData.max_stage = m_CommonData->GetData().max_stage;
-	m_GameData.crea_stage = m_CommonData->GetData().crea_stage;
+	m_GameData = m_CommonData->GetData();
 	aqua::IGameObject::Initialize();
 }
 
 void CGameMain::Update()
 {
+	// ŽžŠÔ
+	if (++m_Frame >= 60)
+	{
+		m_Timer += 1.0f * aqua::GetDeltaTime();
+		m_Frame = 0.0f;
+	}
+
 	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::Z))
 		((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::RESULT);
 
@@ -39,11 +48,15 @@ void CGameMain::Update()
 	{
 		m_GameData.crea_stage++;
 
-		if (m_GameData.crea_stage == m_CommonData->GetData().max_stage)
+		if (m_GameData.crea_stage == m_CommonData->GetData().crea_target)
+		{
 			((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::RESULT);
+			m_GameData.game_crea_time = m_Timer;
+		}
 		else
+		{
 			((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::GAMEMAIN);
-
+		}
 		m_CommonData->SetData(m_GameData);
 	}
 	aqua::IGameObject::Update();

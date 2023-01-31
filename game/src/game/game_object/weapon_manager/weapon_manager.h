@@ -16,6 +16,7 @@ public:
 
 	void SetWeapon(WEAPON_ID weapon_id);
 	bool CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos);
+	void SetHandMatrix(aqua::CModel& model,const std::string hand_name);
 
 private:
 	IWeapon* m_Weapon;

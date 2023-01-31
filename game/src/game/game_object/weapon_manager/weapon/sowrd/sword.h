@@ -11,9 +11,9 @@ public:
 	void Update() override;
 	void Finalize() override;
 
-	bool CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos);
+	bool CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)override;
 
-	void SetMatrix(aqua::CMatrix& matrix);
+	void SetMatrix(aqua::CMatrix matrix)override;
 
 private:
 	static const std::string m_file_pass;

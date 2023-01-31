@@ -42,7 +42,7 @@ void CEnemy::Update()
 {
 	Algorithms();
 
-	if (m_PlayerModel->CheckHit(m_UnitModel.GetBonePosistion(6), m_UnitModel.GetBonePosistion(69)) && !m_DamageFlag)
+	if (m_PlayerModel->CheckHit(m_UnitModel.GetBonePosition(6), m_UnitModel.GetBonePosition(69)) && !m_DamageFlag)
 	{
 		m_HitPoint -= 100.0f;
 		m_DamageFlag = true;
@@ -50,7 +50,7 @@ void CEnemy::Update()
 
 	if (m_DamageFlag)
 	{
-		if (!m_PlayerModel->CheckHit(m_UnitModel.GetBonePosistion(6), m_UnitModel.GetBonePosistion(69)))
+		if (!m_PlayerModel->CheckHit(m_UnitModel.GetBonePosition(6), m_UnitModel.GetBonePosition(69)))
 			m_DamageFlag = false;
 	}
 
@@ -69,5 +69,7 @@ void CEnemy::Algorithms()
 {
 	aqua::CVector3 angle = m_UnitModel.position - m_PlayerModel->GetPosition();
 	m_UnitModel.angles = atan2(angle.x, angle.z);
+
+
 
 }
