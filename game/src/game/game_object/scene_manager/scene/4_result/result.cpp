@@ -30,7 +30,10 @@ void CResult::Initialize(void)
 	// イージングタイマーの設定
 	m_EasingTimer.Setup(0.5f);
 
-	//m_BackGroundSecond.position.x = (float)aqua::GetWindowWidth();
+<<<<<<< Updated upstream
+=======
+	m_BackGroundSecond.position.x = (float)aqua::GetWindowWidth();
+>>>>>>> Stashed changes
 
 	/////////////////////////////////////////////////////////////////////////////
 	m_Label.Create(50);
