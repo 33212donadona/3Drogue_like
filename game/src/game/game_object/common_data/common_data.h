@@ -14,6 +14,9 @@ public:
 	void SetData(int max_stage,int crea_stage,int easy,int normal,int hard,float game_crea_time);
 	CommonDataInfo GetData();
 
+	int GetSelectMaxCreaTarget();
+
 private:
+	static const int m_selct_max_crea_target; //! ‘I‘ð‰Â”\‚È
 	CommonDataInfo m_MapData;
 };

@@ -61,7 +61,14 @@ namespace aqua
 		* 
 		* @param[in]  bone_index   ボーン番号
 		*/
-		aqua::CVector3 GetBonePosistion(int bone_index);
+		aqua::CVector3 GetBonePosition(int bone_index);
+
+		/*!
+		*  @brief     モデルから特定のボーン座標を取得
+		*
+		* @param[in]  bone_name   ボーンの名前
+		*/
+		aqua::CVector3 GetBonePosition(std::string bone_name);
 
 		/*!
 		*  @brief     モデルから特定のボーン回転行列を取得
@@ -69,6 +76,13 @@ namespace aqua
 		* @param[in]  bone_index   ボーン番号
 		*/
 		aqua::CMatrix GetBoneMatrix(int bone_index);
+
+		/*!
+		*  @brief     モデルから特定のボーン回転行列を取得
+		*
+		* @param[in]  bone_name   ボーンの名前
+		*/
+		aqua::CMatrix GetBoneMatrix(std::string bone_name);
 
 		/*!
 		*  @brief     モデルから特定のボーン回転行列を取得

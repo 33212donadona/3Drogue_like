@@ -1,11 +1,9 @@
 #pragma once
 #include "aqua.h"
-#include "../../../weapon_manager/weapon/weapon.h"
-#include "../../../weapon_manager/weapon/sowrd/sword.h"
 #include "../unit.h"
 
 class CEnemy;
-
+class CWeaponManager;
 
 class CPlayer : public IUnit
 {
@@ -36,6 +34,14 @@ public:
 	*/
 	bool CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos);
 
+	/*!
+	*  @brief 角度を取得
+	* 
+	*  @return 角度
+	*/
+	float GetAngle();
+
+	bool  GetAttackFlag();
 private:
 
 	void AnimetionWork();       //! アニメーション
@@ -50,7 +56,7 @@ private:
 	static const float m_max_hit_point;
 	static const float m_attack;
 
-	IWeapon* m_Weapon;
+	CWeaponManager* m_WeaponManager;
 
 	float m_Angles;
 	int   m_MagicFrame;

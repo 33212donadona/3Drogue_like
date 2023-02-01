@@ -19,7 +19,9 @@ public:
 	void Finalize()		override;
 
 private:
-	CUnitManager* m_UnitManager;
-	CCommonData*  m_CommonData;
+	CUnitManager*     m_UnitManager;
+	CCommonData*      m_CommonData;
 	CommonDataInfo    m_GameData;
+	float             m_Frame;      //! 1•b‚ÌƒtƒŒ[ƒ€”
+	float             m_Timer;      //! •b”
 };

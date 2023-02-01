@@ -55,7 +55,7 @@ void CGameCamera::Draw()
 		"H:" + std::to_string(Input::Horizotal()) + "\n"+
 		"V:" + std::to_string(Input::Vertical()) + "\n"	+
 		"C:" + std::to_string(m_CommonData->GetData().crea_stage) + "\n"+
-		"S:" + std::to_string(m_CommonData->GetData().max_stage);
+		"S:" + std::to_string(m_CommonData->GetData().crea_target);
 
 	cl.Draw();
 	cl.Delete();

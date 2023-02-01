@@ -27,7 +27,7 @@ bool CSword::CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
 		m_SwordModel.GetBoneCapsuleCollision("Collision.001", first_pos, end_pos, 3).HitFlag;
 }
 
-void CSword::SetMatrix(aqua::CMatrix& matrix)
+void CSword::SetMatrix(aqua::CMatrix matrix)
 {
 	m_SwordModel.SetMatrix(matrix);
 }
