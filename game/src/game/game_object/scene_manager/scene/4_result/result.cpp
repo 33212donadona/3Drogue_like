@@ -10,68 +10,77 @@ CResult::CResult(IGameObject* parent)
 
 void CResult::Initialize(void)
 {
-	m_ScoreBoardSprite.Create("data/score_board.png");
+	// スコアボードのスプライト生成
+	m_ScoreBoardSprite.Create("data/result/score_board.png");
+
+	// スコアボードの初期位置を設定
 	m_ScoreBoardSprite.position.x = -1000;
 
-	m_BackGround.Create("data/abeb.png");
+	// 背景スプライトの生成
+	m_BackGround.Create("data/result/bg.png");
 
-	m_BackGroundFirst.Create("data/abea.png");
-	m_BackGroundSecond.Create("data/abea.png");
+	// 枠スプライトの生成（１枚目）
+	m_FrameFirst.Create("data/result/frame.png");
+	// 枠スプライトの生成（２枚目）
+	m_FrameSecond.Create("data/result/frame.png");
 
-	m_BackGroundSecond.position.x = aqua::GetWindowWidth();
+	// 背景スプライト（２枚目）を（１枚目）の右に配置
+	m_FrameSecond.position.x = (float)aqua::GetWindowWidth();
 
+	// イージングタイマーの設定
+	m_EasingTimer.Setup(0.5f);
+
+
+	/////////////////////////////////////////////////////////////////////////////
 	m_Label.Create(50);
 	m_Label.position.x = 600;
 	m_Label.position.y = 290;
 	m_Label.color.alpha = 0;
-
 	m_ClearTime = ((CCommonData*)aqua::FindGameObject("CommonData"))->GetData().game_crea_time;
-
 	m_Label.text = std::to_string(m_ClearTime);
-
-	m_EasingTimer.Setup(0.5f);
 }
 
 void CResult::Update(void)
 {
-	if (!m_EasingTimer.Finished())
-	{
-		m_EasingTimer.Update();
-	}
-	else
-	{
-		m_Label.color.alpha+=5;
-	}
-
-	m_ScoreBoardSprite.position.x = aqua::easing::InCubic(m_EasingTimer.GetTime(), m_EasingTimer.GetLimit(),-1000, 0);
-
+	// 「スペース」キーを押すとタイトルシーンへ遷移する
 	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::SPACE))
 		((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::TITLE);
 
-	m_BackGroundFirst.position.x--;
-	m_BackGroundSecond.position.x--;
+	// タイマーが終了していなければ、タイマーを更新し続ける
+	if (!m_EasingTimer.Finished()) m_EasingTimer.Update();
+	// タイマーが終了している場合、数値を点滅させる
+	else m_Label.color.alpha += 5;
 
-	if (m_BackGroundFirst.position.x < -1919)
-		m_BackGroundFirst.position.x = 1920;
+	// スコアボードのアニメーション処理
+	m_ScoreBoardSprite.position.x = aqua::easing::InCubic(m_EasingTimer.GetTime(), m_EasingTimer.GetLimit(), -1000, 0);
 
-	if (m_BackGroundSecond.position.x < -1919)
-		m_BackGroundSecond.position.x = 1920;
+	// 背景を左側へ移動させる処理
+	m_FrameFirst.position.x--;
+	m_FrameSecond.position.x--;
+
+	// 背景（１枚目）の位置が左側へ移動して見えなくなったら右端へ戻す
+	if (m_FrameFirst.position.x <= -(float)aqua::GetWindowWidth())
+		m_FrameFirst.position.x = (float)aqua::GetWindowWidth();
+
+	// 背景（２枚目）の位置が左側へ移動して見えなくなったら右端へ戻す
+	else if (m_FrameSecond.position.x <= -(float)aqua::GetWindowWidth())
+		m_FrameSecond.position.x = (float)aqua::GetWindowWidth();
 }
 
 void CResult::Draw(void)
 {
 	m_BackGround.Draw();
-	m_BackGroundFirst.Draw();
-	m_BackGroundSecond.Draw();
+	m_FrameFirst.Draw();
+	m_FrameSecond.Draw();
 	m_ScoreBoardSprite.Draw();
 
 	m_Label.Draw();
-	IScene::Draw();
 }
 
 void CResult::Finalize(void)
 {
-	m_BackGroundSecond.Delete();
-	m_BackGroundFirst.Delete();
 	m_ScoreBoardSprite.Delete();
+	m_FrameSecond.Delete();
+	m_FrameFirst.Delete();
+	m_BackGround.Draw();
 }

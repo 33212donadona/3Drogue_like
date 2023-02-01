@@ -29,18 +29,19 @@ private: // 非公開メンバ関数
 	// スコアボードスプライト
 	aqua::CSprite m_ScoreBoardSprite;
 
-	// 背景スプライト（１枚目）
-	aqua::CSprite m_BackGroundFirst;
-
-	// 背景スプライト（２枚目）
-	aqua::CSprite m_BackGroundSecond;
-
+	// 背景スプライト
 	aqua::CSprite m_BackGround;
 
-	aqua::CLabel m_Label;
+	// 枠スプライト（１枚目）
+	aqua::CSprite m_FrameFirst;
 
-	// ゲームクリア時間
-	float m_ClearTime;
+	// 枠スプライト（２枚目）
+	aqua::CSprite m_FrameSecond;
 
+	// イージングタイマー
 	aqua::CTimer m_EasingTimer;
+
+	//////////////////////////////////////////////////////////////
+	aqua::CLabel m_Label;
+	float m_ClearTime;
 };
