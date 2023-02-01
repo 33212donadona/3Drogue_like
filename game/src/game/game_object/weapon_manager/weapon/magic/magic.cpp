@@ -29,6 +29,8 @@ void CMagic::Update()
 		m_FindPlayer = true;
 	}
 
+	m_HitMagic = m_HitMagic || m_MagicKeepEffect.position.x < -98.0f || m_MagicKeepEffect.position.x > 98.0f;
+	m_HitMagic = m_HitMagic || m_MagicKeepEffect.position.z < -98.0f || m_MagicKeepEffect.position.z > 98.0f;
 
 	switch (m_MagicState)
 	{
@@ -40,15 +42,18 @@ void CMagic::Update()
 		{
 			m_MagicKeepEffect.Play();
 			m_MagicState = MAGIC_STATE::KEEP_MAGIC;
+			m_Angles = m_Player->GetAngle();
 		}
 
 		break;
 	case MAGIC_STATE::KEEP_MAGIC:
-			Shot();
+		Shot();
 
 		if (m_HitMagic)
 		{
 			m_MagicEndEffect.Play();
+			m_MagicKeepEffect.Stop();
+			m_MagicEndEffect.position = m_MagicKeepEffect.position;
 			m_MagicState = MAGIC_STATE::FINISHED_MAGIC;
 		}
 
@@ -64,6 +69,7 @@ void CMagic::Update()
 		{
 			m_MagicFirstEffect.Play();
 			m_MagicState = MAGIC_STATE::INVOKE_MAGIC;
+			m_MoveDistance = 0;
 		}
 
 		m_MagicEndEffect.Update();
@@ -90,8 +96,7 @@ bool CMagic::CheckHit(aqua::CVector3 enemy_pos)
 	distance.y = m_MagicFirstEffect.position.z - enemy_pos.z;
 
 	m_HitMagic = distance.x * distance.x + distance.y * distance.y <= r * r;
-	m_HitMagic = m_HitMagic || m_MagicKeepEffect.position.x < -98.0f || m_MagicKeepEffect.position.x > 98.0f;
-	m_HitMagic = m_HitMagic || m_MagicKeepEffect.position.z < -98.0f || m_MagicKeepEffect.position.z > 98.0f;
+
 	return m_HitMagic;
 }
 
@@ -99,15 +104,13 @@ void CMagic::SetPosition(aqua::CVector3 position)
 {
 	m_MagicFirstEffect.position = position;
 	m_MagicKeepEffect.position = position;
-	m_MagicEndEffect.position = position;
 }
 
 void CMagic::Shot()
 {
-	if (m_Player->GetAttackFlag())
-		m_Angles = m_Player->GetAngle();
+	//if (m_Player->GetAttackFlag())
 
-	m_MoveDistance++;
+	m_MoveDistance--;
 
 	aqua::CVector3 md(sin(m_Angles), 0.0f, cos(m_Angles));
 

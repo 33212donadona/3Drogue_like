@@ -2,6 +2,7 @@
 #include "weapon/sowrd/sword.h"
 #include "weapon/magic/magic.h"
 #include "weapon/weapon_id.h"
+
 CWeaponManager::CWeaponManager(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent, "WeaponManager")
 	, m_BoneIndex(0)
