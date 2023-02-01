@@ -1,20 +1,25 @@
 #include "weapon_manager.h"
 #include "weapon/sowrd/sword.h"
 #include "weapon/magic/magic.h"
-#include "weapon/weapon.h"
 #include "weapon/weapon_id.h"
 CWeaponManager::CWeaponManager(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent, "WeaponManager")
+	, m_BoneIndex(0)
+	, m_BoneName("")
 	, m_Weapon(nullptr)
 {
 }
 
 void CWeaponManager::Initialize()
 {
+	m_NowWeapon = WEAPON_ID::MAX;
 }
 
 void CWeaponManager::Update()
 {
+	if (m_Weapon)
+		m_Weapon->Update();
+
 	IGameObject::Update();
 }
 
@@ -98,6 +103,13 @@ bool CWeaponManager::CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
 void CWeaponManager::SetHandMatrix(aqua::CModel& model, std::string hand_name)
 {
 	if (hand_name == "")return;
+	;
+	if (m_BoneName != hand_name)
+	{
+		m_BoneName = hand_name;
+
+		m_BoneIndex = model.GetBoneIndex(m_BoneName);
+	}
 
 	switch (m_NowWeapon)
 	{
@@ -106,11 +118,11 @@ void CWeaponManager::SetHandMatrix(aqua::CModel& model, std::string hand_name)
 		break;
 
 	case WEAPON_ID::SWORD:
-		m_Weapon->SetMatrix(model.GetBoneMatrix(hand_name));
+		m_Weapon->SetMatrix(model.GetBoneMatrix(m_BoneIndex));
 		break;
 
 	case WEAPON_ID::MAGIC:
-		m_Weapon->SetPosition(model.GetBonePosition(hand_name));
+		m_Weapon->SetPosition(model.GetBonePosition(m_BoneIndex));
 		break;
 
 	case WEAPON_ID::MONEY:

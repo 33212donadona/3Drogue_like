@@ -10,6 +10,8 @@ CUnitManager::CUnitManager(aqua::IGameObject* parent)
 
 void CUnitManager::Initialize()
 {
+	m_CWeaponManager = aqua::CreateGameObject<CWeaponManager>(this);
+
 	m_Player = aqua::CreateGameObject<CPlayer>(this);
 	m_EnemyList.push_back(aqua::CreateGameObject<CEnemy>(this));
 
@@ -42,6 +44,8 @@ void CUnitManager::Update()
 		}
 		m_EnemyList.clear();
 	}
+
+	m_CWeaponManager->Update();
 }
 
 void CUnitManager::Finalize()

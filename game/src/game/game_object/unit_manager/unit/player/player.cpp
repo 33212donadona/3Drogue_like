@@ -27,11 +27,11 @@ CPlayer::CPlayer(aqua::IGameObject* parent)
 void CPlayer::Initialize()
 {
 	m_UnitModel.Create("data\\model\\Bot", m_max_animetion);
-	
-	m_WeaponManager = aqua::CreateGameObject<CWeaponManager>(this);
+
+	m_WeaponManager = (CWeaponManager*)aqua::FindGameObject("WeaponManager");
 
 	Animetion = 0;
-	
+
 	m_Stage = (CStage*)aqua::FindGameObject("Stage");
 
 	//‰ŠúˆÊ’uÝ’è
@@ -42,11 +42,11 @@ void CPlayer::Initialize()
 
 	m_UnitModel.AttachAnimation(Animetion);
 
-	if (m_WeaponManager)m_WeaponManager->SetWeapon(WEAPON_ID::SWORD);
+	if (m_WeaponManager)m_WeaponManager->SetWeapon(WEAPON_ID::MAGIC);
 
 	m_HitPoint = 100;
 
-	m_WeaponManager->SetHandMatrix(m_UnitModel,"mixamorig:RightHandThumb1");
+	m_WeaponManager->SetHandMatrix(m_UnitModel, "mixamorig:RightHandThumb1");
 
 	IUnit::Initialize();
 }
@@ -68,8 +68,6 @@ void CPlayer::Update()
  */
 void CPlayer::Finalize()
 {
-	if (m_WeaponManager)m_WeaponManager->Finalize();
-
 	IUnit::Finalize();
 }
 /*
@@ -111,6 +109,12 @@ bool CPlayer::GetAttackFlag()
  */
 void CPlayer::AnimetionWork()
 {
+	if (Input::In(Input::KEY_ID::B) && !m_Attack)
+	{
+		Animetion = 3;
+		m_Attack = true;
+	}
+
 	if (!m_Attack)
 	{
 		if (Input::Horizotal() || Input::Vertical())
@@ -119,20 +123,11 @@ void CPlayer::AnimetionWork()
 			Animetion = 0;
 	}
 
-	if (!Input::Horizotal() || !Input::Vertical())
-		if (Input::In(Input::KEY_ID::B) && !m_Attack)
-		{
-			Animetion = 3;
-			m_Attack = true;
-		}
-
 	if (m_Attack && m_UnitModel.AnimetionFinished(60.0f))
 	{
 		m_Attack = false;
 		Animetion = 0;
 	}
-	
-
 }
 /*
 *   ˆÚ“®
@@ -174,8 +169,7 @@ void CPlayer::Rotation()
 */
 void CPlayer::Weapon()
 {
-	m_WeaponManager->SetHandMatrix(m_UnitModel,"mixamorig:RightHandThumb1");
-	//m_Weapon->SetMatrix(m_UnitModel.GetBoneMatrix(35));
+	m_WeaponManager->SetHandMatrix(m_UnitModel, "mixamorig:RightHandThumb1");
 }
 
 void CPlayer::Collision()

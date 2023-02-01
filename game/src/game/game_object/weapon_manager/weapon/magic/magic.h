@@ -3,6 +3,13 @@
 
 class CPlayer;
 
+enum class MAGIC_STATE
+{
+	INVOKE_MAGIC,
+	KEEP_MAGIC,
+	FINISHED_MAGIC
+};
+
 class CMagic : public IWeapon
 {
 public:
@@ -28,11 +35,13 @@ private:
 	bool            m_HitMagic;
 	bool            m_FindPlayer;
 	float           m_Angles;
+	int             m_MoveDistance;
+
+	MAGIC_STATE     m_MagicState;
 
 	CPlayer*        m_Player;
 
 	aqua::CEffect3D m_MagicFirstEffect;
 	aqua::CEffect3D m_MagicKeepEffect;
 	aqua::CEffect3D m_MagicEndEffect;
-	int             m_MoveDistance;
 };

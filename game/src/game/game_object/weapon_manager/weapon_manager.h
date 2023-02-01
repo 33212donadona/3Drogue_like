@@ -1,7 +1,7 @@
 #include "aqua.h"
+#include "weapon/weapon.h"
 
 enum class WEAPON_ID;
-class IWeapon;
 
 class CWeaponManager : public aqua::IGameObject
 {
@@ -21,4 +21,6 @@ public:
 private:
 	IWeapon* m_Weapon;
 	WEAPON_ID m_NowWeapon;
+	std::string m_BoneName;
+	int         m_BoneIndex;
 };

@@ -37,7 +37,7 @@ void CGameMain::Update()
 	// ŽžŠÔ
 	if (++m_Frame >= 60)
 	{
-		m_Timer += 1.0f * aqua::GetDeltaTime();
+		m_Timer += aqua::GetDeltaTime();
 		m_Frame = 0.0f;
 	}
 
