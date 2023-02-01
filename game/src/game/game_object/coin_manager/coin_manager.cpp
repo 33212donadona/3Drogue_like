@@ -1,16 +1,16 @@
-#include "money_manager.h"
+#include "coin_manager.h"
 #include "../bag/bag_data.h"
 
-const std::string CMoneyManager::m_money_box_name = "data\\game_graph\\マネーバー.png";
-const int CMoneyManager::m_font_size = 100;
-const float CMoneyManager::m_easing_speed = 2.5f;
-const aqua::CVector2 CMoneyManager::m_font_space = aqua::CVector2(25, 75);
+const std::string CCoinManager::m_money_box_name = "data\\game_graph\\マネーバー.png";
+const int CCoinManager::m_font_size = 100;
+const float CCoinManager::m_easing_speed = 2.5f;
+const aqua::CVector2 CCoinManager::m_font_space = aqua::CVector2(25, 75);
 
 /*
  *  コンストラクタ
  */
-CMoneyManager::CMoneyManager(aqua::IGameObject* parent)
-	:aqua::IGameObject(parent, "MoneyManager")
+CCoinManager::CCoinManager(aqua::IGameObject* parent)
+	:aqua::IGameObject(parent, "CoinManager")
 	, m_PrevDeposit(0)
 {
 }
@@ -18,7 +18,7 @@ CMoneyManager::CMoneyManager(aqua::IGameObject* parent)
 /*
  *  初期化
  */
-void CMoneyManager::Initialize()
+void CCoinManager::Initialize()
 {
 	m_BagData = (CBagData*)aqua::FindGameObject("BagData");
 	m_MoneyBoxSprite.Create(m_money_box_name);
@@ -42,7 +42,7 @@ void CMoneyManager::Initialize()
 /*
  *  更新
  */
-void CMoneyManager::Update()
+void CCoinManager::Update()
 {
 	DepositFluctuation();
 
@@ -58,7 +58,7 @@ void CMoneyManager::Update()
 /*
  *  描画
  */
-void CMoneyManager::Draw()
+void CCoinManager::Draw()
 {
 	m_MoneyBoxSprite.Draw();
 	m_Deposit.Draw();
@@ -68,7 +68,7 @@ void CMoneyManager::Draw()
 /*
  *  解放
  */
-void CMoneyManager::Finalize()
+void CCoinManager::Finalize()
 {
 	m_MoneyBoxSprite.Delete();
 	m_Deposit.Delete();
@@ -79,7 +79,7 @@ void CMoneyManager::Finalize()
 /*
 *   預金残高計算
 */
-void CMoneyManager::DepositFluctuation()
+void CCoinManager::DepositFluctuation()
 {
 	if (m_PrevDeposit == m_BagData->GetDepositBalance() && !m_BagData)return;
 
@@ -119,7 +119,7 @@ void CMoneyManager::DepositFluctuation()
 /*
 *   預金残高計算
 */
-void CMoneyManager::DepositBalanceCalculation()
+void CCoinManager::DepositBalanceCalculation()
 {
 	m_Deposit.text = std::to_string(m_BagData->GetDepositBalance());
 	m_Deposit.position.x = float(aqua::GetWindowWidth() - m_MoneyBoxSprite.GetTextureWidth() / 10 - m_Deposit.GetTextWidth());

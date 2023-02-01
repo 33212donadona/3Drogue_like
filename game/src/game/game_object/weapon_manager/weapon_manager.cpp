@@ -2,6 +2,7 @@
 #include "weapon/sowrd/sword.h"
 #include "weapon/magic/magic.h"
 #include "weapon/weapon_id.h"
+
 CWeaponManager::CWeaponManager(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent, "WeaponManager")
 	, m_BoneIndex(0)
@@ -62,6 +63,7 @@ void CWeaponManager::SetWeapon(WEAPON_ID weapon_id)
 	default:
 		break;
 	}
+
 	if (m_Weapon)
 		m_Weapon->Initialize();
 
@@ -103,7 +105,8 @@ bool CWeaponManager::CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
 void CWeaponManager::SetHandMatrix(aqua::CModel& model, std::string hand_name)
 {
 	if (hand_name == "")return;
-	;
+	if (!m_Weapon)return;
+	
 	if (m_BoneName != hand_name)
 	{
 		m_BoneName = hand_name;
