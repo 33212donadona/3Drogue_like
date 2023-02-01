@@ -1,5 +1,6 @@
 #pragma once
 #include "aqua.h"
+#include "../weapon_manager/weapon_manager.h"
 
 class IUnit;
 class CEnemy;
@@ -20,6 +21,7 @@ public:
 
 private:
 	CPlayer* m_Player;
+	CWeaponManager* m_CWeaponManager;
 	std::list<CEnemy*> m_EnemyList;
 	int m_EnemyDeleteCount;
 };

@@ -42,13 +42,11 @@ void CPlayer::Initialize()
 
 	m_UnitModel.AttachAnimation(Animetion);
 
-	if (m_WeaponManager)
-	{
-		m_WeaponManager->SetWeapon(WEAPON_ID::SWORD);
-		m_WeaponManager->SetHandMatrix(m_UnitModel, "mixamorig:RightHandThumb1");
-	}
+	if (m_WeaponManager)m_WeaponManager->SetWeapon(WEAPON_ID::MAGIC);
 
 	m_HitPoint = 100;
+
+	m_WeaponManager->SetHandMatrix(m_UnitModel, "mixamorig:RightHandThumb1");
 
 	IUnit::Initialize();
 }

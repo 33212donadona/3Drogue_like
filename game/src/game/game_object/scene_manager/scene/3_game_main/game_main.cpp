@@ -3,8 +3,7 @@
 #include "../../../common_data/common_data.h"
 #include "../../../unit_manager/unit_manager.h"
 #include "../../../stage/stage.h"
-#include "../../../weapon_manager/weapon_manager.h"
-#include "../../../coin_manager/coin_manager.h"
+#include "../../../money_manager/money_manager.h"
 #include "../../../bag/bag.h"
 #include "../../../bag/bag_data.h"
 #include "../../../camera_manager/game_camera/game_camera.h"
@@ -22,9 +21,8 @@ void CGameMain::Initialize()
 	m_SoundManager = (CGameSoundManager*)aqua::FindGameObject("GameSoundManager");
 	m_SoundManager->Play(SoundID::GAME_BGM);
 	aqua::CreateGameObject<CBagData>(this);
-	aqua::CreateGameObject<CCoinManager>(this);
+	aqua::CreateGameObject<CMoneyManager>(this);
 	aqua::CreateGameObject<CStage>(this);
-	//aqua::CreateGameObject<CWeaponManager>(this);
 	m_UnitManager = aqua::CreateGameObject<CUnitManager>(this);
 	aqua::CreateGameObject<CGameCamera>(this);
 	aqua::CreateGameObject<CBag>(this);

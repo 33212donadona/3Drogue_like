@@ -2,12 +2,12 @@
 
 class CBagData;
 
-class CCoinManager : public aqua::IGameObject
+class CMoneyManager : public aqua::IGameObject
 {
 public:
 
-	CCoinManager(aqua::IGameObject* parent);
-	~CCoinManager() = default;
+	CMoneyManager(aqua::IGameObject* parent);
+	~CMoneyManager() = default;
 
 	void Initialize() override;
 	void Update() override;
