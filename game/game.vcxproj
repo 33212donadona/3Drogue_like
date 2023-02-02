@@ -160,6 +160,7 @@
     <ClInclude Include="src\game\game_object\money_manager\money_manager.h" />
     <ClInclude Include="src\game\game_object\stage\stage.h" />
     <ClInclude Include="src\game\game_object\stage\stage_id.h" />
+    <ClInclude Include="src\game\game_object\unit_manager\unit\player\player_anime_id.h" />
     <ClInclude Include="src\game\game_object\weapon_manager\weapon_manager.h" />
     <ClInclude Include="src\game\game_object\unit_manager\unit_manager.h" />
     <ClInclude Include="src\game\game_object\unit_manager\unit\unit.h" />

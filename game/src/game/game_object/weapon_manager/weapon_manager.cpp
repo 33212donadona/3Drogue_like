@@ -18,8 +18,7 @@ void CWeaponManager::Initialize()
 
 void CWeaponManager::Update()
 {
-	if (m_Weapon)
-		m_Weapon->Update();
+	if (m_Weapon)m_Weapon->Update();
 
 	IGameObject::Update();
 }
