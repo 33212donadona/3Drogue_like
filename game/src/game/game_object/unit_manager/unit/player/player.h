@@ -1,9 +1,12 @@
 #pragma once
 #include "aqua.h"
 #include "../unit.h"
+#include "player_anime_id.h"
 
 class CEnemy;
 class CWeaponManager;
+
+enum class WEAPON_ID;
 
 class CPlayer : public IUnit
 {
@@ -42,9 +45,13 @@ public:
 	float GetAngle();
 
 	bool  GetAttackFlag();
+	bool  GetStandbyFlag();
+	bool  GetShotMagic();
 private:
 
 	void AnimetionWork();       //! アニメーション
+	void SwordAnimeWork();      //! 
+	void MagicAnimeWork();      //! 
 	void Move();                //! 移動
 	void Rotation();            //! 回転
 	void Weapon();              //! 武器
@@ -53,15 +60,20 @@ private:
 private:
 	static const int m_max_animetion;
 	static const float m_shot_animetion_frame;
+	static const float m_chage_max_time;
 	static const float m_max_hit_point;
 	static const float m_attack;
 
 	CWeaponManager* m_WeaponManager;
+	WEAPON_ID       m_SetingWeapon;
+	P_ANIME_ID      m_AnimeState;
+
+	aqua::CTimer    m_ChageTime;
 
 	float m_Angles;
 	int   m_MagicFrame;
-	int Animetion;
 
+	bool m_Standby;
 	bool m_ShotMagic;
 	bool m_Attack;
 };

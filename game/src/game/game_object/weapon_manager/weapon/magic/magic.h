@@ -5,6 +5,7 @@ class CPlayer;
 
 enum class MAGIC_STATE
 {
+	STANDBY,
 	INVOKE_MAGIC,
 	KEEP_MAGIC,
 	FINISHED_MAGIC
