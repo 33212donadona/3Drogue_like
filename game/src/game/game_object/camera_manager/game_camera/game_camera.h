@@ -20,4 +20,5 @@ private:
 	static const aqua::CVector3 m_camera_position;
 	CPlayer* m_PlayerClass;
 	CCommonData* m_CommonData;
+	aqua::CSprite   m_Range_of_VisionSprite;
 };

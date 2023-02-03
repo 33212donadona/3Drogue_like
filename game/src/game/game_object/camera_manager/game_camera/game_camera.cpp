@@ -25,6 +25,9 @@ void CGameCamera::Initialize()
 		m_Camera.camera_position = m_PlayerClass->GetPosition() + m_camera_position;
 		m_Camera.target_point = m_PlayerClass->GetPosition();
 	}
+
+	m_Range_of_VisionSprite.Create("data\\game_graph\\éãäE_2.png");
+
 }
 /*
  *  çXêV
@@ -43,6 +46,8 @@ void CGameCamera::Update()
 void CGameCamera::Draw()
 {
 	ICamera::Draw();
+
+	m_Range_of_VisionSprite.Draw();
 
 #ifdef AQUA_DEBUG
 	aqua::CLabel cl;
@@ -65,5 +70,6 @@ void CGameCamera::Draw()
 
 void CGameCamera::Finalize()
 {
+	m_Range_of_VisionSprite.Delete();
 	ICamera::Finalize();
 }

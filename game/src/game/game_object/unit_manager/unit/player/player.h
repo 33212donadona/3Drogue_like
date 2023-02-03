@@ -47,6 +47,7 @@ public:
 	bool  GetAttackFlag();
 	bool  GetStandbyFlag();
 	bool  GetShotMagic();
+	bool  GetCancelMagic();
 private:
 
 	void AnimetionWork();       //! アニメーション
@@ -58,7 +59,7 @@ private:
 	void Collision();           //! 衝突処理
 
 private:
-	static const int m_max_animetion;
+
 	static const float m_shot_animetion_frame;
 	static const float m_chage_max_time;
 	static const float m_max_hit_point;
@@ -76,4 +77,5 @@ private:
 	bool m_Standby;
 	bool m_ShotMagic;
 	bool m_Attack;
+	bool m_CancelMagic;
 };

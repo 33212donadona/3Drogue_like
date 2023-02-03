@@ -9,4 +9,8 @@ enum class P_ANIME_ID
 	MONEY_SHOT,
 	MAGIC_SHOT,
 	MAGIC_RUN,
+	MAGIC_IDLE,
+
+
+	MAX
 };

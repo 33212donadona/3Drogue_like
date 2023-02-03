@@ -35,6 +35,7 @@ private:
 
 	bool            m_HitMagic;
 	bool            m_FindPlayer;
+	bool            m_ShotFlag;
 	float           m_Angles;
 	int             m_MoveDistance;
 
