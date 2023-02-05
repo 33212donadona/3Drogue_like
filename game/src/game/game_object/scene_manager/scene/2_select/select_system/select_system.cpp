@@ -89,7 +89,7 @@ void CSelectSystem::Finalize()
 	m_SelectPointer.Delete();
 }
 
-bool CSelectSystem::GetSelsectLavel()
+bool CSelectSystem::GetDecisionSelsectLavel()
 {
 	bool sl = Input::In(Input::KEY_ID::B);
 
@@ -101,6 +101,16 @@ bool CSelectSystem::GetSelsectLavel()
 	}
 
 	return sl;
+}
+
+int CSelectSystem::GetNowLavel()
+{
+	return m_SelsectLevel;
+}
+
+int CSelectSystem::GetPrevLavel()
+{
+	return m_PrevSelsectLevel;
 }
 
 aqua::CVector3 CSelectSystem::GetTargetPosition()

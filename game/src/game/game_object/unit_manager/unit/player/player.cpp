@@ -1,4 +1,5 @@
 #include "player.h"
+#include "../../../bag/bag_data.h"
 #include "../../../weapon_manager/weapon_manager.h"
 #include "../../../weapon_manager/weapon/weapon_id.h"
 #include "../enemy/enemy.h"
@@ -21,7 +22,7 @@ CPlayer::CPlayer(aqua::IGameObject* parent)
 	, m_Standby(false)
 	, m_CancelMagic(false)
 	, m_WeaponManager(nullptr)
-	, m_SetingWeapon(WEAPON_ID::MAGIC)
+	, m_SetingWeapon(WEAPON_ID::FIST)
 	, m_AnimeState(P_ANIME_ID::IDLE)
 {
 }
@@ -33,6 +34,7 @@ void CPlayer::Initialize()
 	m_UnitModel.Create("data\\model\\Bot", (int)P_ANIME_ID::MAX);
 
 	m_WeaponManager = (CWeaponManager*)aqua::FindGameObject("WeaponManager");
+	m_BagData =       (CBagData*)aqua::FindGameObject("BagData");
 
 	m_Stage = (CStage*)aqua::FindGameObject("Stage");
 
@@ -44,7 +46,6 @@ void CPlayer::Initialize()
 
 	m_UnitModel.AttachAnimation((int)m_AnimeState);
 
-	if (m_WeaponManager)m_WeaponManager->SetWeapon(m_SetingWeapon);
 
 	m_HitPoint = 100;
 
@@ -52,6 +53,13 @@ void CPlayer::Initialize()
 
 	m_ChageTime.Setup(m_chage_max_time);
 
+
+	m_BagData->SetWeapon(0, WEAPON_ID::SWORD, 10, 30);
+	m_BagData->SetWeapon(1, WEAPON_ID::SWORD, 10, 30);
+	m_BagData->SetWeapon(2, WEAPON_ID::SWORD, 10, 30);
+
+	m_WeaponManager->SetWeapon(m_BagData->GetWeaponData(m_BagData->GetSelectBagNumber()).id);
+	m_SetingWeapon = m_BagData->GetWeaponData(m_BagData->GetSelectBagNumber()).id;
 	IUnit::Initialize();
 }
 
@@ -60,6 +68,12 @@ void CPlayer::Initialize()
  */
 void CPlayer::Update()
 {
+	if (Input::In(Input::KEY_ID::B ))
+		if (m_WeaponManager) 
+		{
+			m_WeaponManager->SetWeapon(m_BagData->GetWeaponData(m_BagData->GetSelectBagNumber()).id);
+			m_SetingWeapon = m_BagData->GetWeaponData(m_BagData->GetSelectBagNumber()).id;
+		}
 
 	Weapon();
 
@@ -131,16 +145,16 @@ void CPlayer::AnimetionWork()
 	switch (m_SetingWeapon)
 	{
 	case WEAPON_ID::FIST:
+		FistAnimeWork();
 		break;
 	case WEAPON_ID::SWORD:
-
 		SwordAnimeWork();
-
 		break;
 	case WEAPON_ID::MAGIC:
 		MagicAnimeWork();
 		break;
 	case WEAPON_ID::MONEY:
+		MoneyAnimeWork();
 		break;
 	case WEAPON_ID::MAX:
 		break;
@@ -148,6 +162,31 @@ void CPlayer::AnimetionWork()
 		break;
 	}
 }
+/*
+*  素手の時のアニメーション
+*/
+void CPlayer::FistAnimeWork()
+{
+	if (!m_Attack)
+	{
+		if (Input::Horizotal() || Input::Vertical())
+			m_AnimeState = P_ANIME_ID::RUN;
+		else
+			m_AnimeState = P_ANIME_ID::IDLE;
+	}
+
+	if (Input::In(Input::KEY_ID::B))
+	{
+		m_Attack = true;
+		m_AnimeState = P_ANIME_ID::SLASH;
+	}
+
+	if (m_UnitModel.AnimetionFinished() && m_AnimeState == P_ANIME_ID::SLASH)
+		m_Attack = false;
+}
+/*
+*  剣の時のアニメーション
+*/
 void CPlayer::SwordAnimeWork()
 {
 	if (Input::In(Input::KEY_ID::B) && !m_Attack)
@@ -171,6 +210,9 @@ void CPlayer::SwordAnimeWork()
 	}
 
 }
+/*
+*  魔法の時のアニメーション
+*/
 void CPlayer::MagicAnimeWork()
 {
 	if (!m_Attack && m_AnimeState != P_ANIME_ID::MAGIC_SHOT)
@@ -235,6 +277,36 @@ void CPlayer::MagicAnimeWork()
 	}
 }
 /*
+*  お金の武器の時のアニメーション
+*/
+void CPlayer::MoneyAnimeWork()
+{
+	if (!m_Attack && m_AnimeState != P_ANIME_ID::MONEY_SHOT)
+	{
+		if (Input::Horizotal() || Input::Vertical())
+			m_AnimeState = P_ANIME_ID::RUN;
+		else
+			m_AnimeState = P_ANIME_ID::IDLE;
+	}
+
+	if (Input::In(Input::KEY_ID::B))
+	{
+		m_AnimeState = P_ANIME_ID::MONEY_SHOT;
+	}
+	if (m_AnimeState == P_ANIME_ID::MONEY_SHOT && m_UnitModel.AnimetionFinished(30.0f))
+	{
+		m_Attack = true;
+	}
+	if (m_AnimeState == P_ANIME_ID::MONEY_SHOT && m_UnitModel.AnimetionFinished(30.0f + 1.0f))
+	{
+		m_Attack = false;
+	}
+	if (m_AnimeState == P_ANIME_ID::MONEY_SHOT && m_UnitModel.AnimetionFinished())
+	{
+		m_AnimeState = P_ANIME_ID::IDLE;
+	}
+}
+/*
 *   移動
 */
 void CPlayer::Move()
@@ -248,7 +320,7 @@ void CPlayer::Move()
 	if (m_Stage->CheckObject(m_UnitModel.position + aqua::CVector3(0.0f, 0.0f, z * 4.5f)))
 		z = 0.0f;
 
-	if (m_Attack || m_AnimeState == P_ANIME_ID::MAGIC_SHOT)
+	if (m_Attack || m_AnimeState == P_ANIME_ID::MAGIC_SHOT || m_AnimeState == P_ANIME_ID::MONEY_SHOT)
 	{
 		x = 0.0f;
 		z = 0.0f;
@@ -263,12 +335,13 @@ void CPlayer::Move()
 */
 void CPlayer::Rotation()
 {
-	if (!m_Attack && m_AnimeState != P_ANIME_ID::MAGIC_SHOT)
+	if (!m_Attack && m_AnimeState != P_ANIME_ID::MAGIC_SHOT && m_AnimeState != P_ANIME_ID::MONEY_SHOT)
 		if (Input::Horizotal() || Input::Vertical())
 			m_Angles = atan2(Input::Horizotal(), -Input::Vertical());
 
 	m_UnitModel.angles = m_Angles;
 }
+
 /*
 *   武器
 */

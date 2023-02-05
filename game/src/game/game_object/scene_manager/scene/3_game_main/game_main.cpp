@@ -21,10 +21,10 @@ void CGameMain::Initialize()
 	m_SoundManager = (CGameSoundManager*)aqua::FindGameObject("GameSoundManager");
 	m_SoundManager->Play(SoundID::GAME_BGM);
 	aqua::CreateGameObject<CBagData>(this);
-	aqua::CreateGameObject<CMoneyManager>(this);
 	aqua::CreateGameObject<CStage>(this);
 	m_UnitManager = aqua::CreateGameObject<CUnitManager>(this);
 	aqua::CreateGameObject<CGameCamera>(this);
+	aqua::CreateGameObject<CMoneyManager>(this);
 	aqua::CreateGameObject<CBag>(this);
 
 	m_CommonData = (CCommonData*)aqua::FindGameObject("CommonData");
@@ -51,7 +51,7 @@ void CGameMain::Update()
 		if (m_GameData.crea_stage == m_CommonData->GetData().crea_target)
 		{
 			((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::RESULT);
-			m_GameData.game_crea_time = m_Timer;
+			m_GameData.game_crea_time += m_Timer;
 		}
 		else
 		{

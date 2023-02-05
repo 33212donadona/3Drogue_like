@@ -69,7 +69,4 @@ void CEnemy::Algorithms()
 {
 	aqua::CVector3 angle = m_UnitModel.position - m_PlayerModel->GetPosition();
 	m_UnitModel.angles = atan2(angle.x, angle.z);
-
-
-
 }

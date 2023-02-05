@@ -123,7 +123,9 @@
     <ClCompile Include="src\game\game_object\camera_manager\game_camera\game_camera.cpp" />
     <ClCompile Include="src\game\game_object\money_manager\money_manager.cpp" />
     <ClCompile Include="src\game\game_object\stage\stage.cpp" />
+    <ClCompile Include="src\game\game_object\weapon_manager\weapon\fist\fist.cpp" />
     <ClCompile Include="src\game\game_object\weapon_manager\weapon\magic\magic.cpp" />
+    <ClCompile Include="src\game\game_object\weapon_manager\weapon\money_weapon\money_weapon.cpp" />
     <ClCompile Include="src\game\game_object\weapon_manager\weapon\sowrd\sword.cpp" />
     <ClCompile Include="src\game\game_object\weapon_manager\weapon\weapon.cpp" />
     <ClCompile Include="src\game\game_object\weapon_manager\weapon_manager.cpp" />
@@ -161,6 +163,8 @@
     <ClInclude Include="src\game\game_object\stage\stage.h" />
     <ClInclude Include="src\game\game_object\stage\stage_id.h" />
     <ClInclude Include="src\game\game_object\unit_manager\unit\player\player_anime_id.h" />
+    <ClInclude Include="src\game\game_object\weapon_manager\weapon\fist\fist.h" />
+    <ClInclude Include="src\game\game_object\weapon_manager\weapon\money_weapon\money_weapon.h" />
     <ClInclude Include="src\game\game_object\weapon_manager\weapon_manager.h" />
     <ClInclude Include="src\game\game_object\unit_manager\unit_manager.h" />
     <ClInclude Include="src\game\game_object\unit_manager\unit\unit.h" />

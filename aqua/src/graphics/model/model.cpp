@@ -102,7 +102,7 @@ void aqua::CModel::AnimationUpdata()
 
 bool aqua::CModel::AnimetionFinished()
 {
-	return m_Frame >= m_MaxTime;
+	return m_Frame >= m_MaxTime - 1;
 }
 
 bool aqua::CModel::AnimetionFinished(float m_time)

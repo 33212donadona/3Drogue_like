@@ -13,8 +13,13 @@ public:
 	void Update()		override;
 	void Finalize()		override;
 
-	bool GetSelsectLavel();
+	bool GetDecisionSelsectLavel();
+
+	int  GetNowLavel();  //! 今選択しているレベル
+	int  GetPrevLavel(); //! 前フレームで選択していたレベル
+
 	aqua::CVector3 GetTargetPosition();
+
 private:
 
 	static const aqua::CVector2 m_object_space;

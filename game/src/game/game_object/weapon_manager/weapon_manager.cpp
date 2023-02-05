@@ -1,6 +1,8 @@
 #include "weapon_manager.h"
+#include "weapon/fist/fist.h"
 #include "weapon/sowrd/sword.h"
 #include "weapon/magic/magic.h"
+#include "weapon/money_weapon/money_weapon.h"
 #include "weapon/weapon_id.h"
 CWeaponManager::CWeaponManager(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent, "WeaponManager")
@@ -43,6 +45,7 @@ void CWeaponManager::SetWeapon(WEAPON_ID weapon_id)
 	switch (weapon_id)
 	{
 	case WEAPON_ID::FIST:
+		m_Weapon = (IWeapon*)aqua::CreateGameObject<CFist>(this);
 
 		break;
 
@@ -55,7 +58,7 @@ void CWeaponManager::SetWeapon(WEAPON_ID weapon_id)
 		break;
 
 	case WEAPON_ID::MONEY:
-
+		m_Weapon = (IWeapon*)aqua::CreateGameObject<CMoneyWeapon>(this);
 		break;
 
 	default:
@@ -113,6 +116,7 @@ void CWeaponManager::SetHandMatrix(aqua::CModel& model, std::string hand_name)
 	switch (m_NowWeapon)
 	{
 	case WEAPON_ID::FIST:
+		m_Weapon->SetPosition(model.GetBonePosition(m_BoneIndex));
 
 		break;
 
@@ -125,6 +129,7 @@ void CWeaponManager::SetHandMatrix(aqua::CModel& model, std::string hand_name)
 		break;
 
 	case WEAPON_ID::MONEY:
+		m_Weapon->SetPosition(model.GetBonePosition(m_BoneIndex));
 
 		break;
 

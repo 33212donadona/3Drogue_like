@@ -81,7 +81,7 @@ void CMoneyManager::Finalize()
 */
 void CMoneyManager::DepositFluctuation()
 {
-	if (m_PrevDeposit == m_BagData->GetDepositBalance() && !m_BagData)return;
+	if (m_PrevDeposit == m_BagData->GetDepositBalance())return;
 
 	std::string sign;
 	int d = m_BagData->GetDepositBalance() - m_PrevDeposit;

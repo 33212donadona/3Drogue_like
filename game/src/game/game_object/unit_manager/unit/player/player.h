@@ -5,6 +5,7 @@
 
 class CEnemy;
 class CWeaponManager;
+class CBagData;
 
 enum class WEAPON_ID;
 
@@ -51,8 +52,10 @@ public:
 private:
 
 	void AnimetionWork();       //! アニメーション
+	void FistAnimeWork();      //! 
 	void SwordAnimeWork();      //! 
 	void MagicAnimeWork();      //! 
+	void MoneyAnimeWork();      //! 
 	void Move();                //! 移動
 	void Rotation();            //! 回転
 	void Weapon();              //! 武器
@@ -66,6 +69,7 @@ private:
 	static const float m_attack;
 
 	CWeaponManager* m_WeaponManager;
+	CBagData*       m_BagData;
 	WEAPON_ID       m_SetingWeapon;
 	P_ANIME_ID      m_AnimeState;
 

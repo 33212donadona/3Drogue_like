@@ -53,7 +53,6 @@ void CMagic::Update()
 				m_MagicKeepEffect.Play();
 				m_MagicKeepEffect.position = m_MagicFirstEffect.position;
 
-
 				if (!m_Player->GetShotMagic())
 					m_MagicState = MAGIC_STATE::STANDBY;
 			}
@@ -61,7 +60,9 @@ void CMagic::Update()
 			if (m_Player->GetShotMagic())
 			{
 				m_MagicState = MAGIC_STATE::KEEP_MAGIC;
+				m_MagicKeepEffect.position = m_MagicFirstEffect.position;
 				m_MagicKeepEffect.visible = true;
+				m_HitMagic = false;
 			}
 			break;
 		case MAGIC_STATE::KEEP_MAGIC:
@@ -90,7 +91,6 @@ void CMagic::Update()
 
 			break;
 		case MAGIC_STATE::FINISHED_MAGIC:
-
 			if (m_MagicEndEffect.Finished())
 			{
 				m_MagicState = MAGIC_STATE::STANDBY;

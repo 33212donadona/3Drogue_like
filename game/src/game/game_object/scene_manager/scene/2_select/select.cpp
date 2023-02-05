@@ -20,7 +20,7 @@ void CSelect::Initialize()
 void CSelect::Update()
 {
 	// スペースでゲームシーンへ移動
-	if (((CSelectSystem*)aqua::FindGameObject("SelectSystem"))->GetSelsectLavel())
+	if (((CSelectSystem*)aqua::FindGameObject("SelectSystem"))->GetDecisionSelsectLavel())
 	{
 		((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::GAMEMAIN);
 	}
