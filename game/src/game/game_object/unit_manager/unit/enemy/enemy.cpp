@@ -2,7 +2,7 @@
 #include "../player/player.h"
 #include "../../../stage/stage.h"
 
-const float CEnemy::m_max_hit_point = 100.0f;
+const float CEnemy::m_max_hit_point = 280.0f;
 const float CEnemy::m_attack = 10.0f;
 
 /*
@@ -24,7 +24,9 @@ void CEnemy::Initialize()
 	m_Stage = (CStage*)aqua::FindGameObject("Stage");
 
 	m_UnitModel.Create("data\\model\\Enemy", 4);
-	m_HitPoint = 100.0f;
+	m_UnitModel.AttachAnimation(0);
+
+	m_HitPoint = m_max_hit_point;
 
 	//‰ŠúˆÊ’uÝ’è
 	while (m_UnitModel.position == aqua::CVector3::ZERO)
@@ -32,7 +34,6 @@ void CEnemy::Initialize()
 		m_UnitModel.position = m_Stage->GetArePosition(aqua::CPoint(aqua::Rand(21, 1), aqua::Rand(21, 1)));
 	}
 
-	
 	IUnit::Initialize();
 }
 /*
@@ -46,7 +47,7 @@ void CEnemy::Update()
 	{
 		if (m_PlayerModel->CheckHit(m_UnitModel.GetBonePosition(6), m_UnitModel.GetBonePosition(69)) && !m_DamageFlag)
 		{
-			m_HitPoint -= 100.0f;
+			m_HitPoint -= m_PlayerModel->GetAttack();
 			m_DamageFlag = true;
 		}
 	}
@@ -57,6 +58,8 @@ void CEnemy::Update()
 	}
 
 	IUnit::Update();
+
+	m_UnitModel.AnimationUpdata();
 }
 /*
  *  ‰ð•ú

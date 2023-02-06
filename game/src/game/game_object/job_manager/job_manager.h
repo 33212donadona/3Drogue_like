@@ -22,11 +22,14 @@ public:
 
 	JOB_ID GetJobID();
 
+	float  GetJobAttackState();
+	float  GetJobHitPointState();
+
 private:
 
 	JOB_ID m_JobID;
 
-	static const int m_JobAttackState[(int)JOB_ID::MAX];
-	static const int m_JobHitPointState[(int)JOB_ID::MAX];
+	static const float m_JobAttackState[(int)JOB_ID::MAX];
+	static const float m_JobHitPointState[(int)JOB_ID::MAX];
 
 };

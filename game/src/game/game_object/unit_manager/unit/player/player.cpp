@@ -1,4 +1,5 @@
 #include "player.h"
+#include "../../../job_manager/job_manager.h"
 #include "../../../bag/bag_data.h"
 #include "../../../weapon_manager/weapon_manager.h"
 #include "../../../weapon_manager/weapon/weapon_id.h"
@@ -22,6 +23,7 @@ CPlayer::CPlayer(aqua::IGameObject* parent)
 	, m_Standby(false)
 	, m_CancelMagic(false)
 	, m_WeaponManager(nullptr)
+	, m_JobManager(nullptr)
 	, m_SetingWeapon(WEAPON_ID::FIST)
 	, m_AnimeState(P_ANIME_ID::IDLE)
 {
@@ -31,6 +33,8 @@ CPlayer::CPlayer(aqua::IGameObject* parent)
  */
 void CPlayer::Initialize()
 {
+	m_JobManager = aqua::CreateGameObject< CJobManager >(this)  ;
+
 	m_UnitModel.Create("data\\model\\Bot", (int)P_ANIME_ID::MAX);
 
 	m_WeaponManager = (CWeaponManager*)aqua::FindGameObject("WeaponManager");
@@ -53,6 +57,7 @@ void CPlayer::Initialize()
 
 	m_ChageTime.Setup(m_chage_max_time);
 
+	m_JobManager->SetJobID(JOB_ID::STUDENT);
 
 	m_BagData->SetWeapon(0, WEAPON_ID::MONEY, 10, 30);
 	m_BagData->SetWeapon(1, WEAPON_ID::SWORD, 10, 30);
@@ -119,7 +124,7 @@ float CPlayer::GetAngle()
 
 bool CPlayer::GetAttackFlag()
 {
-	return m_Attack;
+	return m_Attack + m_JobManager->GetJobAttackState();
 }
 
 bool CPlayer::GetStandbyFlag()

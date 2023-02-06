@@ -6,6 +6,7 @@
 class CEnemy;
 class CWeaponManager;
 class CBagData;
+class CJobManager;
 
 enum class WEAPON_ID;
 
@@ -49,6 +50,7 @@ public:
 	bool  GetStandbyFlag();
 	bool  GetShotMagic();
 	bool  GetCancelMagic();
+
 private:
 
 	void AnimetionWork();       //! アニメーション
@@ -70,6 +72,8 @@ private:
 
 	CWeaponManager* m_WeaponManager;
 	CBagData*       m_BagData;
+	CJobManager*    m_JobManager;
+
 	WEAPON_ID       m_SetingWeapon;
 	P_ANIME_ID      m_AnimeState;
 
