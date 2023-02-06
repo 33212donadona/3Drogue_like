@@ -38,10 +38,36 @@ private: // 非公開メンバ関数
 	// 枠スプライト（２枚目）
 	aqua::CSprite m_FrameSecond;
 
+	// 銅メダルスプライト
+	aqua::CSprite m_BronzeMedalSprite;
+
+	// 銀メダルスプライト
+	aqua::CSprite m_SilverMedalSprite;
+
+	// 金メダルスプライト
+	aqua::CSprite m_GoldMedalSprite;
+
+	// スコアメータースプライト
+	aqua::CSprite m_ScoreMeter;
+
 	// イージングタイマー
 	aqua::CTimer m_EasingTimer;
 
+private: // 非公開メンバ定数
+
+	static const aqua::CVector2 m_medal_position;
+
 	//////////////////////////////////////////////////////////////
-	aqua::CLabel m_Label;
+	aqua::CLabel m_ClearTimeText;
+	aqua::CLabel m_EasyNumText;
+	aqua::CLabel m_NormalNumText;
+	aqua::CLabel m_HardText;
+	aqua::CLabel m_TotalScoreText;
+
 	float m_ClearTime;
+
+
+	POINT mouse;
+	int X;
+	int Y;
 };
