@@ -2,7 +2,7 @@
 #include "bag_data.h"
 #include "../weapon_manager/weapon/weapon_id.h"
 
-const int CBag::m_max_item = 2;
+const int CBag::m_max_item = 3;
 const int CBag::m_flash_speed = 3;
 const int CBag::m_back_ground_alpha = 200;
 const float CBag::m_scale_time = 0.5f;
@@ -11,7 +11,8 @@ const float CBag::m_bag_sprite_space = 100.0f;
 const std::string CBag::m_file_name[] =
 {
 	"data\\game_graph\\sword.png",
-	"data\\game_graph\\magic.png"
+	"data\\game_graph\\magic.png",
+	"data\\game_graph\\money.png"
 };
 
 /*
@@ -110,7 +111,7 @@ void CBag::Draw()
 
 		for (int i = 0; i < m_BagCapacity; ++i)
 		{
-			int item_id = aqua::Limit((int)m_ItemData[i].id - 1, 0, 1);
+			int item_id = aqua::Limit((int)m_ItemData[i].id - 1, 0, 2);
 
 			m_BagSprite[i].Draw();
 

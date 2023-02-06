@@ -54,7 +54,7 @@ void CPlayer::Initialize()
 	m_ChageTime.Setup(m_chage_max_time);
 
 
-	m_BagData->SetWeapon(0, WEAPON_ID::SWORD, 10, 30);
+	m_BagData->SetWeapon(0, WEAPON_ID::MONEY, 10, 30);
 	m_BagData->SetWeapon(1, WEAPON_ID::SWORD, 10, 30);
 	m_BagData->SetWeapon(2, WEAPON_ID::SWORD, 10, 30);
 
@@ -68,8 +68,8 @@ void CPlayer::Initialize()
  */
 void CPlayer::Update()
 {
-	if (Input::In(Input::KEY_ID::B ))
-		if (m_WeaponManager) 
+	if (Input::In(Input::KEY_ID::B) && m_BagData->GetBagFlag())
+		if (m_WeaponManager)
 		{
 			m_WeaponManager->SetWeapon(m_BagData->GetWeaponData(m_BagData->GetSelectBagNumber()).id);
 			m_SetingWeapon = m_BagData->GetWeaponData(m_BagData->GetSelectBagNumber()).id;
@@ -109,7 +109,7 @@ int CPlayer::GetAnimetionNum()
 
 bool CPlayer::CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
 {
-	return m_WeaponManager->CheckHit(first_pos, end_pos);// && m_Attack;
+	return m_WeaponManager->CheckHit(first_pos, end_pos) && m_Attack;
 }
 
 float CPlayer::GetAngle()
@@ -292,6 +292,7 @@ void CPlayer::MoneyAnimeWork()
 	if (Input::In(Input::KEY_ID::B))
 	{
 		m_AnimeState = P_ANIME_ID::MONEY_SHOT;
+		m_BagData->AddToDepositBalance(-100);
 	}
 	if (m_AnimeState == P_ANIME_ID::MONEY_SHOT && m_UnitModel.AnimetionFinished(30.0f))
 	{

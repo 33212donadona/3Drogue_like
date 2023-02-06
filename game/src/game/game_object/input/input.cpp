@@ -13,7 +13,7 @@ void Input::Updata()
 		m_PrevInputKey[i] = m_InputKey[i];
 
 	m_InputKey[(int)KEY_ID::A] =
-		mou::Button(mou::BUTTON_ID::RIGHT) ||
+		key::Button(key::KEY_ID::V)||
 		con::Button(con::DEVICE_ID::P1, con::BUTTON_ID::A);
 
 	m_InputKey[(int)KEY_ID::B] =
@@ -25,7 +25,7 @@ void Input::Updata()
 		con::Button(con::DEVICE_ID::P1, con::BUTTON_ID::X);
 
 	m_InputKey[(int)KEY_ID::Y] =
-		key::Button(key::KEY_ID::V) ||
+		mou::Button(mou::BUTTON_ID::RIGHT) ||
 		con::Button(con::DEVICE_ID::P1, con::BUTTON_ID::Y);
 
 	m_InputKey[(int)KEY_ID::R] =

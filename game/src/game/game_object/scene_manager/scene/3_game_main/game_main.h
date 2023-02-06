@@ -5,6 +5,7 @@
 
 class CUnitManager;
 class CCommonData;
+class CLoopGame;
 
 class CGameMain : public IScene
 {
@@ -20,6 +21,7 @@ public:
 
 private:
 	CUnitManager*     m_UnitManager;
+	CLoopGame*        m_LoopGame;
 	CCommonData*      m_CommonData;
 	CommonDataInfo    m_GameData;
 	float             m_Frame;      //! 1•b‚ÌƒtƒŒ[ƒ€”

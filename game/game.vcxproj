@@ -101,7 +101,9 @@
     <ClCompile Include="src\game\game_object\camera_manager\camera.cpp" />
     <ClCompile Include="src\game\game_object\camera_manager\select_camera\select_camera.cpp" />
     <ClCompile Include="src\game\game_object\input\input.cpp" />
+    <ClCompile Include="src\game\game_object\job_manager\job_manager.cpp" />
     <ClCompile Include="src\game\game_object\scene_manager\scene\2_select\select_system\select_system.cpp" />
+    <ClCompile Include="src\game\game_object\scene_manager\scene\3_game_main\loop_game\loop_game.cpp" />
     <ClCompile Include="src\game\game_object\select_back_ground\select_back_ground.cpp" />
     <ClCompile Include="src\game\game_object\scene_manager\scene\2_select\select.cpp" />
     <ClCompile Include="src\game\game_object\common_data\common_data.cpp" />
@@ -138,7 +140,9 @@
     <ClInclude Include="src\game\game_object\camera_manager\select_camera\select_camera.h" />
     <ClInclude Include="src\game\game_object\common_data\common_data_info.h" />
     <ClInclude Include="src\game\game_object\input\input.h" />
+    <ClInclude Include="src\game\game_object\job_manager\job_manager.h" />
     <ClInclude Include="src\game\game_object\scene_manager\scene\2_select\select_system\select_system.h" />
+    <ClInclude Include="src\game\game_object\scene_manager\scene\3_game_main\loop_game\loop_game.h" />
     <ClInclude Include="src\game\game_object\select_back_ground\select_back_ground.h" />
     <ClInclude Include="src\game\game_object\scene_manager\scene\2_select\select.h" />
     <ClInclude Include="src\game\game_object\common_data\common_data.h" />

@@ -37,7 +37,7 @@ private:
 	static const float       m_scale_time;
 	static const float       m_scale_bag_sprite;
 	static const float       m_bag_sprite_space;
-	static const std::string m_file_name[2];
+	static const std::string m_file_name[3];
 
 	aqua::CSprite* m_BagSprite;                            //! バックの中
 	std::vector<std::vector<aqua::CSprite>> m_ItemSprite;  //! アイテムの画像

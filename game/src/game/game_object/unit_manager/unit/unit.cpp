@@ -170,3 +170,8 @@ bool IUnit::GetDead()
 {
 	return DeadFlag;
 }
+
+IUnit::STATE IUnit::GetState()
+{
+	return m_State;
+}

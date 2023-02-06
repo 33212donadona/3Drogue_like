@@ -2,6 +2,7 @@
 #include "../weapon.h"
 
 class CPlayer;
+class CBagData;
 
 class CMoneyWeapon :public IWeapon
 {
@@ -27,5 +28,6 @@ private:
 
 	bool            m_HitMoney;
 
-	CPlayer* m_Player;
+	CPlayer*  m_Player;
+	CBagData* m_BagData;
 };

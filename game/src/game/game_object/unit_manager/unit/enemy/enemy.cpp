@@ -42,12 +42,14 @@ void CEnemy::Update()
 {
 	Algorithms();
 
-	if (m_PlayerModel->CheckHit(m_UnitModel.GetBonePosition(6), m_UnitModel.GetBonePosition(69)) && !m_DamageFlag)
+	if (GetState() != STATE::DEAD)
 	{
-		m_HitPoint -= 100.0f;
-		m_DamageFlag = true;
+		if (m_PlayerModel->CheckHit(m_UnitModel.GetBonePosition(6), m_UnitModel.GetBonePosition(69)) && !m_DamageFlag)
+		{
+			m_HitPoint -= 100.0f;
+			m_DamageFlag = true;
+		}
 	}
-
 	if (m_DamageFlag)
 	{
 		if (!m_PlayerModel->CheckHit(m_UnitModel.GetBonePosition(6), m_UnitModel.GetBonePosition(69)))

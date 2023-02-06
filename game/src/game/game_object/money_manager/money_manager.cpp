@@ -13,6 +13,7 @@ CMoneyManager::CMoneyManager(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent, "MoneyManager")
 	, m_PrevDeposit(0)
 {
+
 }
 
 /*

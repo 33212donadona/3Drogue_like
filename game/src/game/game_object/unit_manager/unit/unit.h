@@ -23,6 +23,7 @@ public:
 	float GetHitPoint();
 	aqua::CVector3 GetPosition();
 	bool  GetDead();
+
 public:
 
 	enum class STATE
@@ -31,6 +32,8 @@ public:
 		MOVE,
 		DEAD
 	};
+
+	STATE GetState();
 
 private:
 

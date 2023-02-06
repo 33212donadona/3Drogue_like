@@ -1,5 +1,6 @@
 #include "bag_data.h"
 #include "../weapon_manager/weapon/weapon_id.h"
+#include "../input/input.h"
 
 const int CBagData::m_max_item = 2;
 const int CBagData::m_bag_capacity = 3;
@@ -31,7 +32,7 @@ void CBagData::Initialize()
  */
 void CBagData::Update()
 {
-	if (KEY::Trigger(KEY::KEY_ID::SPACE))
+	if (Input::In(Input::KEY_ID::Y))
 		m_BagFlag = !m_BagFlag;
 
 	if (m_BagFlag)
@@ -61,6 +62,10 @@ void CBagData::SetWeapon(int bag_num,WEAPON_STATE state)
 {
 	int num = aqua::Limit(bag_num, 0, m_bag_capacity - 1);
 
+	WEAPON_STATE ws = state;
+
+	ws.id = WEAPON_ID((int)state.id % (int)WEAPON_ID::MONEY);
+
 	m_BagInventory[num] = state;
 }
 
@@ -71,7 +76,7 @@ void CBagData::SetWeapon(int const bag_num, WEAPON_ID id, float attack, float du
 {
 	WEAPON_STATE w;
 
-	w.id = id;
+	w.id = WEAPON_ID((int)id % (int)WEAPON_ID::MONEY);
 	w.attack = attack;
 	w.durability = durability;
 

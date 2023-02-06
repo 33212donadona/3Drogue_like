@@ -1,4 +1,5 @@
 #include "money_weapon.h"
+#include "../../../bag/bag_data.h"
 #include "../../../unit_manager/unit/player/player.h"
 #include "../../../input/input.h"
 
@@ -8,6 +9,7 @@ const int CMoneyWeapon::m_enemy_radius = 3;
 CMoneyWeapon::CMoneyWeapon(aqua::IGameObject* parent)
 	:IWeapon(parent, "MoneyWeapon")
 	, m_Player(nullptr)
+	, m_BagData(nullptr)
 {
 }
 
@@ -15,6 +17,7 @@ void CMoneyWeapon::Initialize()
 {
 	m_MoneyEffect.Create("data\\effect\\coin_attack.efkefc");
 	m_MoneyEffect.scale = aqua::CVector3::ONE * 10.0f;
+	m_BagData = (CBagData*)aqua::FindGameObject("BagData");
 }
 
 void CMoneyWeapon::Update()
@@ -54,7 +57,7 @@ bool CMoneyWeapon::CheckHit(aqua::CVector3 enemy_pos)
 
 	hit = distance.x * distance.x + distance.y * distance.y <= r * r;
 
-	if (hit)
+	if (hit && m_Player)
 	{
 		aqua::CVector3 angle = enemy_pos - m_MoneyPosition;
 		float theta = atan2(angle.x, angle.z);
