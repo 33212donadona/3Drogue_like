@@ -31,7 +31,7 @@ JOB_ID CJobManager::GetJobID()
 
 float CJobManager::GetJobAttackState()
 {
-	return m_JobHitPointState[(int)m_JobID];
+	return m_JobAttackState[(int)m_JobID];
 }
 
 float CJobManager::GetJobHitPointState()

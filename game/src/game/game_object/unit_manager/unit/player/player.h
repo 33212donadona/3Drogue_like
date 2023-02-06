@@ -9,6 +9,7 @@ class CBagData;
 class CJobManager;
 
 enum class WEAPON_ID;
+enum class JOB_ID;
 
 class CPlayer : public IUnit
 {
@@ -51,6 +52,8 @@ public:
 	bool  GetShotMagic();
 	bool  GetCancelMagic();
 
+	JOB_ID GetPlayerJob();
+
 private:
 
 	void AnimetionWork();       //! アニメーション
@@ -75,6 +78,7 @@ private:
 	CJobManager*    m_JobManager;
 
 	WEAPON_ID       m_SetingWeapon;
+	JOB_ID          m_PlayerJobID;
 	P_ANIME_ID      m_AnimeState;
 
 	aqua::CTimer    m_ChageTime;
@@ -84,6 +88,6 @@ private:
 
 	bool m_Standby;
 	bool m_ShotMagic;
-	bool m_Attack;
+	bool m_AttackFlag;
 	bool m_CancelMagic;
 };

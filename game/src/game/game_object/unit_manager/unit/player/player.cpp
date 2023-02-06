@@ -18,7 +18,7 @@ const float CPlayer::m_attack = 50.0f;
 CPlayer::CPlayer(aqua::IGameObject* parent)
 	:IUnit(parent, "Player")
 	, m_Angles(0.0f)
-	, m_Attack(false)
+	, m_AttackFlag(false)
 	, m_ShotMagic(false)
 	, m_Standby(false)
 	, m_CancelMagic(false)
@@ -26,6 +26,7 @@ CPlayer::CPlayer(aqua::IGameObject* parent)
 	, m_JobManager(nullptr)
 	, m_SetingWeapon(WEAPON_ID::FIST)
 	, m_AnimeState(P_ANIME_ID::IDLE)
+	, m_PlayerJobID(JOB_ID::STUDENT)
 {
 }
 /*
@@ -33,12 +34,12 @@ CPlayer::CPlayer(aqua::IGameObject* parent)
  */
 void CPlayer::Initialize()
 {
-	m_JobManager = aqua::CreateGameObject< CJobManager >(this)  ;
+	m_JobManager = aqua::CreateGameObject< CJobManager >(this);
 
 	m_UnitModel.Create("data\\model\\Bot", (int)P_ANIME_ID::MAX);
 
 	m_WeaponManager = (CWeaponManager*)aqua::FindGameObject("WeaponManager");
-	m_BagData =       (CBagData*)aqua::FindGameObject("BagData");
+	m_BagData = (CBagData*)aqua::FindGameObject("BagData");
 
 	m_Stage = (CStage*)aqua::FindGameObject("Stage");
 
@@ -50,22 +51,23 @@ void CPlayer::Initialize()
 
 	m_UnitModel.AttachAnimation((int)m_AnimeState);
 
-
 	m_HitPoint = 100;
 
 	m_WeaponManager->SetHandMatrix(m_UnitModel, "mixamorig:RightHandThumb1");
 
 	m_ChageTime.Setup(m_chage_max_time);
 
-	m_JobManager->SetJobID(JOB_ID::STUDENT);
+	m_JobManager->SetJobID(m_PlayerJobID);
 
-	m_BagData->SetWeapon(0, WEAPON_ID::MONEY, 10, 30);
+	m_BagData->SetWeapon(0, WEAPON_ID::MONEY, 50, 30);
 	m_BagData->SetWeapon(1, WEAPON_ID::SWORD, 10, 30);
 	m_BagData->SetWeapon(2, WEAPON_ID::SWORD, 10, 30);
 
-	m_WeaponManager->SetWeapon(m_BagData->GetWeaponData(m_BagData->GetSelectBagNumber()).id);
 	m_SetingWeapon = m_BagData->GetWeaponData(m_BagData->GetSelectBagNumber()).id;
+	m_WeaponManager->SetWeapon(m_SetingWeapon);
 	IUnit::Initialize();
+
+	m_Attack = m_JobManager->GetJobAttackState() + m_BagData->GetWeaponData(m_BagData->GetSelectBagNumber()).attack;
 }
 
 /*
@@ -114,7 +116,7 @@ int CPlayer::GetAnimetionNum()
 
 bool CPlayer::CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
 {
-	return m_WeaponManager->CheckHit(first_pos, end_pos) && m_Attack;
+	return m_WeaponManager->CheckHit(first_pos, end_pos) && m_AttackFlag;
 }
 
 float CPlayer::GetAngle()
@@ -124,7 +126,7 @@ float CPlayer::GetAngle()
 
 bool CPlayer::GetAttackFlag()
 {
-	return m_Attack + m_JobManager->GetJobAttackState();
+	return m_AttackFlag;
 }
 
 bool CPlayer::GetStandbyFlag()
@@ -140,6 +142,11 @@ bool CPlayer::GetShotMagic()
 bool CPlayer::GetCancelMagic()
 {
 	return m_CancelMagic;
+}
+
+JOB_ID CPlayer::GetPlayerJob()
+{
+	return m_PlayerJobID;
 }
 
 /*
@@ -172,7 +179,7 @@ void CPlayer::AnimetionWork()
 */
 void CPlayer::FistAnimeWork()
 {
-	if (!m_Attack)
+	if (!m_AttackFlag)
 	{
 		if (Input::Horizotal() || Input::Vertical())
 			m_AnimeState = P_ANIME_ID::RUN;
@@ -182,31 +189,31 @@ void CPlayer::FistAnimeWork()
 
 	if (Input::In(Input::KEY_ID::B))
 	{
-		m_Attack = true;
+		m_AttackFlag = true;
 		m_AnimeState = P_ANIME_ID::SLASH;
 	}
 
 	if (m_UnitModel.AnimetionFinished() && m_AnimeState == P_ANIME_ID::SLASH)
-		m_Attack = false;
+		m_AttackFlag = false;
 }
 /*
 *  剣の時のアニメーション
 */
 void CPlayer::SwordAnimeWork()
 {
-	if (Input::In(Input::KEY_ID::B) && !m_Attack)
+	if (Input::In(Input::KEY_ID::B) && !m_AttackFlag)
 	{
 
 		m_AnimeState = P_ANIME_ID::SLASH;
-		m_Attack = true;
+		m_AttackFlag = true;
 	}
 
-	if (m_Attack && m_UnitModel.AnimetionFinished(60.0f))
+	if (m_AttackFlag && m_UnitModel.AnimetionFinished(60.0f))
 	{
-		m_Attack = false;
+		m_AttackFlag = false;
 	}
 
-	if (!m_Attack)
+	if (!m_AttackFlag)
 	{
 		if (Input::Horizotal() || Input::Vertical())
 			m_AnimeState = P_ANIME_ID::RUN;
@@ -220,7 +227,7 @@ void CPlayer::SwordAnimeWork()
 */
 void CPlayer::MagicAnimeWork()
 {
-	if (!m_Attack && m_AnimeState != P_ANIME_ID::MAGIC_SHOT)
+	if (!m_AttackFlag && m_AnimeState != P_ANIME_ID::MAGIC_SHOT)
 	{
 		if (Input::Horizotal() || Input::Vertical())
 		{
@@ -270,12 +277,12 @@ void CPlayer::MagicAnimeWork()
 	{
 		if (m_UnitModel.AnimetionFinished(54.0f))
 		{
-			m_Attack = true;
+			m_AttackFlag = true;
 		}
 
-		if (m_UnitModel.AnimetionFinished(80.0f) && m_Attack)
+		if (m_UnitModel.AnimetionFinished(80.0f) && m_AttackFlag)
 		{
-			m_Attack = false;
+			m_AttackFlag = false;
 			m_ShotMagic = false;
 			m_AnimeState = P_ANIME_ID::IDLE;
 		}
@@ -286,7 +293,7 @@ void CPlayer::MagicAnimeWork()
 */
 void CPlayer::MoneyAnimeWork()
 {
-	if (!m_Attack && m_AnimeState != P_ANIME_ID::MONEY_SHOT)
+	if (!m_AttackFlag && m_AnimeState != P_ANIME_ID::MONEY_SHOT)
 	{
 		if (Input::Horizotal() || Input::Vertical())
 			m_AnimeState = P_ANIME_ID::RUN;
@@ -301,11 +308,11 @@ void CPlayer::MoneyAnimeWork()
 	}
 	if (m_AnimeState == P_ANIME_ID::MONEY_SHOT && m_UnitModel.AnimetionFinished(30.0f))
 	{
-		m_Attack = true;
+		m_AttackFlag = true;
 	}
 	if (m_AnimeState == P_ANIME_ID::MONEY_SHOT && m_UnitModel.AnimetionFinished(30.0f + 1.0f))
 	{
-		m_Attack = false;
+		m_AttackFlag = false;
 	}
 	if (m_AnimeState == P_ANIME_ID::MONEY_SHOT && m_UnitModel.AnimetionFinished())
 	{
@@ -326,7 +333,7 @@ void CPlayer::Move()
 	if (m_Stage->CheckObject(m_UnitModel.position + aqua::CVector3(0.0f, 0.0f, z * 4.5f)))
 		z = 0.0f;
 
-	if (m_Attack || m_AnimeState == P_ANIME_ID::MAGIC_SHOT || m_AnimeState == P_ANIME_ID::MONEY_SHOT)
+	if (m_AttackFlag || m_AnimeState == P_ANIME_ID::MAGIC_SHOT || m_AnimeState == P_ANIME_ID::MONEY_SHOT)
 	{
 		x = 0.0f;
 		z = 0.0f;
@@ -341,7 +348,7 @@ void CPlayer::Move()
 */
 void CPlayer::Rotation()
 {
-	if (!m_Attack && m_AnimeState != P_ANIME_ID::MAGIC_SHOT && m_AnimeState != P_ANIME_ID::MONEY_SHOT)
+	if (!m_AttackFlag && m_AnimeState != P_ANIME_ID::MAGIC_SHOT && m_AnimeState != P_ANIME_ID::MONEY_SHOT)
 		if (Input::Horizotal() || Input::Vertical())
 			m_Angles = atan2(Input::Horizotal(), -Input::Vertical());
 

@@ -11,6 +11,5 @@ enum class P_ANIME_ID
 	MAGIC_RUN,
 	MAGIC_IDLE,
 
-
 	MAX
 };
