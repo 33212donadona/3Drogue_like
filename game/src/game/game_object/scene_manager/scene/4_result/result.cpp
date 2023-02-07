@@ -1,5 +1,5 @@
 #include "result.h"
-
+#include "../../../input/input.h"
 #include "../../../common_data/common_data.h"
 
 const aqua::CVector2 CResult::m_medal_position = { 1000,100 };
@@ -81,7 +81,7 @@ void CResult::Update(void)
 	//m_ClearTimeText.text = std::to_string(X) + "/" + std::to_string(Y);
 
 	// 「スペース」キーを押すとタイトルシーンへ遷移する
-	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::SPACE))
+	if (Input::In(Input::KEY_ID::B))
 		((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::TITLE);
 
 	// タイマーが終了していなければ、タイマーを更新し続ける

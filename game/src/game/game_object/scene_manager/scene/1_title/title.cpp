@@ -1,5 +1,6 @@
 #include "title.h"
 #include "../../../sound_manager/game_sound_manager.h"
+#include "../../../input/input.h"
 CTitle::CTitle(aqua::IGameObject* parent)
 // parent(scene_manager)
 	: IScene(parent, "Title")
@@ -9,7 +10,6 @@ CTitle::CTitle(aqua::IGameObject* parent)
 void CTitle::Initialize(void)
 {
 	
-
 	m_SoundManager = (CGameSoundManager*)aqua::FindGameObject("GameSoundManager");
 	m_SoundManager->Play(SoundID::TITLE_BGM);
 	m_TitleSprite.Create("data\\title_graph\\title.png");
@@ -73,11 +73,13 @@ void CTitle::Initialize(void)
 
 void CTitle::Update(void)
 {
-	// スペースでゲームシーンへ移動
+	// Lでゲームシーンへ移動
+#ifdef AQUA_DEBUG
 	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::L))
 	{
 		((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::RESULT);
 	}
+#endif
 
 	if (!m_TitleStartTimer.Finished())
 	{
@@ -147,7 +149,7 @@ void CTitle::Update(void)
 
 
 	// スペースでゲームシーンへ移動
-	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::SPACE))
+	if (Input::In(Input::KEY_ID::B))
 	{
 		((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::SELECT);
 	}

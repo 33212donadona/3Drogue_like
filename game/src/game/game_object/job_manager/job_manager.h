@@ -1,15 +1,6 @@
 #pragma once
 #include "aqua.h"
-
-enum class JOB_ID
-{
-	STUDENT,
-	SWORDMAN,
-	WIZARD,
-	TEX_COLLECTOR,
-
-	MAX
-};
+#include "job_id.h"
 
 class CJobManager : public aqua::IGameObject
 {

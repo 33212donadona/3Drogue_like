@@ -1,14 +1,12 @@
 #include "game_main.h"
-#include "loop_game/loop_game.h"
 
 #include "../../../common_data/common_data.h"
-#include "../../../unit_manager/unit_manager.h"
-#include "../../../stage/stage.h"
-#include "../../../camera_manager/game_camera/game_camera.h"
+#include "../../../sound_manager/game_sound_manager.h"
+#include "../../../bag/bag_data.h"
+#include "loop_game/loop_game.h"
+#include "../../../ui_manager/ui_manager.h"
 #include "../../../money_manager/money_manager.h"
 #include "../../../bag/bag.h"
-#include "../../../bag/bag_data.h"
-#include "../../../sound_manager/game_sound_manager.h"
 
 CGameMain::CGameMain(IGameObject* parent)
 	:IScene(parent, "GameMain")
@@ -22,11 +20,8 @@ void CGameMain::Initialize()
 	m_SoundManager = (CGameSoundManager*)aqua::FindGameObject("GameSoundManager");
 	m_SoundManager->Play(SoundID::GAME_BGM);
 	aqua::CreateGameObject<CBagData>(this);
-	//aqua::CreateGameObject<CStage>(this);
-	//m_UnitManager = aqua::CreateGameObject<CUnitManager>(this);
-	//aqua::CreateGameObject<CGameCamera>(this);
-
 	m_LoopGame = aqua::CreateGameObject<CLoopGame>(this);
+	aqua::CreateGameObject<CUIManager>(this);
 	aqua::CreateGameObject<CMoneyManager>(this);
 	aqua::CreateGameObject<CBag>(this);
 
@@ -45,22 +40,6 @@ void CGameMain::Update()
 
 	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::Z))
 		((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::RESULT);
-
-	//if (m_UnitManager->EmptyEnemyList())
-	//{
-	//	m_GameData.crea_stage++;
-	//
-	//	if (m_GameData.crea_stage == m_CommonData->GetData().crea_target)
-	//	{
-	//		((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::RESULT);
-	//		m_GameData.game_crea_time += m_Timer;
-	//	}
-	//	else
-	//	{
-	//		((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::GAMEMAIN);
-	//	}
-	//	m_CommonData->SetData(m_GameData);
-	//}
 
 	if(m_LoopGame->ChengeResult())
 			((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::RESULT);

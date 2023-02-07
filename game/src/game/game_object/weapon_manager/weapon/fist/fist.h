@@ -1,6 +1,8 @@
 #pragma once
 #include "../weapon.h"
 
+class CPlayer;
+
 class CFist :public IWeapon
 {
 public:
@@ -21,6 +23,8 @@ private:
 	static const int m_enemy_radius;
 
 	bool m_HitFist;
+
+	CPlayer* m_Player;
 
 	aqua::CVector3 m_FistPosition;
 	aqua::CEffect3D m_HitFistEffect;

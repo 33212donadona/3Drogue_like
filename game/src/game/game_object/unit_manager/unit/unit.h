@@ -20,6 +20,7 @@ public:
 	virtual void MoveUpdata(){};
 
 	float GetAttack();
+	float GetMaxHitPoint();
 	float GetHitPoint();
 	aqua::CVector3 GetPosition();
 	bool  GetDead();
@@ -59,6 +60,7 @@ private:
 protected:
 
 	float m_HitPoint;
+	float m_MaxHitPoint;
 	float m_Attack;
 	aqua::CVector3 m_position;
 	aqua::CModel m_UnitModel;

@@ -117,6 +117,10 @@
     <ClCompile Include="src\game\game_object\stage\stage_object\tree\object_tree.cpp" />
     <ClCompile Include="src\game\game_object\stage\stage_object\rock\object_rock.cpp" />
     <ClCompile Include="src\game\game_object\stage\stage_object\object.cpp" />
+    <ClCompile Include="src\game\game_object\ui_manager\ui\hitpoint_ui\hitpoint_ui.cpp" />
+    <ClCompile Include="src\game\game_object\ui_manager\ui\job_icom\job_icom.cpp" />
+    <ClCompile Include="src\game\game_object\ui_manager\ui\ui.cpp" />
+    <ClCompile Include="src\game\game_object\ui_manager\ui_manager.cpp" />
     <ClCompile Include="src\game\game_object\unit_manager\unit\enemy\enemy.cpp" />
     <ClCompile Include="src\game\game_object\unit_manager\unit\player\player.cpp" />
     <ClCompile Include="src\game\game.cpp" />
@@ -140,6 +144,7 @@
     <ClInclude Include="src\game\game_object\camera_manager\select_camera\select_camera.h" />
     <ClInclude Include="src\game\game_object\common_data\common_data_info.h" />
     <ClInclude Include="src\game\game_object\input\input.h" />
+    <ClInclude Include="src\game\game_object\job_manager\job_id.h" />
     <ClInclude Include="src\game\game_object\job_manager\job_manager.h" />
     <ClInclude Include="src\game\game_object\scene_manager\scene\2_select\select_system\select_system.h" />
     <ClInclude Include="src\game\game_object\scene_manager\scene\3_game_main\loop_game\loop_game.h" />
@@ -157,6 +162,10 @@
     <ClInclude Include="src\game\game_object\stage\stage_object\tree\object_tree.h" />
     <ClInclude Include="src\game\game_object\stage\stage_object\rock\object_rock.h" />
     <ClInclude Include="src\game\game_object\stage\stage_object\object.h" />
+    <ClInclude Include="src\game\game_object\ui_manager\ui\hitpoint_ui\hitpoint_ui.h" />
+    <ClInclude Include="src\game\game_object\ui_manager\ui\job_icom\job_icom.h" />
+    <ClInclude Include="src\game\game_object\ui_manager\ui\ui.h" />
+    <ClInclude Include="src\game\game_object\ui_manager\ui_manager.h" />
     <ClInclude Include="src\game\game_object\unit_manager\unit\enemy\enemy.h" />
     <ClInclude Include="src\game\game_object\unit_manager\unit\player\player.h" />
     <ClInclude Include="src\game\game.h" />

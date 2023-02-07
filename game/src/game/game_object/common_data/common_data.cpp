@@ -5,12 +5,6 @@ const int CCommonData::m_selct_max_crea_target = 3;
 CCommonData::CCommonData(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent, "CommonData")
 {
-	m_MapData.crea_target = 10;
-	m_MapData.crea_stage = 0;
-	m_MapData.easy = 0;
-	m_MapData.normal = 0;
-	m_MapData.hard = 0;
-	m_MapData.game_crea_time = 0.0f;
 }
 
 void CCommonData::SetData(CommonDataInfo common_data)
@@ -21,10 +15,19 @@ void CCommonData::SetData(CommonDataInfo common_data)
 	m_MapData.normal = common_data.normal;
 	m_MapData.hard = common_data.hard;
 	m_MapData.game_crea_time = common_data.game_crea_time;
-
+	m_MapData.now_job = common_data.now_job;
 }
 
-void CCommonData::SetData(int max_stage, int crea_stage, int easy, int normal, int hard, float game_crea_time)
+void CCommonData::SetData
+(
+	int max_stage, 
+	int crea_stage, 
+	int easy, 
+	int normal, 
+	int hard, 
+	float game_crea_time,
+	JOB_ID job_id
+)
 {
 	if (m_MapData.crea_target != max_stage)
 		m_MapData.crea_target = max_stage;
@@ -43,6 +46,9 @@ void CCommonData::SetData(int max_stage, int crea_stage, int easy, int normal, i
 
 	if (m_MapData.game_crea_time != game_crea_time)
 		m_MapData.game_crea_time = game_crea_time;
+
+	if (m_MapData.now_job != job_id)
+		m_MapData.now_job = job_id;
 }
 
 CommonDataInfo CCommonData::GetData()

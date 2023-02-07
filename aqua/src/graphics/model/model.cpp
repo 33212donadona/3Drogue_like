@@ -5,6 +5,7 @@
 *  コンストラクタ
 */
 aqua::CModel::CModel()
+	: m_AttachIndex(0)
 {
 }
 

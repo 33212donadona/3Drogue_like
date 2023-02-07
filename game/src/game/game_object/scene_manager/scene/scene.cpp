@@ -8,7 +8,7 @@ IScene::IScene(aqua::IGameObject* parent, const std::string& name)
 
 void IScene::Draw(void)
 {
-#ifdef _DEBUG
+#ifdef AQUA_DEBUG
 	m_Label.Draw();
 #endif // _DEBUG
 

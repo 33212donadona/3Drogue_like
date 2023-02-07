@@ -1,10 +1,11 @@
 #include "fist.h"
-
+#include "../../../unit_manager/unit/player/player.h"
 const int CFist::m_fist_radius = 2;
 const int CFist::m_enemy_radius = 3;
 
 CFist::CFist(aqua::IGameObject* parent)
 	:IWeapon(parent,"Fist")
+	, m_Player(nullptr)
 {
 }
 
@@ -15,12 +16,18 @@ void CFist::Initialize()
 
 void CFist::Update()
 {
-	if (m_HitFist)
+	if (!m_Player)
 	{
-		m_HitFistEffect.position = m_FistPosition;
-		m_HitFistEffect.Play();
+		m_Player = (CPlayer*)aqua::FindGameObject("Player");
 	}
-
+	else
+	{
+		if (m_HitFist && m_Player->GetAttackFlag())
+		{
+			m_HitFistEffect.position = m_FistPosition;
+			m_HitFistEffect.Play();
+		}
+	}
 	m_HitFistEffect.Update();
 }
 
