@@ -3,6 +3,7 @@
 #include "../../../../unit_manager/unit_manager.h"
 #include "../../../../camera_manager/game_camera/game_camera.h"
 #include "../../../../common_data/common_data.h"
+#include "../../../../scene_manager/scene/3_game_main/game_main.h"
 
 CLoopGame::CLoopGame(IGameObject* parent)
 	:aqua::IGameObject(parent, "LoopGame")
@@ -31,8 +32,10 @@ void CLoopGame::Update()
 			{
 				// 現在のユニットの解放処理を行う
 				m_UnitManager->Finalize();
+
 				// 現在のユニットを削除する（子リストから外す）
 				m_ChildObjectList.erase(std::find(m_ChildObjectList.begin(), m_ChildObjectList.end(), m_UnitManager));
+
 				// ポインタの破棄＆NULL化
 				AQUA_SAFE_DELETE(m_UnitManager)
 			}
@@ -44,6 +47,8 @@ void CLoopGame::Update()
 			aqua::CreateGameObject<CGameCamera>(this);
 
 			IGameObject::Initialize();
+
+			m_GameData.game_crea_time = ((CGameMain*)aqua::FindGameObject("GameMain"))->GetGameTime();
 		}
 
 		m_CommonData->SetData(m_GameData);

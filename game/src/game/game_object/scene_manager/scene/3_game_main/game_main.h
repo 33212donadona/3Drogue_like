@@ -19,6 +19,8 @@ public:
 	void Draw()			override;
 	void Finalize()		override;
 
+	float GetGameTime(void);
+
 private:
 	CUnitManager*     m_UnitManager;
 	CLoopGame*        m_LoopGame;
@@ -26,4 +28,5 @@ private:
 	CommonDataInfo    m_GameData;
 	float             m_Frame;      //! 1•b‚ÌƒtƒŒ[ƒ€”
 	float             m_Timer;      //! •b”
+	aqua::CTimer	  m_GameTimer;
 };

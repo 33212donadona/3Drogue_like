@@ -33,16 +33,15 @@ void CGameMain::Initialize()
 	m_CommonData = (CCommonData*)aqua::FindGameObject("CommonData");
 	m_GameData = m_CommonData->GetData();
 	aqua::IGameObject::Initialize();
+
+	// ゲームタイマーセット
+	m_GameTimer.Setup(1000.0f);
 }
 
 void CGameMain::Update()
 {
-	// 時間
-	if (++m_Frame >= 60)
-	{
-		m_Timer += aqua::GetDeltaTime();
-		m_Frame = 0.0f;
-	}
+	// ゲームタイマーの更新
+	m_GameTimer.Update();
 
 	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::Z))
 		((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::RESULT);
@@ -78,4 +77,9 @@ void CGameMain::Finalize()
 {
 	m_SoundManager->Stop(SoundID::GAME_BGM);
 	aqua::IGameObject::Finalize();
+}
+
+float CGameMain::GetGameTime(void)
+{
+	return m_GameTimer.GetTime();
 }
