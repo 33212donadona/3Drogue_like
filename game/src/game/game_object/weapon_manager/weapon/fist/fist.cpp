@@ -22,7 +22,7 @@ void CFist::Update()
 	}
 	else
 	{
-		if (m_HitFist && m_Player->GetAttackFlag())
+		if (m_HitFist && m_Player->GetAttackFlag() && m_HitFistEffect.Finished())
 		{
 			m_HitFistEffect.position = m_FistPosition;
 			m_HitFistEffect.Play();

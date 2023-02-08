@@ -20,16 +20,17 @@ CPlayer::CPlayer(aqua::IGameObject* parent)
 	:IUnit(parent, "Player")
 	, m_Angles(0.0f)
 	, m_AttackFlag(false)
-	, m_ShotMagic(false)
+	, m_ShotFlag(false)
 	, m_Standby(false)
 	, m_CancelMagic(false)
 	, m_WeaponManager(nullptr)
 	, m_JobManager(nullptr)
 	, m_CommonData(nullptr)
-	, m_SetingWeapon(WEAPON_ID::FIST)
 	, m_AnimeState(P_ANIME_ID::IDLE)
 	, m_PlayerJobID(JOB_ID::STUDENT)
 {
+	for (int sw_i = 0; sw_i < (int)JOB_ID::MAX; sw_i++)
+		m_SetingWeapon[sw_i] = (WEAPON_ID)sw_i;
 }
 /*
  *  ‰Šú‰»
@@ -58,23 +59,24 @@ void CPlayer::Initialize()
 	m_ChageTime.Setup(m_chage_max_time);
 
 
+
+	m_CommonDataInfo = m_CommonData->GetData();
+	
 	// E‹Æ‚Ì‰Šú‰»
+	m_CommonDataInfo.now_job = JOB_ID::TEX_COLLECTOR;//(JOB_ID)aqua::Rand((int)JOB_ID::MAX - 1, 1);
+	m_PlayerJobID = m_CommonDataInfo.now_job;
 	m_JobManager->SetJobID(m_PlayerJobID);
 
 	// ‘Ì—Í‚ÌÝ’è
-	m_CommonDataInfo = m_CommonData->GetData();
 	m_CommonDataInfo.max_hit_point = m_max_hit_point + m_JobManager->GetJobHitPointState();
 	m_HitPoint = m_CommonDataInfo.hit_point;
-	m_CommonDataInfo.now_job = (JOB_ID)aqua::Rand((int)JOB_ID::MAX - 1, 1);
-	m_CommonData->SetData(m_CommonDataInfo);
 
-	m_PlayerJobID = m_CommonDataInfo.now_job;
+	m_CommonData->SetData(m_CommonDataInfo);
 
 	// ƒoƒbƒN‚Ì’†g‚Ì“o˜^
 	//m_BagData->SetWeapon(0, WEAPON_ID::MONEY, 50, 30);
 
-	m_SetingWeapon = m_BagData->GetWeaponData(m_BagData->GetSelectBagNumber()).id;
-	m_WeaponManager->SetWeapon(m_SetingWeapon);
+	m_WeaponManager->SetWeapon(m_SetingWeapon[(int)m_PlayerJobID]);
 
 	m_Attack = m_JobManager->GetJobAttackState() + m_BagData->GetWeaponData(m_BagData->GetSelectBagNumber()).attack;
 
@@ -148,14 +150,26 @@ bool CPlayer::GetStandbyFlag()
 	return m_Standby;
 }
 
-bool CPlayer::GetShotMagic()
+bool CPlayer::GetShotFlag()
 {
-	return m_ShotMagic;
+	return m_ShotFlag;
 }
 
 bool CPlayer::GetCancelMagic()
 {
 	return m_CancelMagic;
+}
+
+void CPlayer::SetJodID(JOB_ID job_id)
+{
+	CommonDataInfo info = m_CommonData->GetData( );
+
+	info.now_job = job_id;
+
+	m_PlayerJobID = job_id;
+
+	m_JobManager->SetJobID(job_id);
+	m_CommonData->SetData(info);
 }
 
 JOB_ID CPlayer::GetPlayerJob()
@@ -168,7 +182,7 @@ JOB_ID CPlayer::GetPlayerJob()
  */
 void CPlayer::AnimetionWork()
 {
-	switch (m_SetingWeapon)
+	switch (m_SetingWeapon[(int)m_PlayerJobID])
 	{
 	case WEAPON_ID::FIST:
 		FistAnimeWork();
@@ -285,7 +299,7 @@ void CPlayer::MagicAnimeWork()
 	}
 
 	if (m_ChageTime.Finished())
-		m_ShotMagic = true;
+		m_ShotFlag = true;
 
 	if (m_AnimeState == P_ANIME_ID::MAGIC_SHOT)
 	{
@@ -297,7 +311,7 @@ void CPlayer::MagicAnimeWork()
 		if (m_UnitModel.AnimetionFinished(80.0f) && m_AttackFlag)
 		{
 			m_AttackFlag = false;
-			m_ShotMagic = false;
+			m_ShotFlag = false;
 			m_AnimeState = P_ANIME_ID::IDLE;
 		}
 	}
@@ -322,9 +336,12 @@ void CPlayer::MoneyAnimeWork()
 	}
 	if (m_AnimeState == P_ANIME_ID::MONEY_SHOT && m_UnitModel.AnimetionFinished(30.0f))
 	{
+		m_ShotFlag = true;
 		m_AttackFlag = true;
 	}
-	if (m_AnimeState == P_ANIME_ID::MONEY_SHOT && m_UnitModel.AnimetionFinished(30.0f + 1.0f))
+	if (m_AnimeState == P_ANIME_ID::MONEY_SHOT && m_UnitModel.AnimetionFinished(30.0f + 2.0f))
+		m_ShotFlag = false;
+	if (m_AnimeState == P_ANIME_ID::MONEY_SHOT && m_UnitModel.AnimetionFinished(30.0f + 10.0f))
 	{
 		m_AttackFlag = false;
 	}
@@ -374,12 +391,11 @@ void CPlayer::Rotation()
 */
 void CPlayer::Weapon()
 {
-	if (Input::In(Input::KEY_ID::B) && m_BagData->GetBagFlag())
-		if (m_WeaponManager)
-		{
-			m_WeaponManager->SetWeapon(m_BagData->GetWeaponData(m_BagData->GetSelectBagNumber()).id);
-			m_SetingWeapon = m_BagData->GetWeaponData(m_BagData->GetSelectBagNumber()).id;
-		}
+	//if (Input::In(Input::KEY_ID::B) && m_BagData->GetBagFlag())
+	//	if (m_WeaponManager)
+	//	{
+	//		m_WeaponManager->SetWeapon(m_BagData->GetWeaponData(m_BagData->GetSelectBagNumber()).id);
+	//	}
 
 	m_WeaponManager->SetHandMatrix(m_UnitModel, "mixamorig:RightHandThumb1");
 }

@@ -31,7 +31,8 @@ void CJobIcon::Update()
 
 void CJobIcon::Draw()
 {
-	m_JobIconSprite[(int)m_CommonData->GetData().now_job].Draw();
+	if((int)m_CommonData->GetData().now_job > -1)
+	m_JobIconSprite[(int)m_CommonData->GetData( ).now_job].Draw();
 }
 
 void CJobIcon::Finalize()

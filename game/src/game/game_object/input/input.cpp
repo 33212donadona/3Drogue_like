@@ -46,9 +46,8 @@ void Input::Updata()
 
 		m_LeftStick.x = float(key::Button(key::KEY_ID::D) - key::Button(key::KEY_ID::A));
 		m_LeftStick.y = float(key::Button(key::KEY_ID::S) - key::Button(key::KEY_ID::W));
-	//if (key::Button(key::KEY_ID::A) || key::Button(key::KEY_ID::D) || key::Button(key::KEY_ID::W) || key::Button(key::KEY_ID::S))
-	//{
-	//}
+	
+
 	if (con::GetAnalogStickLeft(con::DEVICE_ID::P1).x || con::GetAnalogStickLeft(con::DEVICE_ID::P1).y)
 		m_LeftStick = con::GetAnalogStickLeft(con::DEVICE_ID::P1);
 

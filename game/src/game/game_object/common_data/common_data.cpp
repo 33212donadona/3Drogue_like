@@ -9,24 +9,24 @@ CCommonData::CCommonData(aqua::IGameObject* parent)
 
 void CCommonData::SetData(CommonDataInfo common_data)
 {
-	m_MapData.crea_target = common_data.crea_target;
-	m_MapData.crea_stage = common_data.crea_stage;
-	m_MapData.easy = common_data.easy;
-	m_MapData.normal = common_data.normal;
-	m_MapData.hard = common_data.hard;
+	m_MapData.crea_target    = common_data.crea_target;
+	m_MapData.crea_stage     = common_data.crea_stage;
+	m_MapData.easy           = common_data.easy;
+	m_MapData.normal         = common_data.normal;
+	m_MapData.hard           = common_data.hard;
 	m_MapData.game_crea_time = common_data.game_crea_time;
-	m_MapData.max_hit_point = common_data.max_hit_point;
-	m_MapData.hit_point = common_data.hit_point;
-	m_MapData.now_job = common_data.now_job;
+	m_MapData.max_hit_point  = common_data.max_hit_point;
+	m_MapData.hit_point      = common_data.hit_point;
+	m_MapData.now_job        = common_data.now_job;
 }
 
 void CCommonData::SetData
 (
-	int max_stage, 
-	int crea_stage, 
-	int easy, 
-	int normal, 
-	int hard, 
+	int max_stage,
+	int crea_stage,
+	int easy,
+	int normal,
+	int hard,
 	float max_hit_point,
 	float hit_point,
 	float game_crea_time,

@@ -15,7 +15,7 @@ public:
 	void Update() override;
 	void Finalize() override;
 
-	bool CheckHit(aqua::CVector3 enemy_pos)override;
+	bool CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)override;
 
 	void SetPosition(aqua::CVector3 position)override;
 
@@ -25,6 +25,7 @@ private:
 
 	aqua::CVector3  m_MoneyPosition;
 	aqua::CEffect3D m_MoneyEffect;
+	aqua::CModel    m_MoneyCollision;
 
 	bool            m_HitMoney;
 

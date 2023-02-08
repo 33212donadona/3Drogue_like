@@ -17,6 +17,13 @@ void CMoneyWeapon::Initialize()
 {
 	m_MoneyEffect.Create("data\\effect\\coin_attack.efkefc");
 	m_MoneyEffect.scale = aqua::CVector3::ONE * 10.0f;
+	m_MoneyCollision.Create("data\\model\\weapon\\coin_collision", 0);
+	m_MoneyCollision.axis.y = 1.0f;
+	m_MoneyCollision.initial_axis.y = 1.0f;
+	m_MoneyCollision.initial_angles = aqua::DegToRad(180);
+	m_MoneyCollision.position.y = -50.0f;
+	m_MoneyCollision.scale = aqua::CVector3::ONE * 0.05f;
+	m_MoneyCollision.ChengeFrameVisible("Collition", false);
 	m_BagData = (CBagData*)aqua::FindGameObject("BagData");
 }
 
@@ -29,12 +36,18 @@ void CMoneyWeapon::Update()
 
 	if (m_Player)
 	{
-		if (m_Player->GetAttackFlag())
+		if (m_Player->GetShotFlag())
 		{
 			m_MoneyEffect.rotation.y = m_Player->GetAngle();
 			m_MoneyEffect.position = m_MoneyPosition;
+			m_MoneyCollision.position = m_MoneyPosition;
+			m_MoneyCollision.angles = m_Player->GetAngle();
+
 			m_MoneyEffect.Play();
 		}
+
+		if (m_MoneyEffect.Finished() || m_HitMoney)
+			m_MoneyCollision.position.y = -50.0f;
 
 	}
 
@@ -43,31 +56,13 @@ void CMoneyWeapon::Update()
 
 void CMoneyWeapon::Finalize()
 {
+	m_MoneyCollision.Delete();
 	m_MoneyEffect.Delete();
 }
 
-bool CMoneyWeapon::CheckHit(aqua::CVector3 enemy_pos)
+bool CMoneyWeapon::CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
 {
-	float r = m_money_radius + m_enemy_radius;
-	bool  hit = false;
-
-	aqua::CVector2 distance;
-	distance.x = m_MoneyPosition.x - enemy_pos.x;
-	distance.y = m_MoneyPosition.z - enemy_pos.z;
-
-	hit = distance.x * distance.x + distance.y * distance.y <= r * r;
-
-	if (hit && m_Player)
-	{
-		aqua::CVector3 angle = enemy_pos - m_MoneyPosition;
-		float theta = atan2(angle.x, angle.z);
-
-		float angular_difference = 15.0f + aqua::RadToDeg(m_Player->GetAngle()) - aqua::RadToDeg(theta);
-
-		m_HitMoney = abs(angular_difference) < 15.0f;
-	}
-	else
-		m_HitMoney = false;
+	m_HitMoney = m_MoneyCollision.GetBoneCapsuleCollision("Collition", first_pos, end_pos, 3).HitFlag;
 
 	return m_HitMoney;
 }

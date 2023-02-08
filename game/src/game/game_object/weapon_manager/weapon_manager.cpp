@@ -91,7 +91,7 @@ bool CWeaponManager::CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
 		break;
 
 	case WEAPON_ID::MONEY:
-		hit_flag = m_Weapon->CheckHit(first_pos);
+		hit_flag = m_Weapon->CheckHit(first_pos, end_pos);
 		break;
 
 	default:

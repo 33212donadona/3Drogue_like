@@ -23,11 +23,12 @@ public:
 		float game_crea_time,
 		JOB_ID job_id
 	);
+
 	CommonDataInfo GetData();
 
 	int GetSelectMaxCreaTarget();
 
 private:
-	static const int m_selct_max_crea_target; //! 選択可能な
 	CommonDataInfo m_MapData;
+	static const int m_selct_max_crea_target; //! 選択可能な
 };

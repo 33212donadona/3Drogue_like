@@ -1,4 +1,5 @@
 #include "stage.h"
+#include "stage_id.h"
 
 const int CStage::m_max_stage = 2;
 const int CStage::m_max_template_stage = 4;
@@ -88,9 +89,9 @@ bool CStage::CheckObject(aqua::CVector3 position)
  */
 void CStage::CreateStageObject()
 {
-	if (aqua::Rand(true, false))
-		LodaStageMap();
-	else
+	//if (aqua::Rand(true, false))
+	//	LodaStageMap();
+	//else
 		AutoMapCreate();
 
 	aqua::CPoint stage_half_size = m_StageSize;
@@ -102,17 +103,17 @@ void CStage::CreateStageObject()
 	{
 		for (int j = 0; j < m_StageSize.x; ++j)
 		{
-			if (m_StageMap[i][j] != 0)
+			if (m_StageMap[i][j] != (int)STAGE_OBJECT::ARE)
 			{
 				aqua::CVector3 pos;
 				pos = (aqua::CVector3(j, 0, i) - aqua::CVector3(stage_half_size.x, 0, stage_half_size.y)) * (float)m_StageObjectSize;
 				pos.y = 5.0f;
 
-				if (m_StageMap[i][j] == 1)
+				if (m_StageMap[i][j] == (int)STAGE_OBJECT::ROCK)
 					aqua::CreateGameObject<CObjectRock>(this)->Initialize(pos);
-				if (m_StageMap[i][j] == 2)
+				if (m_StageMap[i][j] == (int)STAGE_OBJECT::TREE)
 					aqua::CreateGameObject<CObjectTree>(this)->Initialize(pos);
-				if (m_StageMap[i][j] == 3)
+				if (m_StageMap[i][j] == (int)STAGE_OBJECT::TOWER)
 					aqua::CreateGameObject<CObjectTower>(this)->Initialize(pos);
 			}
 		}
@@ -218,7 +219,7 @@ void CStage::SpaceAlgorithms()
 void CStage::AutoMapCreate()
 {
 	// ステージマップをオブジェクトで埋める
-	m_StageMap.assign(m_map_size.y, std::vector<int>(m_map_size.x, 1));
+	m_StageMap.assign(m_map_size.y, std::vector<int>(m_map_size.x, (int)STAGE_OBJECT::ROCK));
 
 	if (m_StageObjectSize != m_map_object_space)
 		m_StageObjectSize = m_map_object_space;
@@ -243,16 +244,16 @@ void CStage::AutoMapCreate()
 		{
 			for (int x = m_FirstPosition[back].x; x <= m_FirstPosition[i].x; x++)
 			{
-				if (m_StageMap[m_FirstPosition[back].y][x] != 0)
-					m_StageMap[m_FirstPosition[back].y][x] = 0;
+				if (m_StageMap[m_FirstPosition[back].y][x] != (int)STAGE_OBJECT::ARE)
+					m_StageMap[m_FirstPosition[back].y][x] = (int)STAGE_OBJECT::ARE;
 			}
 		}
 		else
 		{
 			for (int x = m_FirstPosition[i].x; x <= m_FirstPosition[back].x; x++)
 			{
-				if (m_StageMap[m_FirstPosition[i].y][x] != 0)
-					m_StageMap[m_FirstPosition[i].y][x] = 0;
+				if (m_StageMap[m_FirstPosition[i].y][x] != (int)STAGE_OBJECT::ARE)
+					m_StageMap[m_FirstPosition[i].y][x] = (int)STAGE_OBJECT::ARE;
 			}
 		}
 
@@ -260,16 +261,16 @@ void CStage::AutoMapCreate()
 		{
 			for (int y = m_FirstPosition[back].y; y <= m_FirstPosition[i].y + 1; y++)
 			{
-				if (m_StageMap[y][m_FirstPosition[back].x] != 0)
-					m_StageMap[y][m_FirstPosition[back].x] = 0;
+				if (m_StageMap[y][m_FirstPosition[back].x] != (int)STAGE_OBJECT::ARE)
+					m_StageMap[y][m_FirstPosition[back].x] = (int)STAGE_OBJECT::ARE;
 			}
 		}
 		else
 		{
 			for (int y = m_FirstPosition[i].y; y <= m_FirstPosition[back].y + 1; y++)
 			{
-				if (m_StageMap[y][m_FirstPosition[i].x] != 0)
-					m_StageMap[y][m_FirstPosition[i].x] = 0;
+				if (m_StageMap[y][m_FirstPosition[i].x] != (int)STAGE_OBJECT::ARE)
+					m_StageMap[y][m_FirstPosition[i].x] = (int)STAGE_OBJECT::ARE;
 			}
 		}
 	}
@@ -305,13 +306,13 @@ void CStage::MapPartition(aqua::CPoint stage_size_first, aqua::CPoint stage_size
 
 	for (int y = first.y; y < stage_size_end.y; y++)
 		for (int x = first.x; x < stage_size_end.x; x++)
-			m_StageMap[y][x] = 1;
+			m_StageMap[y][x] = (int)STAGE_OBJECT::ROCK;
 
 	aqua::CPoint rand = aqua::CPoint(aqua::Rand(2, 1), aqua::Rand(2, 1));
 
 	for (int y = first.y + rand.y; y < stage_size_end.y - rand.y; y++)
 		for (int x = first.x + rand.x; x < stage_size_end.x - rand.x; x++)
-			m_StageMap[y][x] = 0;
+			m_StageMap[y][x] = (int)STAGE_OBJECT::ARE;
 
 	m_FirstPosition.push_back(first + rand);
 

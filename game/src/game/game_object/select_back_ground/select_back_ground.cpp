@@ -3,11 +3,16 @@
 const int CSelectBackGround::m_max_sky = 2;
 const int CSelectBackGround::m_max_effect = 2;
 const float CSelectBackGround::m_sprite_move_speed = 7.5f;
-const std::string CSelectBackGround::m_filr_name[] =
+const std::string CSelectBackGround::m_bg_filr_name[] =
 {
 	"data\\select_graph\\sub.png",
 	"data\\select_graph\\medium.png",
 	"data\\select_graph\\high.png"
+};
+const std::string CSelectBackGround::m_light_filr_name[] =
+{
+	"data\\select_graph\\move_left_key_light.png",
+	"data\\select_graph\\move_right_key_light.png"
 };
 
 CSelectBackGround::CSelectBackGround(aqua::IGameObject* parent)
@@ -26,7 +31,7 @@ void CSelectBackGround::Initialize()
 	{
 		aqua::CSprite s;
 
-		s.Create(m_filr_name[sky_j]);
+		s.Create(m_bg_filr_name[sky_j]);
 
 		vs.push_back(s);
 	}
@@ -57,6 +62,21 @@ void CSelectBackGround::Initialize()
 			aqua::CVector2(m_EffectSprite[efc_i].GetTextureWidth(), m_EffectSprite[efc_i].GetTextureHeight()) / 2.0f;
 	}
 
+	for (int k_i = 0; k_i < (int)CAN_MOVE_ID::MAX; k_i++)
+	{
+		m_MoveKey[k_i].Create("data\\select_graph\\key_graph.png");
+		m_MoveKeyLight[k_i].Create(m_light_filr_name[k_i]);
+		m_MoveKey[k_i].position = aqua::GetWindowSize() / 2;
+		m_MoveKey[k_i].position.y -= m_MoveKey[k_i].GetTextureHeight() / 2;
+		m_MoveKey[k_i].position.x -= m_MoveKey[k_i].GetTextureWidth() / 2;
+		if (k_i)
+			m_MoveKey[k_i].position.x += aqua::GetWindowWidth() / 5;
+		else
+			m_MoveKey[k_i].position.x -= aqua::GetWindowWidth() / 5;
+
+		m_MoveKeyLight[k_i].position = m_MoveKey[k_i].position;
+	}
+
 	m_BackGroundSurface.Create(aqua::GetWindowWidth(), aqua::GetWindowHeight());
 }
 
@@ -66,6 +86,8 @@ void CSelectBackGround::Update()
 		m_SelectSystem = (CSelectSystem*)aqua::FindGameObject("SelectSystem");
 
 	ChangeBackGournd();
+
+	EmittingLight();
 
 	for (int sky_i = 0; sky_i < m_max_sky; sky_i++)
 	{
@@ -110,6 +132,12 @@ void CSelectBackGround::Draw()
 	for (int efc_i = 0; efc_i < m_max_effect; efc_i++)
 		m_EffectSprite[efc_i].Draw();
 
+	for (int k_i = 0; k_i < (int)CAN_MOVE_ID::MAX; k_i++)
+	{
+		m_MoveKey[k_i].Draw();
+		m_MoveKeyLight[k_i].Draw();
+	}
+
 	m_BackGroundSurface.End();
 }
 
@@ -121,6 +149,12 @@ void CSelectBackGround::Finalize()
 
 	for (int efc_i = 0; efc_i < m_max_effect; efc_i++)
 		m_EffectSprite[efc_i].Delete();
+
+	for (int k_i = 0; k_i < (int)CAN_MOVE_ID::MAX; k_i++)
+	{
+		m_MoveKey[k_i].Delete();
+		m_MoveKeyLight[k_i].Delete();
+	}
 
 	m_ScrollSkySprite.clear();
 
@@ -144,7 +178,7 @@ void CSelectBackGround::ChangeBackGournd()
 		if (m_ScrollSkySprite[0][m_SelectSystem->GetPrevLavel()].color.alpha == (unsigned char)0)
 			return;
 	}
-	
+
 	m_AlphaReta += (unsigned char)2.55;
 
 	for (int sky_i = 0; sky_i < m_max_sky; sky_i++)
@@ -156,4 +190,36 @@ void CSelectBackGround::ChangeBackGournd()
 		m_ScrollSkySprite[sky_i][m_SelectSystem->GetPrevLavel()].color.alpha =
 			(unsigned char)aqua::Limit(255 - (int)m_AlphaReta, 0, 255);
 	}
+}
+
+void CSelectBackGround::EmittingLight()
+{
+
+	m_LightFrame += (unsigned char)2.55f;
+
+	for (int k_i = 0; k_i < (int)CAN_MOVE_ID::MAX; k_i++)
+	{
+		if ((m_SelectSystem->GetNowLavel() + k_i) % ((int)CAN_MOVE_ID::MAX + 1) == 0)
+		{
+			m_MoveKeyLight[k_i].color = aqua::CColor::BLACK;
+			m_MoveKeyLight[k_i].color.alpha = (unsigned char)0;
+		}
+		else
+		{
+			m_MoveKeyLight[k_i].color = aqua::CColor::WHITE;
+
+			if ((float)m_LightFrame > 255.0f)
+				m_MoveKeyLight[k_i].color.alpha = unsigned char(255.0f + 255.0f - (float)m_LightFrame);
+			else if ((float)m_LightFrame > (510.0f))
+			{
+				m_LightFrame = (unsigned char)0;
+				m_MoveKeyLight[k_i].color.alpha = m_LightFrame;
+			}
+			else
+				m_MoveKeyLight[k_i].color.alpha = m_LightFrame;
+		}
+
+		m_MoveKey[k_i].color = m_MoveKeyLight[k_i].color;
+	}
+
 }

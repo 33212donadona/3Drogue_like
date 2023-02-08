@@ -18,7 +18,7 @@ void CHitPointUI::Initialize()
 
 	GetMaskSize(&m_MaskSize.x, &m_MaskSize.y, m_HitPointMaskHandle);
 
-	m_MaskPosition.x = m_HitPointSprite.GetTextureWidth();
+	m_MaskPosition.x = (float)m_HitPointSprite.GetTextureWidth();
 
 }
 

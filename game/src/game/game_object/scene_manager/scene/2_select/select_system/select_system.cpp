@@ -43,7 +43,8 @@ void CSelectSystem::Update()
 {
 	if(m_SelsectLevel == m_PrevSelsectLevel)
 	{
-		m_SelsectLevel += Input::In(Input::KEY_ID::ZL) - Input::In(Input::KEY_ID::ZR);
+		m_SelsectLevel += Input::In(Input::KEY_ID::ZR) - Input::In(Input::KEY_ID::ZL);
+		m_SelsectLevel += (int)Input::Horizotal();
 		m_SelsectLevel = aqua::Limit(m_SelsectLevel, 0, 2);
 	}
 

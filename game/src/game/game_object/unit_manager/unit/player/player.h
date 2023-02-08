@@ -51,9 +51,10 @@ public:
 
 	bool  GetAttackFlag();
 	bool  GetStandbyFlag();
-	bool  GetShotMagic();
+	bool  GetShotFlag();
 	bool  GetCancelMagic();
 
+	void   SetJodID(JOB_ID job_id);
 	JOB_ID GetPlayerJob();
 
 private:
@@ -80,8 +81,8 @@ private:
 	CJobManager*    m_JobManager;
 	CCommonData*    m_CommonData;
 
-	WEAPON_ID       m_SetingWeapon;
 	JOB_ID          m_PlayerJobID;
+	WEAPON_ID       m_SetingWeapon[(int)JOB_ID::MAX];
 	P_ANIME_ID      m_AnimeState;
 
 	CommonDataInfo  m_CommonDataInfo;
@@ -92,7 +93,7 @@ private:
 	int   m_MagicFrame;
 
 	bool m_Standby;
-	bool m_ShotMagic;
+	bool m_ShotFlag;
 	bool m_AttackFlag;
 	bool m_CancelMagic;
 };

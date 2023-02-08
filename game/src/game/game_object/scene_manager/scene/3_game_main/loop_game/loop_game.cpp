@@ -24,6 +24,7 @@ void CLoopGame::Update()
 {
 	if (m_UnitManager->EmptyEnemyList())
 	{
+		m_GameData = m_CommonData->GetData();
 		m_GameData.crea_stage++;
 
 		if (m_GameData.crea_stage < m_CommonData->GetData().crea_target)
@@ -48,7 +49,7 @@ void CLoopGame::Update()
 
 			IGameObject::Initialize();
 
-			m_GameData.game_crea_time = ((CGameMain*)aqua::FindGameObject("GameMain"))->GetGameTime();
+			m_GameData.game_crea_time += ((CGameMain*)aqua::FindGameObject("GameMain"))->GetGameTime();
 		}
 
 		m_CommonData->SetData(m_GameData);

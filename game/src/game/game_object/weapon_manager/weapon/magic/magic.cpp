@@ -53,11 +53,11 @@ void CMagic::Update()
 				m_MagicKeepEffect.Play();
 				m_MagicKeepEffect.position = m_MagicFirstEffect.position;
 
-				if (!m_Player->GetShotMagic())
+				if (!m_Player->GetShotFlag())
 					m_MagicState = MAGIC_STATE::STANDBY;
 			}
 
-			if (m_Player->GetShotMagic())
+			if (m_Player->GetShotFlag())
 			{
 				m_MagicState = MAGIC_STATE::KEEP_MAGIC;
 				m_MagicKeepEffect.position = m_MagicFirstEffect.position;
