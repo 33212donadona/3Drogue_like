@@ -15,6 +15,8 @@ void CCommonData::SetData(CommonDataInfo common_data)
 	m_MapData.normal = common_data.normal;
 	m_MapData.hard = common_data.hard;
 	m_MapData.game_crea_time = common_data.game_crea_time;
+	m_MapData.max_hit_point = common_data.max_hit_point;
+	m_MapData.hit_point = common_data.hit_point;
 	m_MapData.now_job = common_data.now_job;
 }
 
@@ -25,6 +27,8 @@ void CCommonData::SetData
 	int easy, 
 	int normal, 
 	int hard, 
+	float max_hit_point,
+	float hit_point,
 	float game_crea_time,
 	JOB_ID job_id
 )
@@ -43,6 +47,15 @@ void CCommonData::SetData
 
 	if (m_MapData.hard != hard)
 		m_MapData.hard = hard;
+
+	if (m_MapData.hard != hard)
+		m_MapData.hard = hard;
+
+	if (m_MapData.max_hit_point != max_hit_point)
+		m_MapData.max_hit_point = max_hit_point;
+
+	if (m_MapData.hit_point != hit_point)
+		m_MapData.hit_point = hit_point;
 
 	if (m_MapData.game_crea_time != game_crea_time)
 		m_MapData.game_crea_time = game_crea_time;

@@ -25,6 +25,17 @@ CBagData::CBagData(aqua::IGameObject* parent)
 void CBagData::Initialize()
 {
 	m_BagInventory = AQUA_NEW WEAPON_STATE[m_bag_capacity];
+
+	for (int bag_i = 0; bag_i < m_bag_capacity; bag_i++)
+	{
+		WEAPON_STATE w;
+
+		w.id = WEAPON_ID::FIST;
+		w.attack = 50;
+		w.durability = 999;
+
+		m_BagInventory[bag_i] = w;
+	}
 }
 
 /*
@@ -66,7 +77,7 @@ void CBagData::SetWeapon(int bag_num,WEAPON_STATE state)
 
 	ws.id = WEAPON_ID((int)state.id % (int)WEAPON_ID::MONEY);
 
-	m_BagInventory[num] = state;
+	m_BagInventory[num] = ws;
 }
 
 /*

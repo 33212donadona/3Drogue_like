@@ -43,20 +43,6 @@ void CEnemy::Update()
 {
 	Algorithms();
 
-	if (GetState() != STATE::DEAD)
-	{
-		if (m_PlayerModel->CheckHit(m_UnitModel.GetBonePosition(6), m_UnitModel.GetBonePosition(69)) && !m_DamageFlag)
-		{
-			m_HitPoint -= m_PlayerModel->GetAttack();
-			m_DamageFlag = true;
-		}
-	}
-	if (m_DamageFlag)
-	{
-		if (!m_PlayerModel->CheckHit(m_UnitModel.GetBonePosition(6), m_UnitModel.GetBonePosition(69)))
-			m_DamageFlag = false;
-	}
-
 	IUnit::Update();
 
 	m_UnitModel.AnimationUpdata();
@@ -68,6 +54,27 @@ void CEnemy::Finalize()
 {
 	m_PlayerModel = nullptr;
 	IUnit::Finalize();
+}
+
+void CEnemy::MoveUpdata()
+{
+	if (GetState() != STATE::DEAD)
+	{
+		if (
+			m_PlayerModel->CheckHit(m_UnitModel.GetBonePosition(6), m_UnitModel.GetBonePosition(69)) &&
+			!m_DamageFlag &&
+			GetState() != IUnit::STATE::DAMAGE
+			)
+		{
+			m_HitPoint -= m_PlayerModel->GetAttack();
+			m_DamageFlag = true;
+		}
+	}
+	if (m_DamageFlag)
+	{
+		if (!m_PlayerModel->CheckHit(m_UnitModel.GetBonePosition(6), m_UnitModel.GetBonePosition(69)))
+			m_DamageFlag = false;
+	}
 }
 
 void CEnemy::Algorithms()

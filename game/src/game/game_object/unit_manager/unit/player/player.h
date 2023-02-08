@@ -2,6 +2,7 @@
 #include "aqua.h"
 #include "../unit.h"
 #include "player_anime_id.h"
+#include "../../../common_data/common_data_info.h"
 
 class CEnemy;
 class CWeaponManager;
@@ -82,6 +83,8 @@ private:
 	WEAPON_ID       m_SetingWeapon;
 	JOB_ID          m_PlayerJobID;
 	P_ANIME_ID      m_AnimeState;
+
+	CommonDataInfo  m_CommonDataInfo;
 
 	aqua::CTimer    m_ChageTime;
 

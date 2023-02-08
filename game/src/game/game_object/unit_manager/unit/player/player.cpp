@@ -62,26 +62,23 @@ void CPlayer::Initialize()
 	m_JobManager->SetJobID(m_PlayerJobID);
 
 	// ‘Ì—Í‚ÌÝ’è
-	CommonDataInfo info = m_CommonData->GetData();
-	info.max_hit_point = m_max_hit_point + m_JobManager->GetJobHitPointState();
-	m_HitPoint = info.max_hit_point - m_JobManager->GetJobHitPointState();
-	info.hit_point = m_HitPoint;
-	m_CommonData->SetData(info);
+	m_CommonDataInfo = m_CommonData->GetData();
+	m_CommonDataInfo.max_hit_point = m_max_hit_point + m_JobManager->GetJobHitPointState();
+	m_HitPoint = m_CommonDataInfo.hit_point;
+	m_CommonDataInfo.now_job = (JOB_ID)aqua::Rand((int)JOB_ID::MAX - 1, 1);
+	m_CommonData->SetData(m_CommonDataInfo);
 
-	m_PlayerJobID = info.now_job;
+	m_PlayerJobID = m_CommonDataInfo.now_job;
 
 	// ƒoƒbƒN‚Ì’†g‚Ì“o˜^
-	m_BagData->SetWeapon(0, WEAPON_ID::MONEY, 50, 30);
-	m_BagData->SetWeapon(1, WEAPON_ID::SWORD, 10, 30);
-	m_BagData->SetWeapon(2, WEAPON_ID::SWORD, 10, 30);
-
+	//m_BagData->SetWeapon(0, WEAPON_ID::MONEY, 50, 30);
 
 	m_SetingWeapon = m_BagData->GetWeaponData(m_BagData->GetSelectBagNumber()).id;
 	m_WeaponManager->SetWeapon(m_SetingWeapon);
+
 	m_Attack = m_JobManager->GetJobAttackState() + m_BagData->GetWeaponData(m_BagData->GetSelectBagNumber()).attack;
 
 	IUnit::Initialize();
-
 }
 
 /*
@@ -90,6 +87,12 @@ void CPlayer::Initialize()
 void CPlayer::Update()
 {
 	Weapon();
+
+	m_CommonDataInfo = m_CommonData->GetData();
+
+	m_CommonDataInfo.hit_point = m_HitPoint;
+
+	m_CommonData->SetData(m_CommonDataInfo);
 
 	IUnit::Update();
 
@@ -100,9 +103,9 @@ void CPlayer::Update()
  */
 void CPlayer::Finalize()
 {
-	CommonDataInfo info = m_CommonData->GetData();
-	info.hit_point = m_HitPoint;
-	m_CommonData->SetData(info);
+	m_CommonDataInfo.hit_point = m_HitPoint;
+
+	m_CommonData->SetData(m_CommonDataInfo);
 
 	IUnit::Finalize();
 }

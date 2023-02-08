@@ -2,6 +2,7 @@
 #include "../../stage/stage.h"
 
 const float IUnit::m_summon_max_time = 2.0f;
+const float IUnit::m_not_damege_max_time = 1.0f;
 const float IUnit::m_dead_max_time = 2.0f;
 const float IUnit::m_first_position_height = -20.0f;
 const int IUnit::m_max_dead_effect = 10;
@@ -10,6 +11,7 @@ IUnit::IUnit(aqua::IGameObject* parent, std::string name)
 	:aqua::IGameObject(parent, name, "Unit")
 	, m_State(STATE::SUMMON)
 	, DeadFlag(false)
+	, m_StateDamageFrame(0)
 	, m_HitPoint(0.0f)
 	, m_MaxHitPoint(0.0f)
 {
@@ -24,6 +26,7 @@ void IUnit::Initialize()
 	m_UnitModel.position.y = m_first_position_height; // ínñ ÇÃâ∫Ç…ê›íu
 
 	m_EffectTime.Setup(m_summon_max_time);
+	m_NotDamageTime.Setup(m_not_damege_max_time);
 
 	m_SummonEffect.Create("data\\effect\\summon.efkefc");
 	m_SummonEffect.Play();
@@ -56,20 +59,48 @@ void IUnit::Update()
 		break;
 	case IUnit::STATE::MOVE:
 
+		m_PrevHitPoint = m_HitPoint;
+
 		if (m_EffectTime.Finished())
 			m_EffectTime.Reset();
 
 		MoveUpdata();
 
-		if (m_HitPoint <= 0)
+		//if (m_HitPoint <= 0)
+		//{
+		//	m_State = STATE::DAMAGE;
+		//	
+		//}
+
+		if(m_PrevHitPoint != m_HitPoint)
+			m_State = STATE::DAMAGE;
+
+		break;
+	case IUnit::STATE::DAMAGE:
+
+		if (m_StateDamageFrame == 0)
+			m_NotDamageTime.Reset();
+
+		m_StateDamageFrame++;
+
+		if (m_NotDamageTime.Finished())
 		{
-			m_State = STATE::DEAD;
-			for (int e_i = 0; e_i < m_max_dead_effect; e_i++)
+			if (m_HitPoint <= 0)
 			{
-				m_DeadEffect[e_i].position = m_UnitModel.position;
-				m_DeadEffect[e_i].Play();
+				m_State = STATE::DEAD;
+				for (int e_i = 0; e_i < m_max_dead_effect; e_i++)
+				{
+					m_DeadEffect[e_i].position = m_UnitModel.position;
+					m_DeadEffect[e_i].Play();
+				}
 			}
+			else
+				m_State = STATE::MOVE;
+
+			m_StateDamageFrame = 0;
 		}
+
+		m_NotDamageTime.Update();
 
 		break;
 	case IUnit::STATE::DEAD:

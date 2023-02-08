@@ -15,11 +15,16 @@ public:
 	void Update() override;
 	void Finalize() override;
 
+	/*
+	*  @brief 動きの更新
+	*/
+	void MoveUpdata()override;
+
 private:
 	void Algorithms();
 	static const float m_max_hit_point;
 	static const float m_attack;
 	IWeapon* m_Weapon;
 	CPlayer* m_PlayerModel;
-	bool m_DamageFlag;            //! 連続ダメージを防ぐ
+	bool m_DamageFlag;                 //! 連続ダメージを防ぐ
 };

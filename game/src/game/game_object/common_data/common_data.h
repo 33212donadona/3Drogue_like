@@ -18,6 +18,8 @@ public:
 		int easy,
 		int normal,
 		int hard,
+		float max_hit_point,
+		float hit_point,
 		float game_crea_time,
 		JOB_ID job_id
 	);
