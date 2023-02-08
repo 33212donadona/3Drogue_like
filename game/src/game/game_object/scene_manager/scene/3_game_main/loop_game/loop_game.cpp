@@ -59,11 +59,22 @@ void CLoopGame::Update()
 
 void CLoopGame::Draw()
 {
+
 	IGameObject::Draw();
 }
 
 void CLoopGame::Finalize()
 {
+	if (m_UnitManager)
+	{
+		// 現在のユニットの解放処理を行う
+		m_UnitManager->Finalize();
+		// 現在のユニットを削除する（子リストから外す）
+		m_ChildObjectList.erase(std::find(m_ChildObjectList.begin(), m_ChildObjectList.end(), m_UnitManager));
+		// ポインタの破棄＆NULL化
+		AQUA_SAFE_DELETE(m_UnitManager)
+	}
+
 	IGameObject::Finalize();
 }
 

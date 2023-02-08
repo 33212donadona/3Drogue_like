@@ -11,6 +11,7 @@ IUnit::IUnit(aqua::IGameObject* parent, std::string name)
 	, m_State(STATE::SUMMON)
 	, DeadFlag(false)
 	, m_HitPoint(0.0f)
+	, m_MaxHitPoint(0.0f)
 {
 }
 /*
@@ -39,6 +40,7 @@ void IUnit::Initialize()
 	}
 
 	IGameObject::Initialize();
+
 }
 
 /*
@@ -49,6 +51,7 @@ void IUnit::Update()
 	switch (m_State)
 	{
 	case IUnit::STATE::SUMMON:
+		m_UnitModel.AttachAnimation(1);
 		Summon();
 		break;
 	case IUnit::STATE::MOVE:
@@ -111,8 +114,10 @@ void IUnit::Summon()
 	);
 
 	if (m_SummonEffect.Finished())
+	{
+		m_UnitModel.AttachAnimation(0);
 		m_State = STATE::MOVE;
-
+	}
 	m_SummonEffect.Update();
 	m_EffectTime.Update();
 
@@ -153,6 +158,10 @@ void IUnit::Dead()
 float IUnit::GetAttack()
 {
 	return m_Attack;
+}
+float IUnit::GetMaxHitPoint()
+{
+	return m_MaxHitPoint;
 }
 float IUnit::GetHitPoint()
 {

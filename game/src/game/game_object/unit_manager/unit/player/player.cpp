@@ -3,6 +3,7 @@
 #include "../../../bag/bag_data.h"
 #include "../../../weapon_manager/weapon_manager.h"
 #include "../../../weapon_manager/weapon/weapon_id.h"
+#include "../../../common_data/common_data.h"
 #include "../enemy/enemy.h"
 #include "../../../stage/stage.h"
 #include "../../../input/input.h"
@@ -24,6 +25,7 @@ CPlayer::CPlayer(aqua::IGameObject* parent)
 	, m_CancelMagic(false)
 	, m_WeaponManager(nullptr)
 	, m_JobManager(nullptr)
+	, m_CommonData(nullptr)
 	, m_SetingWeapon(WEAPON_ID::FIST)
 	, m_AnimeState(P_ANIME_ID::IDLE)
 	, m_PlayerJobID(JOB_ID::STUDENT)
@@ -40,7 +42,7 @@ void CPlayer::Initialize()
 
 	m_WeaponManager = (CWeaponManager*)aqua::FindGameObject("WeaponManager");
 	m_BagData = (CBagData*)aqua::FindGameObject("BagData");
-
+	m_CommonData = (CCommonData*)aqua::FindGameObject("CommonData");
 	m_Stage = (CStage*)aqua::FindGameObject("Stage");
 
 	//‰ŠúˆÊ’uÝ’è
@@ -51,23 +53,35 @@ void CPlayer::Initialize()
 
 	m_UnitModel.AttachAnimation((int)m_AnimeState);
 
-	m_HitPoint = 100;
-
 	m_WeaponManager->SetHandMatrix(m_UnitModel, "mixamorig:RightHandThumb1");
 
 	m_ChageTime.Setup(m_chage_max_time);
 
+
+	// E‹Æ‚Ì‰Šú‰»
 	m_JobManager->SetJobID(m_PlayerJobID);
 
+	// ‘Ì—Í‚ÌÝ’è
+	CommonDataInfo info = m_CommonData->GetData();
+	info.max_hit_point = m_max_hit_point + m_JobManager->GetJobHitPointState();
+	m_HitPoint = info.max_hit_point - m_JobManager->GetJobHitPointState();
+	info.hit_point = m_HitPoint;
+	m_CommonData->SetData(info);
+
+	m_PlayerJobID = info.now_job;
+
+	// ƒoƒbƒN‚Ì’†g‚Ì“o˜^
 	m_BagData->SetWeapon(0, WEAPON_ID::MONEY, 50, 30);
 	m_BagData->SetWeapon(1, WEAPON_ID::SWORD, 10, 30);
 	m_BagData->SetWeapon(2, WEAPON_ID::SWORD, 10, 30);
 
+
 	m_SetingWeapon = m_BagData->GetWeaponData(m_BagData->GetSelectBagNumber()).id;
 	m_WeaponManager->SetWeapon(m_SetingWeapon);
+	m_Attack = m_JobManager->GetJobAttackState() + m_BagData->GetWeaponData(m_BagData->GetSelectBagNumber()).attack;
+
 	IUnit::Initialize();
 
-	m_Attack = m_JobManager->GetJobAttackState() + m_BagData->GetWeaponData(m_BagData->GetSelectBagNumber()).attack;
 }
 
 /*
@@ -75,13 +89,6 @@ void CPlayer::Initialize()
  */
 void CPlayer::Update()
 {
-	if (Input::In(Input::KEY_ID::B) && m_BagData->GetBagFlag())
-		if (m_WeaponManager)
-		{
-			m_WeaponManager->SetWeapon(m_BagData->GetWeaponData(m_BagData->GetSelectBagNumber()).id);
-			m_SetingWeapon = m_BagData->GetWeaponData(m_BagData->GetSelectBagNumber()).id;
-		}
-
 	Weapon();
 
 	IUnit::Update();
@@ -93,6 +100,10 @@ void CPlayer::Update()
  */
 void CPlayer::Finalize()
 {
+	CommonDataInfo info = m_CommonData->GetData();
+	info.hit_point = m_HitPoint;
+	m_CommonData->SetData(info);
+
 	IUnit::Finalize();
 }
 /*
@@ -360,9 +371,12 @@ void CPlayer::Rotation()
 */
 void CPlayer::Weapon()
 {
-	m_WeaponManager->SetHandMatrix(m_UnitModel, "mixamorig:RightHandThumb1");
-}
+	if (Input::In(Input::KEY_ID::B) && m_BagData->GetBagFlag())
+		if (m_WeaponManager)
+		{
+			m_WeaponManager->SetWeapon(m_BagData->GetWeaponData(m_BagData->GetSelectBagNumber()).id);
+			m_SetingWeapon = m_BagData->GetWeaponData(m_BagData->GetSelectBagNumber()).id;
+		}
 
-void CPlayer::Collision()
-{
+	m_WeaponManager->SetHandMatrix(m_UnitModel, "mixamorig:RightHandThumb1");
 }

@@ -133,6 +133,7 @@ void CBag::Finalize()
 	for (int i = 0; i < m_BagCapacity; ++i)
 		m_BagSprite[i].Delete();
 
+	AQUA_SAFE_DELETE_ARRAY(m_ItemData);
 	AQUA_SAFE_DELETE_ARRAY(m_BagSprite);
 	m_BagData = nullptr;
 	m_ItemSprite.clear();;

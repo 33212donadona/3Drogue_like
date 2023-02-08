@@ -7,6 +7,7 @@ class CEnemy;
 class CWeaponManager;
 class CBagData;
 class CJobManager;
+class CCommonData;
 
 enum class WEAPON_ID;
 enum class JOB_ID;
@@ -64,7 +65,7 @@ private:
 	void Move();                //! ˆÚ“®
 	void Rotation();            //! ‰ñ“]
 	void Weapon();              //! •Ší
-	void Collision();           //! Õ“Ëˆ—
+
 
 private:
 
@@ -76,6 +77,7 @@ private:
 	CWeaponManager* m_WeaponManager;
 	CBagData*       m_BagData;
 	CJobManager*    m_JobManager;
+	CCommonData*    m_CommonData;
 
 	WEAPON_ID       m_SetingWeapon;
 	JOB_ID          m_PlayerJobID;
