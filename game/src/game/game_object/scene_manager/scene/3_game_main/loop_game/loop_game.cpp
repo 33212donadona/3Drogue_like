@@ -48,6 +48,8 @@ void CLoopGame::Update()
 		}
 		else
 		{
+			m_FadeBox.color.alpha = (unsigned char)0;
+
 			m_LoopState = LOOP_STATE::UPDATA;
 
 			m_FadeTimer.Reset();
@@ -69,8 +71,8 @@ void CLoopGame::Update()
 			if (m_FadeTimer.Finished())
 				m_LoopState = LOOP_STATE::FADE_OUT;
 		}
-		else
-			IGameObject::Update();
+
+		IGameObject::Update();
 
 		break;
 	case LOOP_STATE::FADE_OUT:
@@ -91,7 +93,6 @@ void CLoopGame::Update()
 				// É|ÉCÉìÉ^ÇÃîjä¸ÅïNULLâª
 				AQUA_SAFE_DELETE(m_UnitManager)
 			}
-
 			IGameObject::Finalize();
 
 			aqua::CreateGameObject<CStage>(this);

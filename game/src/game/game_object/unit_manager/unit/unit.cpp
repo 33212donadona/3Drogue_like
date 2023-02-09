@@ -144,7 +144,7 @@ void IUnit::Summon()
 		0.0f
 	);
 
-	if (m_SummonEffect.Finished())
+	if(m_UnitModel.position.y == 0.0f)
 	{
 		m_UnitModel.AttachAnimation(0);
 		m_State = STATE::MOVE;
