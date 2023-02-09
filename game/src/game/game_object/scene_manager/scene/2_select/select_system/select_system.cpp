@@ -43,7 +43,7 @@ void CSelectSystem::Update()
 {
 	if(m_SelsectLevel == m_PrevSelsectLevel)
 	{
-		m_SelsectLevel += Input::In(Input::KEY_ID::ZR) - Input::In(Input::KEY_ID::ZL);
+		m_SelsectLevel += Input::In(Input::BUTTON_ID::ZR) - Input::In(Input::BUTTON_ID::ZL);
 		m_SelsectLevel += (int)Input::Horizotal();
 		m_SelsectLevel = aqua::Limit(m_SelsectLevel, 0, 2);
 	}
@@ -92,7 +92,7 @@ void CSelectSystem::Finalize()
 
 bool CSelectSystem::GetDecisionSelsectLavel()
 {
-	bool sl = Input::In(Input::KEY_ID::B);
+	bool sl = Input::In(Input::BUTTON_ID::B);
 
 	if (sl)
 	{

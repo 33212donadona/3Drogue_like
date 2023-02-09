@@ -1,5 +1,5 @@
 #include "stage.h"
-#include "stage_id.h"
+#include "../common_data/common_data.h"
 
 const int CStage::m_max_stage = 2;
 const int CStage::m_max_template_stage = 4;
@@ -13,6 +13,7 @@ const std::string CStage::m_stage_commn_name = "data\\stage\\template_stage_";
 CStage::CStage(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent, "Stage")
 	, m_RandStage(nullptr)
+	, m_CommonData(nullptr)
 {
 }
 
@@ -30,6 +31,10 @@ void CStage::Initialize()
 
 	m_StageNum = 0;
 
+	m_CommonData = (CCommonData*)aqua::FindGameObject("CommonData");
+
+	m_CreateStageLever = m_CommonData->GetData().stage_lever;
+
 	CreateStageObject();
 }
 
@@ -46,8 +51,18 @@ void CStage::Update()
  */
 void CStage::Finalize()
 {
-	IGameObject::Finalize();
+	CommonDataInfo info = m_CommonData->GetData();
 
+	if (m_CreateStageLever == STAGE_LEVER::EASE)
+		info.easy++;
+	if (m_CreateStageLever == STAGE_LEVER::NOMAL)
+		info.normal++;
+	if (m_CreateStageLever == STAGE_LEVER::HARD)
+		info.hard++;
+
+	m_CommonData->SetData(info);
+
+	IGameObject::Finalize();
 	AQUA_SAFE_DELETE_ARRAY(m_RandStage);
 
 	m_StageMap.clear();
@@ -89,9 +104,9 @@ bool CStage::CheckObject(aqua::CVector3 position)
  */
 void CStage::CreateStageObject()
 {
-	//if (aqua::Rand(true, false))
-	//	LodaStageMap();
-	//else
+	if (m_CommonData->GetData().stage_lever == STAGE_LEVER::EASE)
+		LodaStageMap();
+	else
 		AutoMapCreate();
 
 	aqua::CPoint stage_half_size = m_StageSize;
@@ -207,10 +222,6 @@ void CStage::SpaceAlgorithms()
 	} while (map == map_reference);
 
 	m_StageMap[map_reference.y][map_reference.x] = 2;
-
-	// ステージに空間を作る
-
-
 }
 
 /*
@@ -230,8 +241,10 @@ void CStage::AutoMapCreate()
 	if (m_StageSize.y != m_map_size.y)
 		m_StageSize.y = m_map_size.y;
 
-
-	MapPartition(aqua::CPoint(0, 0), m_StageSize, aqua::Rand(10, 3));
+	if (m_CreateStageLever == STAGE_LEVER::NOMAL)
+		MapPartition(aqua::CPoint(0, 0), m_StageSize, aqua::Rand(7, 3));
+	else
+		MapPartition(aqua::CPoint(0, 0), m_StageSize, aqua::Rand(10,7));
 
 	int vector_size = (int)m_FirstPosition.size();
 

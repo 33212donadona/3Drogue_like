@@ -1,8 +1,12 @@
 #pragma once
 #include "aqua.h"
+#include "stage_id.h"
 #include "stage_object/rock/object_rock.h"
 #include "stage_object/tower/object_tower.h"
 #include "stage_object/tree/object_tree.h"
+
+class CCommonData;
+
 class CStage : public aqua::IGameObject
 {
 public:
@@ -46,7 +50,6 @@ private:
 	void MapPartition(aqua::CPoint stage_size_first, aqua::CPoint stage_size_end,int max_partition);
 
 private:
-	aqua::CModel m_StageModel;
 
 	static const int		  m_max_stage;           //! 
 	static const int		  m_max_template_stage;	 //! 
@@ -58,7 +61,10 @@ private:
 	std::vector<aqua::CPoint>     m_FirstPosition;	 //! 
 	std::vector<aqua::CPoint>     m_EndPosition;	 //! 
 	aqua::CPoint			      m_StageSize;		 //! 
+	aqua::CModel                  m_StageModel;      //! 
 	aqua::CModel*			      m_RandStage;		 //! 
 	int						      m_StageObjectSize; //! 
 	int						      m_StageNum;        //! 
+	CCommonData*                  m_CommonData;      //! 
+	STAGE_LEVER                   m_CreateStageLever;//! 
 };

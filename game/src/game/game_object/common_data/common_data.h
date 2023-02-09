@@ -21,7 +21,8 @@ public:
 		float max_hit_point,
 		float hit_point,
 		float game_crea_time,
-		JOB_ID job_id
+		JOB_ID job_id,
+		STAGE_LEVER next_stage_lever = STAGE_LEVER::EASE
 	);
 
 	CommonDataInfo GetData();

@@ -43,7 +43,7 @@ void CBagData::Initialize()
  */
 void CBagData::Update()
 {
-	if (Input::In(Input::KEY_ID::Y))
+	if (Input::In(Input::BUTTON_ID::Y))
 		m_BagFlag = !m_BagFlag;
 
 	if (m_BagFlag)

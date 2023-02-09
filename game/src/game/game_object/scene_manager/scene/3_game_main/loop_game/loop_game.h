@@ -3,8 +3,16 @@
 #include "../../../../common_data/common_data_info.h"
 
 class CUnitManager;
-
 class CCommonData;
+
+enum class LOOP_STATE
+{
+	FADE_IN,
+	UPDATA,
+	FADE_OUT,
+
+	MAX
+};
 
 class CLoopGame : public aqua::IGameObject
 {
@@ -21,7 +29,19 @@ public:
 	bool ChengeResult();
 
 private:
+
+	void SelectNextStageLaver();
+
+private:
+	static const float m_fade_max_time;
+
 	CUnitManager*    m_UnitManager;
 	CCommonData*     m_CommonData;
 	CommonDataInfo   m_GameData;
+	LOOP_STATE       m_LoopState;
+	aqua::CBoxPrimitive m_FadeBox;
+	aqua::CTimer        m_FadeTimer;
+
+	bool m_SelectNextStageFlag;
+
 };

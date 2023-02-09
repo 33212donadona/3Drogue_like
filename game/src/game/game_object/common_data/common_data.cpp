@@ -9,15 +9,16 @@ CCommonData::CCommonData(aqua::IGameObject* parent)
 
 void CCommonData::SetData(CommonDataInfo common_data)
 {
-	m_MapData.crea_target    = common_data.crea_target;
-	m_MapData.crea_stage     = common_data.crea_stage;
-	m_MapData.easy           = common_data.easy;
-	m_MapData.normal         = common_data.normal;
-	m_MapData.hard           = common_data.hard;
-	m_MapData.game_crea_time = common_data.game_crea_time;
-	m_MapData.max_hit_point  = common_data.max_hit_point;
-	m_MapData.hit_point      = common_data.hit_point;
-	m_MapData.now_job        = common_data.now_job;
+	m_MapData.crea_target      = common_data.crea_target;
+	m_MapData.crea_stage       = common_data.crea_stage;
+	m_MapData.easy             = common_data.easy;
+	m_MapData.normal           = common_data.normal;
+	m_MapData.hard             = common_data.hard;
+	m_MapData.game_crea_time   = common_data.game_crea_time;
+	m_MapData.max_hit_point    = common_data.max_hit_point;
+	m_MapData.hit_point        = common_data.hit_point;
+	m_MapData.now_job          = common_data.now_job;
+	m_MapData.stage_lever = common_data.stage_lever;
 }
 
 void CCommonData::SetData
@@ -30,7 +31,8 @@ void CCommonData::SetData
 	float max_hit_point,
 	float hit_point,
 	float game_crea_time,
-	JOB_ID job_id
+	JOB_ID job_id,
+	STAGE_LEVER next_stage_lever
 )
 {
 	if (m_MapData.crea_target != max_stage)
@@ -62,6 +64,9 @@ void CCommonData::SetData
 
 	if (m_MapData.now_job != job_id)
 		m_MapData.now_job = job_id;
+
+	if (m_MapData.stage_lever != next_stage_lever)
+		m_MapData.stage_lever = next_stage_lever;
 }
 
 CommonDataInfo CCommonData::GetData()

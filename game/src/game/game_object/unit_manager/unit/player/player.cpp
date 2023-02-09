@@ -215,7 +215,7 @@ void CPlayer::FistAnimeWork()
 			m_AnimeState = P_ANIME_ID::IDLE;
 	}
 
-	if (Input::In(Input::KEY_ID::B))
+	if (Input::In(Input::BUTTON_ID::B))
 	{
 		m_AttackFlag = true;
 		m_AnimeState = P_ANIME_ID::SLASH;
@@ -229,7 +229,7 @@ void CPlayer::FistAnimeWork()
 */
 void CPlayer::SwordAnimeWork()
 {
-	if (Input::In(Input::KEY_ID::B) && !m_AttackFlag)
+	if (Input::In(Input::BUTTON_ID::B) && !m_AttackFlag)
 	{
 
 		m_AnimeState = P_ANIME_ID::SLASH;
@@ -274,7 +274,7 @@ void CPlayer::MagicAnimeWork()
 		}
 	}
 
-	if (Input::In(Input::KEY_ID::B))
+	if (Input::In(Input::BUTTON_ID::B))
 	{
 		m_Standby = true;
 	}
@@ -285,7 +285,7 @@ void CPlayer::MagicAnimeWork()
 	if (m_CancelMagic)
 		m_CancelMagic = false;
 
-	if (Input::Out(Input::KEY_ID::B))
+	if (Input::Out(Input::BUTTON_ID::B))
 	{
 		if (m_ChageTime.Finished())
 		{
@@ -329,7 +329,7 @@ void CPlayer::MoneyAnimeWork()
 			m_AnimeState = P_ANIME_ID::IDLE;
 	}
 
-	if (Input::In(Input::KEY_ID::B))
+	if (Input::In(Input::BUTTON_ID::B))
 	{
 		m_AnimeState = P_ANIME_ID::MONEY_SHOT;
 		m_BagData->AddToDepositBalance(-100);

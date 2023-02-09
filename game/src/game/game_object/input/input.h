@@ -4,7 +4,7 @@
 namespace Input
 {
 
-	enum class KEY_ID
+	enum class BUTTON_ID
 	{
 		A,
 		B,
@@ -52,7 +52,7 @@ namespace Input
 	*  @retval     true    —£‚³‚ê‚½
 	*  @retval     false   —£‚³‚ê‚Ä‚¢‚È‚¢
 	*/
-	bool In(KEY_ID key_id);
+	bool In(BUTTON_ID key_id);
 	/*
 	*  @brief   —£‚³‚ê‚½‚Ì‚İ‚Ìo—Í
 	*
@@ -63,7 +63,7 @@ namespace Input
 	*  @retval     true    —£‚³‚ê‚½
 	*  @retval     false   —£‚³‚ê‚Ä‚¢‚È‚¢
 	*/
-	bool Out(KEY_ID key_id);
+	bool Out(BUTTON_ID key_id);
 	/*
 	*  @brief   “ü—Í’†‚Ìo—Í
 	*
@@ -74,7 +74,7 @@ namespace Input
 	*  @retval     true    —£‚³‚ê‚½
 	*  @retval     false   —£‚³‚ê‚Ä‚¢‚È‚¢
 	*/
-	bool Button(KEY_ID key_id);
+	bool Button(BUTTON_ID key_id);
 
 	/*
 	*  @brief   …•½“ü—Í
@@ -94,7 +94,7 @@ namespace Input
 	*/
 	float Vertical(ANALOG_STICK_ID stick_id = ANALOG_STICK_ID::LEFT);
 
-	static const int m_max_key = (int)KEY_ID::MAX;
+	static const int m_max_key = (int)BUTTON_ID::MAX;
 	static bool m_InputKey[m_max_key];
 	static bool m_PrevInputKey[m_max_key];
 	static aqua::CVector2 m_LeftStick;

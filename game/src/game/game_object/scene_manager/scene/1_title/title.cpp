@@ -149,7 +149,7 @@ void CTitle::Update(void)
 
 
 	// スペースでゲームシーンへ移動
-	if (Input::In(Input::KEY_ID::B))
+	if (Input::In(Input::BUTTON_ID::B))
 	{
 		((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::SELECT);
 	}

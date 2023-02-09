@@ -81,7 +81,7 @@ void CResult::Update(void)
 	//m_ClearTimeText.text = std::to_string(X) + "/" + std::to_string(Y);
 
 	// 「スペース」キーを押すとタイトルシーンへ遷移する
-	if (Input::In(Input::KEY_ID::B))
+	if (Input::In(Input::BUTTON_ID::B))
 		((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::TITLE);
 
 	// タイマーが終了していなければ、タイマーを更新し続ける
