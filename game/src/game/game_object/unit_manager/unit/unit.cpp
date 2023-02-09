@@ -12,6 +12,7 @@ IUnit::IUnit(aqua::IGameObject* parent, std::string name)
 	, m_State(STATE::SUMMON)
 	, DeadFlag(false)
 	, m_StateDamageFrame(0)
+	, m_SummonInitFrame(0)
 	, m_HitPoint(0.0f)
 	, m_MaxHitPoint(0.0f)
 {
@@ -29,7 +30,7 @@ void IUnit::Initialize()
 	m_NotDamageTime.Setup(m_not_damege_max_time);
 
 	m_SummonEffect.Create("data\\effect\\summon.efkefc");
-	m_SummonEffect.Play();
+
 	m_SummonEffect.scale = aqua::CVector3::ONE * 10.0f;
 	m_SummonEffect.position = m_UnitModel.position;
 	m_SummonEffect.position.y = 0.0f;
@@ -72,7 +73,7 @@ void IUnit::Update()
 		//	
 		//}
 
-		if(m_PrevHitPoint != m_HitPoint)
+		if (m_PrevHitPoint != m_HitPoint)
 			m_State = STATE::DAMAGE;
 
 		break;
@@ -136,6 +137,13 @@ void IUnit::Finalize()
 */
 void IUnit::Summon()
 {
+	if (m_SummonInitFrame == 0)
+	{
+		m_SummonEffect.Play();
+
+		m_SummonInitFrame++;
+	}
+
 	m_UnitModel.position.y = aqua::easing::InQuart
 	(
 		m_EffectTime.GetTime(),
@@ -144,16 +152,18 @@ void IUnit::Summon()
 		0.0f
 	);
 
-	if(m_UnitModel.position.y == 0.0f)
+	if (m_UnitModel.position.y == 0.0f)
 	{
 		m_UnitModel.AttachAnimation(0);
 		m_State = STATE::MOVE;
 	}
+
 	m_SummonEffect.Update();
 	m_EffectTime.Update();
 
 	if (m_EffectTime.Finished())
 		m_EffectTime.SetTime(m_summon_max_time);
+
 }
 /*
 *  @brief  éÄñSèàóù

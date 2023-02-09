@@ -3,6 +3,7 @@
 const int CSelectBackGround::m_max_sky = 2;
 const int CSelectBackGround::m_max_effect = 2;
 const float CSelectBackGround::m_sprite_move_speed = 7.5f;
+const float CSelectBackGround::m_light_time = 0.5f;
 const std::string CSelectBackGround::m_bg_filr_name[] =
 {
 	"data\\select_graph\\sub.png",
@@ -69,6 +70,7 @@ void CSelectBackGround::Initialize()
 		m_MoveKey[k_i].position = aqua::GetWindowSize() / 2;
 		m_MoveKey[k_i].position.y -= m_MoveKey[k_i].GetTextureHeight() / 2;
 		m_MoveKey[k_i].position.x -= m_MoveKey[k_i].GetTextureWidth() / 2;
+
 		if (k_i)
 			m_MoveKey[k_i].position.x += aqua::GetWindowWidth() / 5;
 		else
@@ -76,6 +78,8 @@ void CSelectBackGround::Initialize()
 
 		m_MoveKeyLight[k_i].position = m_MoveKey[k_i].position;
 	}
+
+	m_LightTimer.Setup(m_light_time);
 
 	m_BackGroundSurface.Create(aqua::GetWindowWidth(), aqua::GetWindowHeight());
 }
@@ -195,31 +199,48 @@ void CSelectBackGround::ChangeBackGournd()
 void CSelectBackGround::EmittingLight()
 {
 
-	m_LightFrame += (unsigned char)2.55f;
-
 	for (int k_i = 0; k_i < (int)CAN_MOVE_ID::MAX; k_i++)
 	{
 		if ((m_SelectSystem->GetNowLavel() + k_i) % ((int)CAN_MOVE_ID::MAX + 1) == 0)
 		{
-			m_MoveKeyLight[k_i].color = aqua::CColor::BLACK;
 			m_MoveKeyLight[k_i].color.alpha = (unsigned char)0;
+			m_MoveKey[k_i].color = m_MoveKeyLight[k_i].color;
 		}
 		else
 		{
 			m_MoveKeyLight[k_i].color = aqua::CColor::WHITE;
 
-			if ((float)m_LightFrame > 255.0f)
-				m_MoveKeyLight[k_i].color.alpha = unsigned char(255.0f + 255.0f - (float)m_LightFrame);
-			else if ((float)m_LightFrame > (510.0f))
+			if (!m_LightTimer.Finished())
 			{
-				m_LightFrame = (unsigned char)0;
-				m_MoveKeyLight[k_i].color.alpha = m_LightFrame;
+				m_MoveKeyLight[k_i].color.alpha = (unsigned char)aqua::easing::InCubic
+				(
+					m_LightTimer.GetTime(),
+					m_LightTimer.GetLimit(),
+					255.0f,
+					0.0f
+				);
 			}
 			else
-				m_MoveKeyLight[k_i].color.alpha = m_LightFrame;
+			{
+				m_MoveKeyLight[k_i].color.alpha = (unsigned char)aqua::easing::OutCubic
+				(
+					m_LightTimer.GetTime() - m_LightTimer.GetLimit(),
+					m_LightTimer.GetLimit(),
+					0.0f,
+					255.0f
+				);
+
+				if (m_LightTimer.GetTime() - m_LightTimer.GetLimit() >= m_LightTimer.GetLimit())
+					m_LightTimer.Reset();
+
+			}
+
+
+			m_MoveKey[k_i].color.alpha = 255;
 		}
 
-		m_MoveKey[k_i].color = m_MoveKeyLight[k_i].color;
 	}
+
+	m_LightTimer.Update();
 
 }

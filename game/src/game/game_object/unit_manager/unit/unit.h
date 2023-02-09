@@ -51,6 +51,7 @@ private:
 	aqua::CEffect3D*   m_DeadEffect;            //! 死亡エフェクト
 
 	int                m_StateDamageFrame;      //! ダメージ状態のフレーム
+	int                m_SummonInitFrame;       //!	召喚時の初め
 	float              m_PrevHitPoint;
 	/*
 	*  @brief 召喚
