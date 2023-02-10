@@ -171,6 +171,13 @@ void CLoopGame::Update()
 			IGameObject::Finalize();
 
 			m_GameData.game_crea_time += ((CGameMain*)aqua::FindGameObject("GameMain"))->GetGameTime();
+			
+			if (m_GameData.stage_lever == STAGE_LEVER::EASE)
+				m_GameData.easy++;
+			else if (m_GameData.stage_lever == STAGE_LEVER::NOMAL)
+				m_GameData.nomal++;
+			else if (m_GameData.stage_lever == STAGE_LEVER::HARD)
+				m_GameData.hard++;
 
 			m_CommonData->SetData(m_GameData);
 
@@ -195,6 +202,9 @@ void CLoopGame::Update()
 		if (m_LightFlag)
 		{
 			int select_num = (int)m_CommonData->GetData().stage_lever;
+
+			if (m_LightTimer.GetTime() >= m_LightTimer.GetLimit() * 2.0f)
+				m_LightTimer.SetTime(m_LightTimer.GetLimit() * 2.0f);
 
 			m_LeverSprite[select_num].color.alpha = (unsigned)0;
 
@@ -221,7 +231,7 @@ void CLoopGame::Update()
 			else
 			{
 				m_LeverSpriteLight[select_num].color.alpha =
-					(unsigned char)aqua::easing::InCubic
+					(unsigned char)aqua::easing::OutCubic
 					(
 						m_LightTimer.GetTime() - m_LightTimer.GetLimit(),
 						m_LightTimer.GetLimit(),
@@ -230,7 +240,7 @@ void CLoopGame::Update()
 					);
 
 				m_LeverSpriteLight[select_num].scale = aqua::CVector2::ONE *
-					aqua::easing::InCubic
+					aqua::easing::OutCubic
 					(
 						m_LightTimer.GetTime() - m_LightTimer.GetLimit(),
 						m_LightTimer.GetLimit(),
@@ -238,10 +248,13 @@ void CLoopGame::Update()
 						1.0f
 					);
 
-				if (m_LeverSpriteLight[select_num].color.alpha == (unsigned char)0)
+				if (m_LeverSpriteLight[select_num].scale == aqua::CVector2::ONE)
 					m_LightFlag = false;
 
 			}
+
+			if (m_LightTimer.GetTime() > m_LightTimer.GetLimit() * 2.0f)
+				m_LightFlag = false;
 
 			m_LightTimer.Update();
 		}

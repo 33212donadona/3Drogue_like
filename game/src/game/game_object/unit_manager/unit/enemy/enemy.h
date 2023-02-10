@@ -34,5 +34,8 @@ private:
 
 	ENEMY_ANIME_ID m_AnimetionID;
 
+	aqua::CModel   m_Sword;
+	aqua::CTimer   m_AttackCoolTime;
+
 	bool m_DamageFlag;                 //! 連続ダメージを防ぐ
 };

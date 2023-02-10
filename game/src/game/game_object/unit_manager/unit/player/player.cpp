@@ -19,6 +19,7 @@ const float CPlayer::m_attack = 50.0f;
 CPlayer::CPlayer(aqua::IGameObject* parent)
 	:IUnit(parent, "Player")
 	, m_Angles(0.0f)
+	, m_Damage(0.0f)
 	, m_AttackFlag(false)
 	, m_ShotFlag(false)
 	, m_Standby(false)
@@ -58,10 +59,8 @@ void CPlayer::Initialize()
 
 	m_ChageTime.Setup(m_chage_max_time);
 
-
-
 	m_CommonDataInfo = m_CommonData->GetData();
-	
+
 	// 職業の初期化
 	m_CommonDataInfo.now_job = JOB_ID::TEX_COLLECTOR;//(JOB_ID)aqua::Rand((int)JOB_ID::MAX - 1, 1);
 	m_PlayerJobID = m_CommonDataInfo.now_job;
@@ -69,7 +68,7 @@ void CPlayer::Initialize()
 
 	// 体力の設定
 	m_CommonDataInfo.max_hit_point = m_max_hit_point + m_JobManager->GetJobHitPointState();
-	m_HitPoint = m_CommonDataInfo.hit_point;
+	m_HitPoint = m_CommonDataInfo.max_hit_point;
 
 	m_CommonData->SetData(m_CommonDataInfo);
 
@@ -116,11 +115,23 @@ void CPlayer::Finalize()
 */
 void CPlayer::MoveUpdata()
 {
-	AnimetionWork();
+	m_HitPoint -= m_Damage;
 
-	Move();
+	if (m_Damage != 0.0f)
+		m_Damage = 0.0f;
 
-	Rotation();
+	if (m_AnimeState != P_ANIME_ID::DAMAGE)
+	{
+		AnimetionWork();
+
+		Move();
+
+		Rotation();
+	}
+	else if (m_UnitModel.AnimetionFinished())
+	{
+		m_AnimeState = P_ANIME_ID::IDLE;
+	}
 }
 /*
  *  アニメーション番号
@@ -128,6 +139,15 @@ void CPlayer::MoveUpdata()
 int CPlayer::GetAnimetionNum()
 {
 	return (int)m_AnimeState;
+}
+
+void CPlayer::HitEnemyAttack(float attack)
+{
+	if (m_AnimeState == P_ANIME_ID::DAMAGE)return;
+	if (m_HitPoint < 0)return;
+
+	m_Damage = attack;
+	m_AnimeState = P_ANIME_ID::DAMAGE;
 }
 
 bool CPlayer::CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
@@ -162,7 +182,7 @@ bool CPlayer::GetCancelMagic()
 
 void CPlayer::SetJodID(JOB_ID job_id)
 {
-	CommonDataInfo info = m_CommonData->GetData( );
+	CommonDataInfo info = m_CommonData->GetData();
 
 	info.now_job = job_id;
 
@@ -182,6 +202,7 @@ JOB_ID CPlayer::GetPlayerJob()
  */
 void CPlayer::AnimetionWork()
 {
+
 	switch (m_SetingWeapon[(int)m_PlayerJobID])
 	{
 	case WEAPON_ID::FIST:
@@ -201,6 +222,7 @@ void CPlayer::AnimetionWork()
 	default:
 		break;
 	}
+
 }
 /*
 *  素手の時のアニメーション

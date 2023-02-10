@@ -31,6 +31,11 @@ public:
 
 	int GetAnimetionNum();
 
+	/*
+	* 
+	*/
+	void HitEnemyAttack(float attack);
+
 	/*!
 	*  @brief •Ší‚Æ‚ÌÕ“ËŒŸ’m
 	*
@@ -90,6 +95,7 @@ private:
 	aqua::CTimer    m_ChageTime;
 
 	float m_Angles;
+	float m_Damage;
 	int   m_MagicFrame;
 
 	bool m_Standby;

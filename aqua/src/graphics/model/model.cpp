@@ -108,7 +108,9 @@ bool aqua::CModel::AnimetionFinished()
 
 bool aqua::CModel::AnimetionFinished(float m_time)
 {
-	return m_Frame >= m_time;
+	float t = max(0, min(m_time, m_MaxTime - 1));
+
+	return m_Frame >= t;
 }
 
 aqua::CollisionInfo aqua::CModel::GetBoneCollision(

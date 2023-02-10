@@ -55,5 +55,5 @@ void CUnitManager::Finalize()
 
 bool CUnitManager::EmptyEnemyList()
 {
-	return m_EnemyList.empty();
+	return m_EnemyList.empty() || m_Player->GetDead();
 }
