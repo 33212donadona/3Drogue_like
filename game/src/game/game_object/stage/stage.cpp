@@ -56,7 +56,7 @@ void CStage::Finalize()
 	if (m_CreateStageLever == STAGE_LEVER::EASE)
 		info.easy++;
 	if (m_CreateStageLever == STAGE_LEVER::NOMAL)
-		info.normal++;
+		info.nomal++;
 	if (m_CreateStageLever == STAGE_LEVER::HARD)
 		info.hard++;
 

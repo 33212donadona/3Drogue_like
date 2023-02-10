@@ -11,6 +11,7 @@ const float CEnemy::m_attack = 10.0f;
 CEnemy::CEnemy(aqua::IGameObject* parent)
 	:IUnit(parent, "Enemy")
 	, m_DamageFlag(true)
+	, m_AnimetionID(ENEMY_ANIME_ID::IDEL)
 	, m_PlayerModel(nullptr)
 {
 }
@@ -23,8 +24,8 @@ void CEnemy::Initialize()
 
 	m_Stage = (CStage*)aqua::FindGameObject("Stage");
 
-	m_UnitModel.Create("data\\model\\Enemy", 4);
-	m_UnitModel.AttachAnimation(0);
+	m_UnitModel.Create("data\\model\\Enemy", (int)ENEMY_ANIME_ID::MAX);
+	m_UnitModel.AttachAnimation((int)m_AnimetionID);
 
 	m_HitPoint = m_max_hit_point;
 
@@ -41,7 +42,6 @@ void CEnemy::Initialize()
  */
 void CEnemy::Update()
 {
-	Algorithms();
 
 	IUnit::Update();
 
@@ -58,6 +58,8 @@ void CEnemy::Finalize()
 
 void CEnemy::MoveUpdata()
 {
+	Algorithms();
+
 	if (GetState() != STATE::DEAD)
 	{
 		if (
@@ -68,17 +70,35 @@ void CEnemy::MoveUpdata()
 		{
 			m_HitPoint -= m_PlayerModel->GetAttack();
 			m_DamageFlag = true;
+			m_AnimetionID = ENEMY_ANIME_ID::DAMAGE;
 		}
 	}
+	else
+		m_AnimetionID = ENEMY_ANIME_ID::DAMAGE;
+
 	if (m_DamageFlag)
 	{
 		if (!m_PlayerModel->CheckHit(m_UnitModel.GetBonePosition(6), m_UnitModel.GetBonePosition(69)))
 			m_DamageFlag = false;
 	}
+
+	if (m_AnimetionID == ENEMY_ANIME_ID::DAMAGE)
+	{
+		if (m_UnitModel.AnimetionFinished())
+			m_AnimetionID = ENEMY_ANIME_ID::IDEL;
+
+	}
+
+	m_UnitModel.AttachAnimation((int)m_AnimetionID);
 }
 
 void CEnemy::Algorithms()
 {
 	aqua::CVector3 angle = m_UnitModel.position - m_PlayerModel->GetPosition();
 	m_UnitModel.angles = atan2(angle.x, angle.z);
+}
+
+void CEnemy::AnimetionWark()
+{
+
 }

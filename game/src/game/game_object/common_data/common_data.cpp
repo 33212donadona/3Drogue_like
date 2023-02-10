@@ -12,7 +12,7 @@ void CCommonData::SetData(CommonDataInfo common_data)
 	m_MapData.crea_target      = common_data.crea_target;
 	m_MapData.crea_stage       = common_data.crea_stage;
 	m_MapData.easy             = common_data.easy;
-	m_MapData.normal           = common_data.normal;
+	m_MapData.nomal           = common_data.nomal;
 	m_MapData.hard             = common_data.hard;
 	m_MapData.game_crea_time   = common_data.game_crea_time;
 	m_MapData.max_hit_point    = common_data.max_hit_point;
@@ -44,8 +44,8 @@ void CCommonData::SetData
 	if (m_MapData.easy != easy)
 		m_MapData.easy = easy;
 
-	if (m_MapData.normal != normal)
-		m_MapData.normal = normal;
+	if (m_MapData.nomal != normal)
+		m_MapData.nomal = normal;
 
 	if (m_MapData.hard != hard)
 		m_MapData.hard = hard;

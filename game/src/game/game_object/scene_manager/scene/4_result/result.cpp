@@ -60,7 +60,7 @@ void CResult::Initialize(void)
 
 	m_NormalNumText.Create(50);
 	m_NormalNumText.position = { 450,620 };
-	m_NormalNumText.text = "1000 ~ " + std::to_string(cd->GetData().normal) + " = " + std::to_string(cd->GetData().normal * 1000);
+	m_NormalNumText.text = "1000 ~ " + std::to_string(cd->GetData().nomal) + " = " + std::to_string(cd->GetData().nomal * 1000);
 
 	m_HardText.Create(50);
 	m_HardText.position = { 450,780 };

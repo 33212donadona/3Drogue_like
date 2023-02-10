@@ -33,6 +33,8 @@ public:
 	*/
 	bool CheckObject(aqua::CVector3 position);
 
+
+
 private:
 
 	void CreateStageObject();
