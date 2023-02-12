@@ -1,5 +1,6 @@
 #include "bag_data.h"
 #include "../weapon_manager/weapon/weapon_id.h"
+#include "../sound_manager/game_sound_manager.h"
 #include "../input/input.h"
 
 const int CBagData::m_max_item = 2;
@@ -24,6 +25,8 @@ CBagData::CBagData(aqua::IGameObject* parent)
  */
 void CBagData::Initialize()
 {
+	m_SoundManager = (CGameSoundManager*)aqua::FindGameObject("GameSoundManager");
+
 	m_BagInventory = AQUA_NEW WEAPON_STATE[m_bag_capacity];
 
 	for (int bag_i = 0; bag_i < m_bag_capacity; bag_i++)
@@ -110,6 +113,9 @@ void CBagData::SetSelectBagNumber(int select_bag_num)
 void CBagData::AddToDepositBalance(int add_to_deposit_balance)
 {
 	m_DepositBalance = aqua::Limit(m_DepositBalance + add_to_deposit_balance, 0, m_max_deposit_balance);
+
+	if (add_to_deposit_balance != 0)
+		m_SoundManager->Play(SoundID::GET_MONEY);
 }
 
 /*

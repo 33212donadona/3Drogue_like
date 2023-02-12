@@ -5,7 +5,14 @@ const SoundInfo CGameSoundManager::m_Sound[(int)SoundID::MAX] =
 	{"data\\bgm\\title.mp3",true},
 	{"data\\bgm\\select.mp3",true},
 	{"data\\bgm\\game_main.mp3",true},
-	{"data\\bgm\\result.mp3",true}
+	{"data\\bgm\\result.mp3",true},
+	{"data\\bgm\\重いパンチ1.mp3",false},
+	{"data\\bgm\\大剣で斬る.mp3",false},
+    {"data\\bgm\\火炎魔法1.mp3",false},
+	{"data\\bgm\\硬貨・ばら撒く.mp3",false},
+	{"data\\bgm\\レジスター開ける.mp3",false},
+	{"data\\bgm\\シーン遷移_ボタン.mp3",false},
+	{"data\\bgm\\ステージ_ボタン.mp3",false}
 };
 
 CGameSoundManager::CGameSoundManager(aqua::IGameObject* parent)
@@ -24,6 +31,7 @@ void CGameSoundManager::Finalize()
 {
 	for (auto& i : m_SoundList)
 		i.Delete();
+
 	m_Finalize = true;
 	IGameObject::Finalize();
 }
@@ -31,7 +39,7 @@ void CGameSoundManager::Finalize()
 void CGameSoundManager::Play(SoundID id)
 {
 	int sound_id = (int)id;
-	
+
 	if (!m_SoundList[sound_id].IsPlaying() && m_Sound[sound_id].flag)
 		m_SoundList[sound_id].Play();
 

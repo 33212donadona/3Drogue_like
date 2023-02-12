@@ -1,6 +1,7 @@
 #include "player.h"
 #include "../../../job_manager/job_manager.h"
 #include "../../../bag/bag_data.h"
+#include "../../../sound_manager/game_sound_manager.h"
 #include "../../../weapon_manager/weapon_manager.h"
 #include "../../../weapon_manager/weapon/weapon_id.h"
 #include "../../../common_data/common_data.h"
@@ -46,6 +47,7 @@ void CPlayer::Initialize()
 	m_BagData = (CBagData*)aqua::FindGameObject("BagData");
 	m_CommonData = (CCommonData*)aqua::FindGameObject("CommonData");
 	m_Stage = (CStage*)aqua::FindGameObject("Stage");
+	m_SoundManager = (CGameSoundManager*)aqua::FindGameObject("GameSoundManager");
 
 	//初期位置設定
 	while (m_UnitModel.position == aqua::CVector3::ZERO)
@@ -55,20 +57,22 @@ void CPlayer::Initialize()
 
 	m_UnitModel.AttachAnimation((int)m_AnimeState);
 
-	m_WeaponManager->SetHandMatrix(m_UnitModel, "mixamorig:RightHandThumb1");
 
 	m_ChageTime.Setup(m_chage_max_time);
 
 	m_CommonDataInfo = m_CommonData->GetData();
 
 	// 職業の初期化
-	m_CommonDataInfo.now_job = JOB_ID::TEX_COLLECTOR;//(JOB_ID)aqua::Rand((int)JOB_ID::MAX - 1, 1);
+	m_CommonDataInfo.now_job = JOB_ID::SWORDMAN;//(JOB_ID)aqua::Rand((int)JOB_ID::MAX - 1, 1);
 	m_PlayerJobID = m_CommonDataInfo.now_job;
 	m_JobManager->SetJobID(m_PlayerJobID);
 
 	// 体力の設定
 	m_CommonDataInfo.max_hit_point = m_max_hit_point + m_JobManager->GetJobHitPointState();
-	m_HitPoint = m_CommonDataInfo.max_hit_point;
+	if (m_CommonDataInfo.crea_stage == 0)
+		m_HitPoint = m_CommonDataInfo.max_hit_point;
+	else
+		m_HitPoint = m_CommonDataInfo.hit_point;
 
 	m_CommonData->SetData(m_CommonDataInfo);
 
@@ -76,6 +80,7 @@ void CPlayer::Initialize()
 	//m_BagData->SetWeapon(0, WEAPON_ID::MONEY, 50, 30);
 
 	m_WeaponManager->SetWeapon(m_SetingWeapon[(int)m_PlayerJobID]);
+	m_WeaponManager->SetHandMatrix(m_UnitModel, "mixamorig:RightHandThumb1");
 
 	m_Attack = m_JobManager->GetJobAttackState() + m_BagData->GetWeaponData(m_BagData->GetSelectBagNumber()).attack;
 
@@ -97,6 +102,11 @@ void CPlayer::Update()
 
 	IUnit::Update();
 
+	if (m_UnitModel.AnimetionFinished() && m_AnimeState == P_ANIME_ID::DAMAGE)
+	{
+		m_AnimeState = P_ANIME_ID::IDLE;
+	}
+
 	m_UnitModel.AttachAnimation((int)m_AnimeState);
 }
 /*
@@ -107,6 +117,8 @@ void CPlayer::Finalize()
 	m_CommonDataInfo.hit_point = m_HitPoint;
 
 	m_CommonData->SetData(m_CommonDataInfo);
+
+	m_JobManager->Finalize();
 
 	IUnit::Finalize();
 }
@@ -128,10 +140,6 @@ void CPlayer::MoveUpdata()
 
 		Rotation();
 	}
-	else if (m_UnitModel.AnimetionFinished())
-	{
-		m_AnimeState = P_ANIME_ID::IDLE;
-	}
 }
 /*
  *  アニメーション番号
@@ -152,7 +160,33 @@ void CPlayer::HitEnemyAttack(float attack)
 
 bool CPlayer::CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
 {
-	return m_WeaponManager->CheckHit(first_pos, end_pos) && m_AttackFlag;
+	bool wh = m_WeaponManager->CheckHit(first_pos, end_pos) && m_AttackFlag;
+
+	if (wh)
+	{
+		switch (m_SetingWeapon[(int)m_PlayerJobID])
+		{
+		case WEAPON_ID::FIST:
+			m_SoundManager->Play(SoundID::PUNCH);
+			break;
+		case WEAPON_ID::SWORD:
+			m_SoundManager->Play(SoundID::SLASH);
+			break;
+		case WEAPON_ID::MAGIC:
+			m_SoundManager->Play(SoundID::MAGIC);
+			break;
+		case WEAPON_ID::MONEY:
+			m_SoundManager->Play(SoundID::MONEY);
+			break;
+		case WEAPON_ID::MAX:
+			break;
+		default:
+			break;
+		}
+
+	}
+
+	return wh;
 }
 
 float CPlayer::GetAngle()
@@ -189,6 +223,7 @@ void CPlayer::SetJodID(JOB_ID job_id)
 	m_PlayerJobID = job_id;
 
 	m_JobManager->SetJobID(job_id);
+	m_WeaponManager->SetWeapon(m_SetingWeapon[(int)m_PlayerJobID]);
 	m_CommonData->SetData(info);
 }
 
@@ -245,6 +280,10 @@ void CPlayer::FistAnimeWork()
 
 	if (m_UnitModel.AnimetionFinished() && m_AnimeState == P_ANIME_ID::SLASH)
 		m_AttackFlag = false;
+
+	if(m_AnimeState != P_ANIME_ID::SLASH)
+		m_AttackFlag = false;
+
 }
 /*
 *  剣の時のアニメーション
@@ -354,8 +393,8 @@ void CPlayer::MoneyAnimeWork()
 	if (Input::In(Input::BUTTON_ID::B))
 	{
 		m_AnimeState = P_ANIME_ID::MONEY_SHOT;
-		m_BagData->AddToDepositBalance(-100);
 	}
+
 	if (m_AnimeState == P_ANIME_ID::MONEY_SHOT && m_UnitModel.AnimetionFinished(30.0f))
 	{
 		m_ShotFlag = true;

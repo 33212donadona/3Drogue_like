@@ -1,6 +1,6 @@
 #include "magic.h"
 #include "../../../unit_manager/unit/player/player.h"
-
+#include "../../../sound_manager/game_sound_manager.h"
 const int CMagic::m_effect_radius = 10;
 const int CMagic::m_enemy_radius = 3;
 
@@ -19,6 +19,7 @@ void CMagic::Initialize()
 	m_MagicFirstEffect.Create("data\\effect\\magic_3_first_2.efkefc");
 	m_MagicKeepEffect.Create("data\\effect\\magic_3_keep.efkefc");
 	m_MagicEndEffect.Create("data\\effect\\magic_3_end.efkefc");
+	m_SoundManager = (CGameSoundManager*)aqua::FindGameObject("GameSoundManager");
 }
 
 void CMagic::Update()

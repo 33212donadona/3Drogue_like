@@ -2,7 +2,7 @@
 #include "../../stage/stage.h"
 
 const float IUnit::m_summon_max_time = 2.0f;
-const float IUnit::m_not_damege_max_time = 2.0f;
+const float IUnit::m_not_damege_max_time = 0.25f;
 const float IUnit::m_dead_max_time = 2.0f;
 const float IUnit::m_first_position_height = -20.0f;
 const int IUnit::m_max_dead_effect = 10;

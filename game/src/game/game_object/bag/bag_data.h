@@ -1,7 +1,10 @@
 #pragma once
 #include "aqua.h"
 
+class CGameSoundManager;
+
 enum class WEAPON_ID;
+
 struct WEAPON_STATE;
 
 class CBagData : public aqua::IGameObject
@@ -63,6 +66,8 @@ private:
 	static const int m_bag_capacity;         //! バックの容量
 	static const int m_max_deposit_balance;  //! 預金残高の上限
 	WEAPON_STATE* m_BagInventory;            //! バックの中身
+
+	CGameSoundManager* m_SoundManager;
 
 	bool m_BagFlag;                          //! バックのフラグ
 	int  m_SelectBagNumber;                  //! バックの番号

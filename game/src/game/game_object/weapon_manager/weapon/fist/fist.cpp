@@ -1,4 +1,5 @@
 #include "fist.h"
+#include "../../../sound_manager/game_sound_manager.h"
 #include "../../../unit_manager/unit/player/player.h"
 const int CFist::m_fist_radius = 2;
 const int CFist::m_enemy_radius = 3;
@@ -12,6 +13,7 @@ CFist::CFist(aqua::IGameObject* parent)
 void CFist::Initialize()
 {
 	m_HitFistEffect.Create("data\\effect\\fist_attak.efkefc");
+	m_SoundManager = (CGameSoundManager*)aqua::FindGameObject("GameSoundManager");
 }
 
 void CFist::Update()

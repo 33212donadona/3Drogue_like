@@ -20,7 +20,7 @@ void CGameMain::Initialize()
 	m_SoundManager = (CGameSoundManager*)aqua::FindGameObject("GameSoundManager");
 	m_SoundManager->Play(SoundID::GAME_BGM);
 	aqua::CreateGameObject<CBagData>(this);
-	m_LoopGame = aqua::CreateGameObject<CLoopGame>(this);
+	aqua::CreateGameObject<CLoopGame>(this);
 	aqua::CreateGameObject<CUIManager>(this);
 	aqua::CreateGameObject<CMoneyManager>(this);
 	aqua::CreateGameObject<CBag>(this);
@@ -28,6 +28,8 @@ void CGameMain::Initialize()
 	m_CommonData = (CCommonData*)aqua::FindGameObject("CommonData");
 	m_GameData = m_CommonData->GetData();
 	aqua::IGameObject::Initialize();
+
+	m_LoopGame = (CLoopGame*)aqua::FindGameObject("LoopGame");
 
 	// ゲームタイマーセット
 	m_GameTimer.Setup(1000.0f);
@@ -55,6 +57,7 @@ void CGameMain::Draw()
 void CGameMain::Finalize()
 {
 	m_SoundManager->Stop(SoundID::GAME_BGM);
+
 	aqua::IGameObject::Finalize();
 }
 

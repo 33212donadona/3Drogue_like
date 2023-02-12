@@ -9,6 +9,7 @@ class CWeaponManager;
 class CBagData;
 class CJobManager;
 class CCommonData;
+class CGameSoundManager;
 
 enum class WEAPON_ID;
 enum class JOB_ID;
@@ -85,6 +86,7 @@ private:
 	CBagData*       m_BagData;
 	CJobManager*    m_JobManager;
 	CCommonData*    m_CommonData;
+	CGameSoundManager* m_SoundManager;
 
 	JOB_ID          m_PlayerJobID;
 	WEAPON_ID       m_SetingWeapon[(int)JOB_ID::MAX];

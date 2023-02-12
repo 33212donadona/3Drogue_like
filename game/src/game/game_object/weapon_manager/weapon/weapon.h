@@ -1,6 +1,8 @@
 #pragma once
 #include "aqua.h"
 
+class CGameSoundManager;
+
 class IWeapon :public aqua::IGameObject
 {
 public:
@@ -16,4 +18,7 @@ public:
 	virtual bool CheckHit(aqua::CVector3 enemy_pos) { return false; };
 	virtual void SetMatrix(aqua::CMatrix matrix){};
 	virtual void SetPosition(aqua::CVector3 position) {};
+
+protected:
+	CGameSoundManager* m_SoundManager;
 };

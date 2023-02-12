@@ -1,4 +1,5 @@
 #include "result.h"
+#include "../../../sound_manager/game_sound_manager.h"
 #include "../../../input/input.h"
 #include "../../../common_data/common_data.h"
 
@@ -11,6 +12,10 @@ CResult::CResult(IGameObject* parent)
 
 void CResult::Initialize(void)
 {
+
+	m_SoundManager = (CGameSoundManager*)aqua::FindGameObject("GameSoundManager");
+	m_SoundManager->Play(SoundID::RESULT_BGM);
+
 	// スコアボードのスプライト生成
 	m_ScoreBoardSprite.Create("data/result/score_board.png");
 
@@ -82,7 +87,10 @@ void CResult::Update(void)
 
 	// 「スペース」キーを押すとタイトルシーンへ遷移する
 	if (Input::In(Input::BUTTON_ID::B))
+	{
+		m_SoundManager->Play(SoundID::SENE_BOTTON);
 		((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::TITLE);
+	}
 
 	// タイマーが終了していなければ、タイマーを更新し続ける
 	if (!m_EasingTimer.Finished()) m_EasingTimer.Update();

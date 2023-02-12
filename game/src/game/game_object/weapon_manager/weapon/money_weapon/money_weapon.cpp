@@ -1,5 +1,6 @@
 #include "money_weapon.h"
 #include "../../../bag/bag_data.h"
+#include "../../../sound_manager/game_sound_manager.h"
 #include "../../../unit_manager/unit/player/player.h"
 #include "../../../input/input.h"
 
@@ -25,6 +26,7 @@ void CMoneyWeapon::Initialize()
 	m_MoneyCollision.scale = aqua::CVector3::ONE * 0.05f;
 	m_MoneyCollision.ChengeFrameVisible("Collition", false);
 	m_BagData = (CBagData*)aqua::FindGameObject("BagData");
+	m_SoundManager = (CGameSoundManager*)aqua::FindGameObject("GameSoundManager");
 }
 
 void CMoneyWeapon::Update()
@@ -44,6 +46,7 @@ void CMoneyWeapon::Update()
 			m_MoneyCollision.angles = m_Player->GetAngle();
 
 			m_MoneyEffect.Play();
+			m_BagData->AddToDepositBalance(-100);
 		}
 
 		if (m_MoneyEffect.Finished() || m_HitMoney)

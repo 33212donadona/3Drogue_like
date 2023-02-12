@@ -5,6 +5,7 @@
 
 class CPlayer;
 class IWeapon;
+class CBagData;
 
 class CEnemy : public IUnit
 {
@@ -31,6 +32,7 @@ private:
 
 	IWeapon* m_Weapon;
 	CPlayer* m_PlayerModel;
+	CBagData* m_BagData;
 
 	ENEMY_ANIME_ID m_AnimetionID;
 

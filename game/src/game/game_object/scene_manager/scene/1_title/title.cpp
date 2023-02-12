@@ -152,6 +152,7 @@ void CTitle::Update(void)
 	if (Input::In(Input::BUTTON_ID::B))
 	{
 		((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::SELECT);
+		m_SoundManager->Play(SoundID::SENE_BOTTON);
 	}
 }
 

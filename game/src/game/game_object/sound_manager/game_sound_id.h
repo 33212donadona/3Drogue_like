@@ -7,6 +7,16 @@ enum class SoundID
 	GAME_BGM,
 	RESULT_BGM,
 
+	PUNCH,
+	SLASH,
+	MAGIC,
+	MONEY,
+
+	GET_MONEY,
+
+	SENE_BOTTON,
+	STAGE_BOTTON,
+
 	MAX
 };
 

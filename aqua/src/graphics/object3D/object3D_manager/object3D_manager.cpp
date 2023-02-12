@@ -15,9 +15,10 @@ aqua::core::CObject3DManager::Load(const std::string& file_name)
 {
 	// 3Dモデル検索
 	CObject3DResorce* object_3d = Find(file_name);
-	// 見つからなかった
-	if (!object_3d)
-	{
+
+	//// 見つからなかった
+	//if (!object_3d)
+	//{
 		// 新規生成
 		object_3d = AQUA_NEW CObject3DResorce();
 
@@ -26,8 +27,9 @@ aqua::core::CObject3DManager::Load(const std::string& file_name)
 
 		// 3Dモデルリストに追加
 		m_Object3DList.push_back(object_3d);
+	//}
 
-	}
+
 
 	// 参照カウンタ加算
 	object_3d->AddReference();
