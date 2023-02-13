@@ -17,6 +17,9 @@ public :
 
 private:
 	static const aqua::CVector3 m_camera_position;
+
+	aqua::CLabel       m_StageTargetLabel;
+
 	CSelectBackGround* m_BackGround;
 	CSelectSystem*     m_System;
 };

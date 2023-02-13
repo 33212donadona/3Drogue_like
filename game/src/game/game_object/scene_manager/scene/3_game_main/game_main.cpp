@@ -40,8 +40,8 @@ void CGameMain::Update()
 	// ゲームタイマーの更新
 	m_GameTimer.Update();
 
-	if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::Z))
-		((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::RESULT);
+	//if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::Z))
+	//	((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::RESULT);
 
 	if(m_LoopGame->ChengeResult())
 			((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::RESULT);

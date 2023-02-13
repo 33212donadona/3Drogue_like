@@ -63,7 +63,7 @@ void CEnemy::Update()
 			m_BagData->AddToDepositBalance(400);
 
 			if (m_PlayerModel->GetPlayerJob() == JOB_ID::TEX_COLLECTOR)
-				m_BagData->AddToDepositBalance(600);
+				m_BagData->AddToDepositBalance(1100);
 
 		}
 	}

@@ -26,7 +26,7 @@ void CHitPointUI::Update()
 {
 	int hit_point_zero = m_HitPointSprite.GetTextureWidth() - m_MaskSize.x;
 
-	m_MaskPosition.x =  hit_point_zero + m_CommonData->GetData().hit_point / m_CommonData->GetData().max_hit_point * m_MaskSize.x - 57.0f;
+	m_MaskPosition.x =  hit_point_zero + m_CommonData->GetData().hit_point / m_CommonData->GetData().max_hit_point * m_MaskSize.x - 26.0f;
 }
 
 void CHitPointUI::Draw()

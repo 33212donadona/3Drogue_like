@@ -58,9 +58,11 @@ void Input::Updata()
 		con::Button(con::DEVICE_ID::P1, con::BUTTON_ID::UP)    ||
 		con::Button(con::DEVICE_ID::P1, con::BUTTON_ID::DOWN))
 	{
-		m_LeftStick.x += con::Button(con::DEVICE_ID::P1, con::BUTTON_ID::RIGHT) -
+		m_LeftStick.x = 
+			con::Button(con::DEVICE_ID::P1, con::BUTTON_ID::RIGHT) -
 			con::Button(con::DEVICE_ID::P1, con::BUTTON_ID::LEFT);
-		m_LeftStick.y += con::Button(con::DEVICE_ID::P1, con::BUTTON_ID::UP) -
+		m_LeftStick.y = 
+			con::Button(con::DEVICE_ID::P1, con::BUTTON_ID::UP) -
 			con::Button(con::DEVICE_ID::P1, con::BUTTON_ID::DOWN);
 	}
 

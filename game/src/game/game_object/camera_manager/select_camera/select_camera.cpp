@@ -16,12 +16,18 @@ CSelsectCamera::CSelsectCamera(aqua::IGameObject* parent)
 void CSelsectCamera::Initialize()
 {
 	m_BackGround = (CSelectBackGround*)aqua::FindGameObject("SelectBackGround");
-	m_System     = (CSelectSystem*)aqua::FindGameObject("SelectSystem");
+	m_System = (CSelectSystem*)aqua::FindGameObject("SelectSystem");
 
 	m_Camera.Create(aqua::GetWindowSize().x, aqua::GetWindowSize().y);
 	m_Camera.camera_position = m_camera_position;
 	m_Camera.m_BackGraph.Create(m_BackGround->GetBackGround());
 
+	m_StageTargetLabel.Create(150);
+	m_StageTargetLabel.text = "目標ステージ数 : " + std::to_string(10);
+	m_StageTargetLabel.position = aqua::GetWindowSize() / 2;
+	m_StageTargetLabel.position.x -= m_StageTargetLabel.GetTextWidth() / 2.0f;
+	m_StageTargetLabel.position.y = 50.0f;
+	m_StageTargetLabel.color = aqua::CColor::GREEN;
 	ICamera::Initialize();
 }
 /*
@@ -35,6 +41,9 @@ void CSelsectCamera::Update()
 	m_Camera.camera_position.x = m_camera_position.x + m_System->GetTargetPosition().x;
 	m_Camera.camera_position.z = m_camera_position.z + m_System->GetTargetPosition().z;
 
+	if (m_System->GetPrevLavel() != m_System->GetNowLavel())
+		m_StageTargetLabel.text = "目標ステージ数 : " + std::to_string((m_System->GetNowLavel() + 1) * 10);
+
 	ICamera::Update();
 }
 /*
@@ -43,9 +52,11 @@ void CSelsectCamera::Update()
 void CSelsectCamera::Draw()
 {
 	ICamera::Draw();
+	m_StageTargetLabel.Draw();
 }
 
 void CSelsectCamera::Finalize()
 {
+	m_StageTargetLabel.Delete();
 	ICamera::Finalize();
 }

@@ -46,7 +46,7 @@ void CMoneyWeapon::Update()
 			m_MoneyCollision.angles = m_Player->GetAngle();
 
 			m_MoneyEffect.Play();
-			m_BagData->AddToDepositBalance(-100);
+			m_BagData->AddToDepositBalance(-25);
 		}
 
 		if (m_MoneyEffect.Finished() || m_HitMoney)
