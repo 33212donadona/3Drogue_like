@@ -117,6 +117,7 @@
     <ClCompile Include="src\game\game_object\stage\stage_object\tree\object_tree.cpp" />
     <ClCompile Include="src\game\game_object\stage\stage_object\rock\object_rock.cpp" />
     <ClCompile Include="src\game\game_object\stage\stage_object\object.cpp" />
+    <ClCompile Include="src\game\game_object\ui_manager\ui\controller_ui\controller_ui.cpp" />
     <ClCompile Include="src\game\game_object\ui_manager\ui\hitpoint_ui\hitpoint_ui.cpp" />
     <ClCompile Include="src\game\game_object\ui_manager\ui\job_icom\job_icom.cpp" />
     <ClCompile Include="src\game\game_object\ui_manager\ui\ui.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="src\game\game_object\stage\stage_object\tree\object_tree.h" />
     <ClInclude Include="src\game\game_object\stage\stage_object\rock\object_rock.h" />
     <ClInclude Include="src\game\game_object\stage\stage_object\object.h" />
+    <ClInclude Include="src\game\game_object\ui_manager\ui\controller_ui\controller_ui.h" />
     <ClInclude Include="src\game\game_object\ui_manager\ui\hitpoint_ui\hitpoint_ui.h" />
     <ClInclude Include="src\game\game_object\ui_manager\ui\job_icom\job_icom.h" />
     <ClInclude Include="src\game\game_object\ui_manager\ui\ui.h" />

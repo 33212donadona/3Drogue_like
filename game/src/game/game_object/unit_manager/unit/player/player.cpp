@@ -63,7 +63,6 @@ void CPlayer::Initialize()
 	m_CommonDataInfo = m_CommonData->GetData();
 
 	// E‹Æ‚Ì‰Šú‰»
-	m_CommonDataInfo.now_job = JOB_ID::SWORDMAN;//(JOB_ID)aqua::Rand((int)JOB_ID::MAX - 1, 1);
 	m_PlayerJobID = m_CommonDataInfo.now_job;
 	m_JobManager->SetJobID(m_PlayerJobID);
 

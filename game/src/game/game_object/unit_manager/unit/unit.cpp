@@ -117,6 +117,8 @@ void IUnit::Update()
 */
 void IUnit::Finalize()
 {
+
+	if(m_UnitModel.GetHandle() < 0)
 	m_UnitModel.Delete();
 	m_SummonEffect.Delete();
 

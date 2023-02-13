@@ -129,6 +129,16 @@ void CResult::Draw(void)
 
 void CResult::Finalize(void)
 {
+	CCommonData* cd = ((CCommonData*)aqua::FindGameObject("CommonData"));
+	CommonDataInfo info = cd->GetData();
+	info.crea_stage = 0;
+	info.easy = 0;
+	info.nomal = 0;
+	info.hard = 0;
+	info.stage_lever = STAGE_LEVER::EASE;
+	info.game_crea_time = 0.0f;
+	cd->SetData(info);
+
 	m_ScoreBoardSprite.Delete();
 	m_FrameSecond.Delete();
 	m_FrameFirst.Delete();

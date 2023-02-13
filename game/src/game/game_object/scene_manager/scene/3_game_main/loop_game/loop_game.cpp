@@ -1,5 +1,6 @@
 #include "loop_game.h"
 #include "../../../../stage/stage.h"
+#include "../../../../bag/bag_data.h"
 #include "../../../../unit_manager/unit_manager.h"
 #include "../../../../camera_manager/game_camera/game_camera.h"
 #include "../../../../common_data/common_data.h"
@@ -40,11 +41,12 @@ CLoopGame::CLoopGame(IGameObject* parent)
 void CLoopGame::Initialize()
 {
 	m_SoundManager = (CGameSoundManager*)aqua::FindGameObject("GameSoundManager");
+	m_CommonData = (CCommonData*)aqua::FindGameObject("CommonData");
+	m_BagData = (CBagData*)aqua::FindGameObject("BagData");
 
 	aqua::CreateGameObject<CStage>(this);
 	m_UnitManager = aqua::CreateGameObject<CUnitManager>(this);
 	aqua::CreateGameObject<CGameCamera>(this);
-	m_CommonData = (CCommonData*)aqua::FindGameObject("CommonData");
 	m_GameData = m_CommonData->GetData();
 
 	// ƒV[ƒ“‘JˆÚ‚Ì‰‰o—p
@@ -54,6 +56,7 @@ void CLoopGame::Initialize()
 	m_FadeTimer.Setup(m_fade_max_time);
 	m_LightTimer.Setup(m_light_max_time);
 	m_MaxLightTimer.Setup(m_light_max_time * 2.0f);
+	m_SelectJobTimer.Setup(m_light_max_time);
 
 	// ƒ‰ƒxƒ‹‚Ì‰Šú‰»
 	m_SelectLeverLabel.Create(40);
@@ -70,6 +73,13 @@ void CLoopGame::Initialize()
 	m_SelectJobLabel.text = "y•ÏX‚µ‚½‚­‚È‚¢ê‡‚ÍŒ»İ‚ÌE‚ğ‰Ÿ‚µ‚Ä‚­‚¾‚³‚¢z";
 	m_SelectJobLabel.position.x = float(aqua::GetWindowWidth() - m_SelectJobLabel.GetTextWidth()) / 2.0f;
 	m_SelectJobLabel.position.y = (float)aqua::GetWindowHeight() / 3 + m_SelectJobLabel.GetFontHeight();
+
+	m_SelectJobListLabel.Create(50);
+	m_SelectJobListLabel.text =
+		"A : @Šwm( 0G )   B : Œ•“¬m(1000G)\n\nX : –‚“±m(1000G)  Y : ûÅm(2500G)";
+	m_SelectJobListLabel.position.x = float(aqua::GetWindowWidth() - m_SelectJobListLabel.GetTextWidth()) / 2.0f;
+	m_SelectJobListLabel.position.y = (float)aqua::GetWindowHeight() / 3 + m_SelectJobLabel.GetFontHeight()
+		+ m_SelectJobListLabel.GetFontHeight();
 
 	// ‰æ‘œ‚Ì‰Šú‰»
 	for (int l_i = 0; l_i < (int)STAGE_LEVER::MAX; l_i++)
@@ -96,6 +106,8 @@ void CLoopGame::Initialize()
 	if (m_NextLever[0] == m_NextLever[1])
 		m_NextLever[1] = (m_NextLever[1] + 1) % (int)STAGE_LEVER::MAX;
 
+	//for (int b_i = 0; b_i < (int)SELECT_BUTTON_ID::MAX; b_i++)
+
 	for (int i = 0; i < (int)SELECT_BUTTON_SIDE::MAX; i++)
 	{
 		m_ButtonSprite[i].Create(m_button_file_name[i]);
@@ -119,13 +131,18 @@ void CLoopGame::Initialize()
 
 void CLoopGame::Update()
 {
-
-	if (Input::In(Input::BUTTON_ID::X) && m_UnitManager)
-		m_UnitManager->SetPlayerJob(JOB_ID::STUDENT);
-
 	switch (m_LoopState)
 	{
 	case LOOP_STATE::FADE_IN:
+
+		if (m_FadeTimer.GetTime() == 0.0f && m_CommonData->GetData().crea_stage > 0)
+		{
+			aqua::CreateGameObject<CStage>(this);
+			m_UnitManager = aqua::CreateGameObject<CUnitManager>(this);
+			aqua::CreateGameObject<CGameCamera>(this);
+
+			IGameObject::Initialize();
+		}
 
 		if (!m_FadeTimer.Finished())
 		{
@@ -147,6 +164,7 @@ void CLoopGame::Update()
 			m_FadeTimer.Reset();
 		}
 		break;
+		//////////////////////////////////////////////////////////////////////////////////
 	case LOOP_STATE::UPDATA:
 
 		if (m_UnitManager->EmptyEnemyList())
@@ -168,6 +186,7 @@ void CLoopGame::Update()
 			m_LoopState = LOOP_STATE::FADE_OUT;
 
 		break;
+		//////////////////////////////////////////////////////////////////////////////////
 	case LOOP_STATE::FADE_OUT:
 
 		m_GameData = m_CommonData->GetData();
@@ -191,12 +210,15 @@ void CLoopGame::Update()
 
 			m_GameData.game_crea_time += ((CGameMain*)aqua::FindGameObject("GameMain"))->GetGameTime();
 
-			if (m_GameData.stage_lever == STAGE_LEVER::EASE)
-				m_GameData.easy++;
-			else if (m_GameData.stage_lever == STAGE_LEVER::NOMAL)
-				m_GameData.nomal++;
-			else if (m_GameData.stage_lever == STAGE_LEVER::HARD)
-				m_GameData.hard++;
+			if (m_CommonData->GetData().hit_point > 0.0f)
+			{
+				if (m_GameData.stage_lever == STAGE_LEVER::EASE)
+					m_GameData.easy++;
+				else if (m_GameData.stage_lever == STAGE_LEVER::NOMAL)
+					m_GameData.nomal++;
+				else if (m_GameData.stage_lever == STAGE_LEVER::HARD)
+					m_GameData.hard++;
+			}
 
 			m_CommonData->SetData(m_GameData);
 
@@ -206,52 +228,19 @@ void CLoopGame::Update()
 			if (m_GameData.crea_stage < m_CommonData->GetData().crea_target)
 				m_LoopState = LOOP_STATE::SELECT_LEVER;
 
-			for (int l_i = 0; l_i < (int)STAGE_LEVER::MAX; l_i++)
-			{
-				m_LeverSprite[l_i].position = aqua::GetWindowSize() / 2;
-
-				m_LeverSprite[l_i].position.y -= m_LeverSprite[l_i].GetTextureHeight() / 2;
-				m_LeverSprite[l_i].position.x -= m_LeverSprite[l_i].GetTextureWidth() / 2;
-
-				m_LeverSprite[l_i].color.alpha = (unsigned char)0;
-
-				m_LeverSpriteLight[l_i].position = m_LeverSprite[l_i].position;
-				m_LeverSpriteLight[l_i].color.alpha = m_LeverSprite[l_i].color.alpha;
-			}
-
-			for (int i = 0; i < (int)SELECT_BUTTON_SIDE::MAX; i++)
-				m_NextLever[i] = aqua::Rand((int)STAGE_LEVER::HARD, (int)STAGE_LEVER::EASE);
-
-			if (m_NextLever[0] == m_NextLever[1])
-				m_NextLever[1] = (m_NextLever[1] + 1) % (int)STAGE_LEVER::MAX;
-
-			for (int i = 0; i < (int)SELECT_BUTTON_SIDE::MAX; i++)
-			{
-				m_LeverSprite[m_NextLever[i]].color.alpha = (unsigned char)255;
-
-				if (i)
-					m_LeverSprite[m_NextLever[i]].position.x += aqua::GetWindowWidth() / 4;
-				else
-					m_LeverSprite[m_NextLever[i]].position.x -= aqua::GetWindowWidth() / 4;
-
-				m_LeverSpriteLight[m_NextLever[i]].position = m_LeverSprite[m_NextLever[i]].position;
-
-				m_ButtonSprite[i].position = m_LeverSprite[m_NextLever[i]].position;
-				m_ButtonSprite[i].position.x -= m_ButtonSprite[i].GetTextureWidth() + m_button_space;
-				m_ButtonSprite[i].position.y -= m_ButtonSprite[i].GetTextureHeight() / 4;
-			}
+			SettingFadeOutSprite();
 
 			m_FadeTimer.Reset();
 		}
 
 		break;
-
+		//////////////////////////////////////////////////////////////////////////////////
 	case LOOP_STATE::SELECT_LEVER:
 
 		SelectLever();
 
 		break;
-
+		//////////////////////////////////////////////////////////////////////////////////
 	case LOOP_STATE::SELECT_JOB:
 
 		SelectJob();
@@ -286,6 +275,7 @@ void CLoopGame::Draw()
 	{
 		m_SelectJobLabel.Draw();
 		m_SelectJobSubLabel.Draw();
+		m_SelectJobListLabel.Draw();
 	}
 
 }
@@ -306,7 +296,7 @@ void CLoopGame::Finalize()
 	m_SelectLeverLabel.Delete();
 	m_SelectJobLabel.Delete();
 	m_SelectJobSubLabel.Delete();
-	
+
 	for (int l_i = 0; l_i < (int)STAGE_LEVER::MAX; l_i++)
 	{
 		m_LeverSprite[l_i].Delete();
@@ -323,6 +313,45 @@ bool CLoopGame::ChengeResult()
 {
 	if (!m_UnitManager)return m_CommonData->GetData().crea_stage >= m_CommonData->GetData().crea_target;
 	return m_CommonData->GetData().crea_stage >= m_CommonData->GetData().crea_target || m_UnitManager->GetPlayerDead();
+}
+
+void CLoopGame::SettingFadeOutSprite()
+{
+	for (int l_i = 0; l_i < (int)STAGE_LEVER::MAX; l_i++)
+	{
+		m_LeverSprite[l_i].position = aqua::GetWindowSize() / 2;
+
+		m_LeverSprite[l_i].position.y -= m_LeverSprite[l_i].GetTextureHeight() / 2;
+		m_LeverSprite[l_i].position.x -= m_LeverSprite[l_i].GetTextureWidth() / 2;
+
+		m_LeverSprite[l_i].color.alpha = (unsigned char)0;
+
+		m_LeverSpriteLight[l_i].position = m_LeverSprite[l_i].position;
+		m_LeverSpriteLight[l_i].color.alpha = m_LeverSprite[l_i].color.alpha;
+	}
+
+	for (int i = 0; i < (int)SELECT_BUTTON_SIDE::MAX; i++)
+		m_NextLever[i] = aqua::Rand((int)STAGE_LEVER::HARD, (int)STAGE_LEVER::EASE);
+
+	if (m_NextLever[0] == m_NextLever[1])
+		m_NextLever[1] = (m_NextLever[1] + 1) % (int)STAGE_LEVER::MAX;
+
+	for (int i = 0; i < (int)SELECT_BUTTON_SIDE::MAX; i++)
+	{
+		m_LeverSprite[m_NextLever[i]].color.alpha = (unsigned char)255;
+
+		if (i)
+			m_LeverSprite[m_NextLever[i]].position.x += aqua::GetWindowWidth() / 4;
+		else
+			m_LeverSprite[m_NextLever[i]].position.x -= aqua::GetWindowWidth() / 4;
+
+		m_LeverSpriteLight[m_NextLever[i]].position = m_LeverSprite[m_NextLever[i]].position;
+
+		m_ButtonSprite[i].position = m_LeverSprite[m_NextLever[i]].position;
+		m_ButtonSprite[i].position.x -= m_ButtonSprite[i].GetTextureWidth() + m_button_space;
+		m_ButtonSprite[i].position.y -= m_ButtonSprite[i].GetTextureHeight() / 4;
+	}
+
 }
 
 void CLoopGame::SelectNextStageLever()
@@ -416,16 +445,52 @@ void CLoopGame::SelectLever()
 	{
 		m_MaxLightTimer.Reset();
 		m_LightTimer.Reset();
-
-		aqua::CreateGameObject<CStage>(this);
-		m_UnitManager = aqua::CreateGameObject<CUnitManager>(this);
-		aqua::CreateGameObject<CGameCamera>(this);
-
-		IGameObject::Initialize();
-		m_LoopState = LOOP_STATE::FADE_IN;
+		if (m_CommonData->GetData().crea_stage % 3 == 0)
+		{
+			m_SelectJobTimer.Reset();
+			m_LoopState = LOOP_STATE::SELECT_JOB;
+		}
+		else
+			m_LoopState = LOOP_STATE::FADE_IN;
 	}
 }
 
 void CLoopGame::SelectJob()
 {
+	if (m_SelectJobTimer.Finished())
+	{
+		if (Input::Button(Input::BUTTON_ID::A))
+		{
+			m_GameData.now_job = JOB_ID::STUDENT;
+			m_BagData->AddToDepositBalance(0);
+		}
+		else if (Input::Button(Input::BUTTON_ID::B) && m_BagData->GetDepositBalance() >= 1000)
+		{
+			m_GameData.now_job = JOB_ID::SWORDMAN;
+			m_BagData->AddToDepositBalance(-1000);
+		}
+		else if (Input::Button(Input::BUTTON_ID::X) && m_BagData->GetDepositBalance() >= 1000)
+		{
+			m_GameData.now_job = JOB_ID::WIZARD;
+			m_BagData->AddToDepositBalance(-1000);
+		}
+		else if (Input::Button(Input::BUTTON_ID::Y) && m_BagData->GetDepositBalance() >= 2500)
+		{
+			m_GameData.now_job = JOB_ID::TEX_COLLECTOR;
+			m_BagData->AddToDepositBalance(-2500);
+		}
+
+		if (
+			Input::Button(Input::BUTTON_ID::A) ||
+			Input::Button(Input::BUTTON_ID::B) ||
+			Input::Button(Input::BUTTON_ID::X) ||
+			Input::Button(Input::BUTTON_ID::Y)
+			)
+		{
+			m_CommonData->SetData(m_GameData);
+			m_LoopState = LOOP_STATE::FADE_IN;
+		}
+	}
+
+	m_SelectJobTimer.Update();
 }
