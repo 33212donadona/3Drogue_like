@@ -39,7 +39,7 @@ private: // 非公開メンバ関数
 	aqua::CSprite m_FrameSecond;
 
 	// 銅メダルスプライト
-	aqua::CSprite m_BronzeMedalSprite;
+	aqua::CSprite m_MedalSprite;
 
 	// 銀メダルスプライト
 	aqua::CSprite m_SilverMedalSprite;

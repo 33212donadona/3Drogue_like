@@ -35,14 +35,8 @@ void CResult::Initialize(void)
 	m_FrameSecond.position.x = (float)aqua::GetWindowWidth();
 
 	// 銅メダルスプライト生成
-	m_BronzeMedalSprite.Create("data/result/bronze_medal.png");
-	m_BronzeMedalSprite.position = { 1290,120 };
-	m_BronzeMedalSprite.scale = { 0.7f,0.7f };
-	// 銀メダルスプライトの生成
-	m_SilverMedalSprite.Create("data/result/silver_medal.png");
-
-	// 金メダルスプライトの生成
-	m_GoldMedalSprite.Create("data/result/gold_medal.png");
+	m_MedalSprite.position = { 1290,120 };
+	m_MedalSprite.scale = { 0.7f,0.7f };
 
 	// スコアメータースプライトの生成
 	m_ScoreMeter.Create("data/result/meter_rank.png");
@@ -71,13 +65,29 @@ void CResult::Initialize(void)
 	m_HardText.position = { 450,780 };
 	m_HardText.text = "1500 × " + std::to_string(cd->GetData().hard) + " = " + std::to_string(cd->GetData().hard * 1500);
 
-	int time_score = cd->GetData().game_crea_time;
+	int time_score = 0;
 
-	//if(time_score<)
+	int max_time_score = 3000;
+
+	time_score = max_time_score - cd->GetData().game_crea_time;
 
 	m_TotalScoreText.Create(50);
 	m_TotalScoreText.position = { 450,880 };
-	m_TotalScoreText.text = std::to_string(cd->GetData().easy * 500 + cd->GetData().nomal * 1000 + cd->GetData().hard * 1500);
+	m_TotalScoreText.text = std::to_string(cd->GetData().easy * 500 + cd->GetData().nomal * 1000 + cd->GetData().hard * 1500 + time_score);
+	m_TotalScoreText.text = std::to_string(cd->GetData().easy * 500 + cd->GetData().nomal * 1000 + cd->GetData().hard * 1500 + time_score);
+
+	if (cd->GetData().easy * 500 + cd->GetData().nomal * 1000 + cd->GetData().hard * 1500 + time_score < 8000)
+	{
+		m_MedalSprite.Create("data/result/bronze_medal.png");
+	}
+	else if ((cd->GetData().easy * 500) + (cd->GetData().nomal * 1000) + (cd->GetData().hard * 1500) + time_score >= 15000)
+	{
+		m_MedalSprite.Create("data/result/gold_medal.png");
+	}
+	else if (cd->GetData().easy * 500 + cd->GetData().nomal * 1000 + cd->GetData().hard * 1500 + time_score >= 8000)
+	{
+		m_MedalSprite.Create("data/result/silver_medal.png");
+	}
 }
 
 void CResult::Update(void)
@@ -117,8 +127,10 @@ void CResult::Draw(void)
 	m_BackGround.Draw();
 	m_FrameFirst.Draw();
 	m_FrameSecond.Draw();
+
+
 	m_ScoreBoardSprite.Draw();
-	m_BronzeMedalSprite.Draw();
+	m_MedalSprite.Draw();
 	m_ScoreMeter.Draw();
 	m_ClearTimeText.Draw();
 	m_EasyNumText.Draw();
@@ -143,8 +155,6 @@ void CResult::Finalize(void)
 	m_FrameSecond.Delete();
 	m_FrameFirst.Delete();
 	m_BackGround.Delete();
-	m_BronzeMedalSprite.Delete();
-	m_SilverMedalSprite.Delete();
-	m_GoldMedalSprite.Delete();
+	m_MedalSprite.Delete();
 	m_ScoreMeter.Delete();
 }
