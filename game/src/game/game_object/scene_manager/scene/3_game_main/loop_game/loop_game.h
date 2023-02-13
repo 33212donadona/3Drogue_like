@@ -1,11 +1,13 @@
 #pragma once
 #include "aqua.h"
+#include "../../../../job_manager/job_id.h"
 #include "../../../../common_data/common_data_info.h"
 #include "../../../../stage/stage_id.h"
 
 class CUnitManager;
 class CCommonData;
 class CGameSoundManager;
+class CBagData;
 
 enum class LOOP_STATE
 {
@@ -52,6 +54,8 @@ public:
 
 private:
 
+	void SettingFadeOutSprite();
+
 	void SelectNextStageLever();
 
 	void SelectLever();
@@ -67,17 +71,22 @@ private:
 	static const std::string m_button_file_name[(int)SELECT_BUTTON_SIDE::MAX];
 
 	CUnitManager*      m_UnitManager;
+	CBagData*          m_BagData;
 	CGameSoundManager* m_SoundManager;
 	CCommonData*       m_CommonData;
+	
 	CommonDataInfo     m_GameData;
 	LOOP_STATE         m_LoopState;
+
 	aqua::CBoxPrimitive m_FadeBox;
 	aqua::CTimer        m_FadeTimer;
 	aqua::CTimer        m_LightTimer;
 	aqua::CTimer        m_MaxLightTimer;
+	aqua::CTimer        m_SelectJobTimer;
 	aqua::CLabel        m_SelectLeverLabel;
 	aqua::CLabel        m_SelectJobLabel;
 	aqua::CLabel        m_SelectJobSubLabel;
+	aqua::CLabel        m_SelectJobListLabel;
 	aqua::CSprite       m_LeverSprite[(int)STAGE_LEVER::MAX];
 	aqua::CSprite       m_LeverSpriteLight[(int)STAGE_LEVER::MAX];
 	aqua::CSprite       m_ButtonSprite[(int)SELECT_BUTTON_SIDE::MAX];

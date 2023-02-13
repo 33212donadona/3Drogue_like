@@ -60,10 +60,13 @@ void CUnitManager::Update()
 
 void CUnitManager::Finalize()
 {
+	IGameObject::Finalize();
+	
 	if (!m_EnemyList.empty())
 		m_EnemyList.clear();
 
-	IGameObject::Finalize();
+	//m_Player->Finalize();
+
 }
 
 bool CUnitManager::EmptyEnemyList()
