@@ -77,7 +77,7 @@ void CResult::Initialize(void)
 
 	m_TotalScoreText.Create(50);
 	m_TotalScoreText.position = { 450,880 };
-	m_TotalScoreText.text = "1234567890";
+	m_TotalScoreText.text = std::to_string(cd->GetData().easy * 500 + cd->GetData().nomal * 1000 + cd->GetData().hard * 1500);
 }
 
 void CResult::Update(void)
