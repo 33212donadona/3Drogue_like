@@ -79,7 +79,6 @@ void CPlayer::Initialize()
 	//m_BagData->SetWeapon(0, WEAPON_ID::MONEY, 50, 30);
 
 	m_WeaponManager->SetWeapon(m_SetingWeapon[(int)m_PlayerJobID]);
-	m_WeaponManager->SetHandMatrix(m_UnitModel, "mixamorig:RightHandThumb1");
 
 	m_Attack = m_JobManager->GetJobAttackState() + m_BagData->GetWeaponData(m_BagData->GetSelectBagNumber()).attack;
 

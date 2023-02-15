@@ -29,7 +29,7 @@ namespace aqua
 			* 
 			*  @param[in]  file_name   ファイル名
 			*/
-			void        DuplicateLoad(const int file_handle);
+			void        DuplicateLoad(const int handle);
 
 			/*!
 			 *  @brief      モデルの解放

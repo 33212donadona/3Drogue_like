@@ -17,5 +17,6 @@ public:
 
 private:
 	CSelectSystem* m_SelectSystem;
+	aqua::CSprite  m_SelectBottonSprite;
 };
 

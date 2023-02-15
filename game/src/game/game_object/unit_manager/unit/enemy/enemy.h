@@ -6,6 +6,7 @@
 class CPlayer;
 class IWeapon;
 class CBagData;
+class CSoundManager;
 
 class CEnemy : public IUnit
 {

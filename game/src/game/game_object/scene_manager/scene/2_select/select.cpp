@@ -17,6 +17,11 @@ void CSelect::Initialize()
 	aqua::CreateGameObject<CSelectSystem>(this);
 	aqua::CreateGameObject<CSelsectCamera>(this);
 
+	m_SelectBottonSprite.Create("data\\select_graph\\Œˆ’èƒ{ƒ^ƒ“.png");
+	m_SelectBottonSprite.position = aqua::GetWindowSize();
+	m_SelectBottonSprite.position.x -= m_SelectBottonSprite.GetTextureWidth();
+	m_SelectBottonSprite.position.y -= m_SelectBottonSprite.GetTextureHeight();
+
 	aqua::IGameObject::Initialize();
 }
 
@@ -35,11 +40,12 @@ void CSelect::Update()
 void CSelect::Draw()
 {
 	aqua::IGameObject::Draw();
+	m_SelectBottonSprite.Draw();
 }
 
 void CSelect::Finalize()
 {
-	m_SoundManager->Stop(SoundID::TITLE_BGM);
-
+	m_SoundManager->Stop(SoundID::SELECT);
 	aqua::IGameObject::Finalize();
+	m_SelectBottonSprite.Delete();
 }

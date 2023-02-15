@@ -36,12 +36,16 @@ void aqua::core::CObject3DResorce::Load(const std::string& file_name, int index)
 	m_Enabel = true;
 }
 
-void aqua::core::CObject3DResorce::DuplicateLoad(const int file_handle)
+void aqua::core::CObject3DResorce::DuplicateLoad(const int handle)
 {
 	// モデル読み込み
-	m_ResourceHandle = MV1DuplicateModel(file_handle);
+	int h = MV1DuplicateModel(handle);
 
-	AQUA_DX_ASSERT(m_ResourceHandle,"モデルの読み込みに失敗しました。");
+	AQUA_DX_ASSERT(h,"モデルの読み込みに失敗しました。");
+
+	MV1AttachAnim(h,0, -1, FALSE);
+
+	m_ResourceHandle = h;
 }
 
 void aqua::core::CObject3DResorce::Unload(void)

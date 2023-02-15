@@ -106,7 +106,6 @@ void CLoopGame::Initialize()
 	if (m_NextLever[0] == m_NextLever[1])
 		m_NextLever[1] = (m_NextLever[1] + 1) % (int)STAGE_LEVER::MAX;
 
-	//for (int b_i = 0; b_i < (int)SELECT_BUTTON_ID::MAX; b_i++)
 
 	for (int i = 0; i < (int)SELECT_BUTTON_SIDE::MAX; i++)
 	{

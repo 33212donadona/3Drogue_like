@@ -2,6 +2,7 @@
 #include "../player/player.h"
 #include "../../../stage/stage.h"
 #include "../../../bag/bag_data.h"
+#include "../../../sound_manager/game_sound_manager.h"
 
 const float CEnemy::m_max_hit_point = 280.0f;
 const float CEnemy::m_attack = 30.0f;
@@ -24,6 +25,7 @@ void CEnemy::Initialize()
 	m_PlayerModel = (CPlayer*)aqua::FindGameObject("Player");
 	m_Stage = (CStage*)aqua::FindGameObject("Stage");
 	m_BagData = (CBagData*)aqua::FindGameObject("BagData");
+	m_SoundManager = (CGameSoundManager*)aqua::FindGameObject("GameSoundManager");
 
 	m_UnitModel.Create("data\\model\\Enemy", (int)ENEMY_ANIME_ID::MAX);
 	m_Sword.Create("data\\model\\weapon\\enemy_sword", 0);
@@ -123,6 +125,7 @@ void CEnemy::Algorithms()
 
 	d = distance.x * distance.x + distance.y * distance.y;
 
+
 	if (d <= r2 && m_AttackCoolTime.Finished())
 	{
 		m_AnimetionID = ENEMY_ANIME_ID::ATTACK;
@@ -130,14 +133,20 @@ void CEnemy::Algorithms()
 		aqua::CVector3 end_pos = m_PlayerModel->GetPosition();
 		end_pos.y = 77.0f;
 
-		if (m_UnitModel.AnimetionFinished(30.0f))
+		if (m_UnitModel.AnimetionFinished(15.0f) && m_AnimetionID == ENEMY_ANIME_ID::ATTACK)
 		{
 			if (m_Sword.GetBoneCapsuleCollision("Collision.000", m_PlayerModel->GetPosition(), end_pos, 3).HitFlag ||
 				m_Sword.GetBoneCapsuleCollision("Collision.001", m_PlayerModel->GetPosition(), end_pos, 3).HitFlag)
 			{
 				m_PlayerModel->HitEnemyAttack(m_Attack);
 				m_AttackCoolTime.Reset();
+				m_SoundManager->Play(SoundID::SLASH);
 			}
+		}
+		else
+		{
+			aqua::CVector3 angle = m_UnitModel.position - m_PlayerModel->GetPosition();
+			m_UnitModel.angles = atan2(angle.x, angle.z);
 		}
 
 		if (m_UnitModel.AnimetionFinished())

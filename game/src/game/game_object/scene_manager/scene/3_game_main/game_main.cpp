@@ -23,7 +23,7 @@ void CGameMain::Initialize()
 	aqua::CreateGameObject<CLoopGame>(this);
 	aqua::CreateGameObject<CUIManager>(this);
 	aqua::CreateGameObject<CMoneyManager>(this);
-	aqua::CreateGameObject<CBag>(this);
+	//aqua::CreateGameObject<CBag>(this);
 
 	m_CommonData = (CCommonData*)aqua::FindGameObject("CommonData");
 	m_GameData = m_CommonData->GetData();

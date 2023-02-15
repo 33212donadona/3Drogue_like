@@ -105,7 +105,7 @@ bool CWeaponManager::CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
 void CWeaponManager::SetHandMatrix(aqua::CModel& model, std::string hand_name)
 {
 	if (hand_name == "")return;
-	;
+	if (!m_Weapon)return;
 	if (m_BoneName != hand_name)
 	{
 		m_BoneName = hand_name;

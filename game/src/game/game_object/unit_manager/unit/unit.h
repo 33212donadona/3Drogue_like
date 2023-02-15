@@ -2,6 +2,7 @@
 #include "aqua.h"
 
 class CStage;
+class CGameSoundManager;
 
 class IUnit : public aqua::IGameObject
 {
@@ -73,6 +74,7 @@ protected:
 	int m_MaxAnimetion;
 	bool DeadFlag;
 	CStage* m_Stage;
+	CGameSoundManager* m_SoundManager;
 
 };
 
