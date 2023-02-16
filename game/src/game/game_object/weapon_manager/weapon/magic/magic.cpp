@@ -1,6 +1,8 @@
 #include "magic.h"
 #include "../../../unit_manager/unit/player/player.h"
 #include "../../../sound_manager/game_sound_manager.h"
+#include "../../../input/input.h"
+
 const int CMagic::m_effect_radius = 10;
 const int CMagic::m_enemy_radius = 3;
 
@@ -129,7 +131,7 @@ bool CMagic::CheckHit(aqua::CVector3 enemy_pos)
 	distance.y = m_MagicKeepEffect.position.z - enemy_pos.z;
 
 	m_HitMagic = distance.x * distance.x + distance.y * distance.y <= r * r;
-
+	m_HitMagic = m_HitMagic && !Input::Button(Input::BUTTON_ID::B);
 	return m_HitMagic;
 }
 

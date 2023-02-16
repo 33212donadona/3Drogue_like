@@ -3,7 +3,7 @@ const float CJobManager::m_JobAttackState[] =
 {
 	30.0f,
 	45.0f,
-	37.5f,
+	67.5f,
 	34.5f
 };
 const float CJobManager::m_JobHitPointState[] =

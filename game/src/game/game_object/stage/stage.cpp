@@ -51,17 +51,6 @@ void CStage::Update()
  */
 void CStage::Finalize()
 {
-	CommonDataInfo info = m_CommonData->GetData();
-
-	if (m_CreateStageLever == STAGE_LEVER::EASE)
-		info.easy++;
-	if (m_CreateStageLever == STAGE_LEVER::NOMAL)
-		info.nomal++;
-	if (m_CreateStageLever == STAGE_LEVER::HARD)
-		info.hard++;
-
-	m_CommonData->SetData(info);
-
 	IGameObject::Finalize();
 	AQUA_SAFE_DELETE_ARRAY(m_RandStage);
 

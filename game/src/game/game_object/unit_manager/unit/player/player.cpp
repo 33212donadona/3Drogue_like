@@ -314,6 +314,12 @@ void CPlayer::SwordAnimeWork()
 */
 void CPlayer::MagicAnimeWork()
 {
+	if (m_ShotFlag || m_MagicFrame)
+		m_MagicFrame++;
+
+	if (m_MagicFrame > 120)
+		m_AnimeState = P_ANIME_ID::IDLE;
+
 	if (!m_AttackFlag && m_AnimeState != P_ANIME_ID::MAGIC_SHOT)
 	{
 		if (Input::Horizotal() || Input::Vertical())

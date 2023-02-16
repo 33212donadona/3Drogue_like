@@ -133,7 +133,7 @@ void CEnemy::Algorithms()
 		aqua::CVector3 end_pos = m_PlayerModel->GetPosition();
 		end_pos.y = 77.0f;
 
-		if (m_UnitModel.AnimetionFinished(15.0f) && m_AnimetionID == ENEMY_ANIME_ID::ATTACK)
+		if (m_UnitModel.AnimetionFinished(30.0f) && m_AnimetionID == ENEMY_ANIME_ID::ATTACK)
 		{
 			if (m_Sword.GetBoneCapsuleCollision("Collision.000", m_PlayerModel->GetPosition(), end_pos, 3).HitFlag ||
 				m_Sword.GetBoneCapsuleCollision("Collision.001", m_PlayerModel->GetPosition(), end_pos, 3).HitFlag)
@@ -143,11 +143,7 @@ void CEnemy::Algorithms()
 				m_SoundManager->Play(SoundID::SLASH);
 			}
 		}
-		else
-		{
-			aqua::CVector3 angle = m_UnitModel.position - m_PlayerModel->GetPosition();
-			m_UnitModel.angles = atan2(angle.x, angle.z);
-		}
+		
 
 		if (m_UnitModel.AnimetionFinished())
 			m_AnimetionID = ENEMY_ANIME_ID::IDEL;
