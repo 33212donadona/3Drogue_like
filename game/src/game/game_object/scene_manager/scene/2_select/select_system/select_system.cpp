@@ -12,7 +12,9 @@ CSelectSystem::CSelectSystem(IGameObject* parent)
 	, m_PrevSelsectLevel(0)
 {
 }
-
+/*
+* 初期化
+*/
 void CSelectSystem::Initialize()
 {
 	m_CommonData = (CCommonData*)aqua::FindGameObject("CommonData");
@@ -38,7 +40,9 @@ void CSelectSystem::Initialize()
 
 	m_EasingTimer.Setup(m_max_easing_time);
 }
-
+/*
+* 更新
+*/
 void CSelectSystem::Update()
 {
 	if(m_SelsectLevel == m_PrevSelsectLevel)
@@ -79,7 +83,9 @@ void CSelectSystem::Update()
 
 	m_SelectPointer.AnimationUpdata();
 }
-
+/*
+* 解放
+*/
 void CSelectSystem::Finalize()
 {
 	for (int m_i = 0; m_i < m_CountModel; m_i++)
@@ -89,7 +95,9 @@ void CSelectSystem::Finalize()
 
 	m_SelectPointer.Delete();
 }
-
+/*
+* 目標とする難易度の決定
+*/
 bool CSelectSystem::GetDecisionSelsectLavel()
 {
 	bool sl = Input::In(Input::BUTTON_ID::B);
@@ -103,17 +111,23 @@ bool CSelectSystem::GetDecisionSelsectLavel()
 
 	return sl;
 }
-
+/*
+* 今選択中の目標レベル
+*/
 int CSelectSystem::GetNowLavel()
 {
 	return m_SelsectLevel;
 }
-
+/*
+* 前の選択目標レベル
+*/
 int CSelectSystem::GetPrevLavel()
 {
 	return m_PrevSelsectLevel;
 }
-
+/*
+* モデルの座標
+*/
 aqua::CVector3 CSelectSystem::GetTargetPosition()
 {
 	return m_SelectPointer.position;

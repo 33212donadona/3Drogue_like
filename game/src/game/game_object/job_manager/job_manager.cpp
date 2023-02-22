@@ -18,22 +18,30 @@ CJobManager::CJobManager(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent, "JobManager")
 {
 }
-
+/*
+* E‹Æ‚Ìİ’è
+*/
 void CJobManager::SetJobID(JOB_ID job_id)
 {
 	m_JobID = JOB_ID((int)job_id % (int)JOB_ID::MAX);
 }
-
+/*
+* E‹Æ‚Ìæ“¾
+*/
 JOB_ID CJobManager::GetJobID()
 {
 	return m_JobID;
 }
-
+/*
+* E‹Æ‚ÌUŒ‚—Í
+*/
 float CJobManager::GetJobAttackState()
 {
 	return m_JobAttackState[(int)m_JobID];
 }
-
+/*
+* E‹Æ‚Ì‘Ì—Í
+*/
 float CJobManager::GetJobHitPointState()
 {
 	return m_JobHitPointState[(int)m_JobID];

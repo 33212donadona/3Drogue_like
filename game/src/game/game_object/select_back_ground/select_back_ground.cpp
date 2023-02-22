@@ -23,7 +23,9 @@ CSelectBackGround::CSelectBackGround(aqua::IGameObject* parent)
 	, m_AlphaReta(255)
 {
 }
-
+/*
+* èâä˙âª
+*/
 void CSelectBackGround::Initialize()
 {
 	std::vector<aqua::CSprite> vs;
@@ -83,7 +85,9 @@ void CSelectBackGround::Initialize()
 
 	m_BackGroundSurface.Create(aqua::GetWindowWidth(), aqua::GetWindowHeight());
 }
-
+/*
+* çXêV
+*/
 void CSelectBackGround::Update()
 {
 	if (!m_SelectSystem)
@@ -117,7 +121,9 @@ void CSelectBackGround::Update()
 		efc_rota = 1;
 	}
 }
-
+/*
+* ï`âÊ
+*/
 void CSelectBackGround::Draw()
 {
 	m_BackGroundSurface.Begin();
@@ -144,7 +150,9 @@ void CSelectBackGround::Draw()
 
 	m_BackGroundSurface.End();
 }
-
+/*
+* âï˙
+*/
 void CSelectBackGround::Finalize()
 {
 	for (int sky_i = 0; sky_i < m_max_sky; sky_i++)
@@ -165,12 +173,16 @@ void CSelectBackGround::Finalize()
 	AQUA_SAFE_DELETE_ARRAY(m_EffectSprite);
 
 }
-
+/*
+* îwåiÇÃÉnÉìÉhÉãéÊìæ
+*/
 aqua::CSurface& CSelectBackGround::GetBackGround()
 {
 	return m_BackGroundSurface;
 }
-
+/*
+* îwåiÇÃçXêV
+*/
 void CSelectBackGround::ChangeBackGournd()
 {
 	if (!m_SelectSystem)return;
@@ -195,7 +207,9 @@ void CSelectBackGround::ChangeBackGournd()
 			(unsigned char)aqua::Limit(255 - (int)m_AlphaReta, 0, 255);
 	}
 }
-
+/*
+* à⁄ìÆÇ≈Ç´ÇÈÇ©Ç«Ç§Ç©Çï`âÊ
+*/
 void CSelectBackGround::EmittingLight()
 {
 

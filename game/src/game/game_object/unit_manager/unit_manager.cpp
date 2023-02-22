@@ -9,7 +9,9 @@ CUnitManager::CUnitManager(aqua::IGameObject* parent)
 	, m_PlayerDead(false)
 {
 }
-
+/*
+* 初期化
+*/
 void CUnitManager::Initialize()
 {
 	m_CommonData = (CCommonData*)aqua::FindGameObject("CommonData");
@@ -28,7 +30,9 @@ void CUnitManager::Initialize()
 	for (auto& elem : m_EnemyList)
 		elem->Initialize();
 }
-
+/*
+* 更新
+*/
 void CUnitManager::Update()
 {
 	m_Player->Update();
@@ -52,35 +56,41 @@ void CUnitManager::Update()
 		{
 			elem->Finalize();
 		}
+
 		m_EnemyList.clear();
 	}
 
 	m_CWeaponManager->Update();
 }
-
+/*
+* 解放
+*/
 void CUnitManager::Finalize()
 {
 	IGameObject::Finalize();
 	
 	if (!m_EnemyList.empty())
 		m_EnemyList.clear();
-
-	//m_Player->Finalize();
-
 }
-
+/*
+* 敵がゼロ体かどうか
+*/
 bool CUnitManager::EmptyEnemyList()
 {
 	return m_EnemyList.empty();
 }
-
+/*
+* プレイヤーの死亡確認
+*/
 bool CUnitManager::GetPlayerDead()
 {
 	if (!m_Player)return m_PlayerDead;
 	m_PlayerDead = m_Player->GetDead();
 	return m_PlayerDead;
 }
-
+/*
+* プレイヤーに職業を設定
+*/
 void CUnitManager::SetPlayerJob(JOB_ID job_id)
 {
 	JOB_ID id = (JOB_ID)((int)job_id % (int)JOB_ID::MAX);

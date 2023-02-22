@@ -8,7 +8,9 @@ CSelect::CSelect(IGameObject* parent)
 	:IScene(parent,"Select")
 {
 }
-
+/*
+* 初期化
+*/
 void CSelect::Initialize()
 {
 	m_SoundManager = (CGameSoundManager*)aqua::FindGameObject("GameSoundManager");
@@ -24,7 +26,9 @@ void CSelect::Initialize()
 
 	aqua::IGameObject::Initialize();
 }
-
+/*
+* 更新
+*/
 void CSelect::Update()
 {
 	// スペースでゲームシーンへ移動
@@ -36,13 +40,17 @@ void CSelect::Update()
 
 	aqua::IGameObject::Update();
 }
-
+/*
+* 描画
+*/
 void CSelect::Draw()
 {
 	aqua::IGameObject::Draw();
 	m_SelectBottonSprite.Draw();
 }
-
+/*
+* 解放
+*/
 void CSelect::Finalize()
 {
 	m_SoundManager->Stop(SoundID::SELECT);

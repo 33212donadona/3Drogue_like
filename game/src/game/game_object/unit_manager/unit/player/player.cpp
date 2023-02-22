@@ -146,7 +146,9 @@ int CPlayer::GetAnimetionNum()
 {
 	return (int)m_AnimeState;
 }
-
+/*
+* “G‚©‚çUŒ‚‚ðŽó‚¯‚½
+*/
 void CPlayer::HitEnemyAttack(float attack)
 {
 	if (m_AnimeState == P_ANIME_ID::DAMAGE)return;
@@ -155,7 +157,9 @@ void CPlayer::HitEnemyAttack(float attack)
 	m_Damage = attack;
 	m_AnimeState = P_ANIME_ID::DAMAGE;
 }
-
+/*
+* Õ“Ë”»’è
+*/
 bool CPlayer::CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
 {
 	bool wh = m_WeaponManager->CheckHit(first_pos, end_pos) && m_AttackFlag;
@@ -186,32 +190,44 @@ bool CPlayer::CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
 
 	return wh;
 }
-
+/*
+* Šp“x‚ÌŽæ“¾
+*/
 float CPlayer::GetAngle()
 {
 	return m_UnitModel.angles;
 }
-
+/*
+* UŒ‚ƒtƒ‰ƒO
+*/
 bool CPlayer::GetAttackFlag()
 {
 	return m_AttackFlag;
 }
-
+/*
+* €”õƒtƒ‰ƒO
+*/
 bool CPlayer::GetStandbyFlag()
 {
 	return m_Standby;
 }
-
+/*
+* ‘_Œ‚ƒtƒ‰ƒO
+*/
 bool CPlayer::GetShotFlag()
 {
 	return m_ShotFlag;
 }
-
+/*
+* ’†’fƒtƒ‰ƒO
+*/
 bool CPlayer::GetCancelMagic()
 {
 	return m_CancelMagic;
 }
-
+/*
+* E‹Æ‚ÌÝ’è
+*/
 void CPlayer::SetJodID(JOB_ID job_id)
 {
 	CommonDataInfo info = m_CommonData->GetData();
@@ -224,7 +240,9 @@ void CPlayer::SetJodID(JOB_ID job_id)
 	m_WeaponManager->SetWeapon(m_SetingWeapon[(int)m_PlayerJobID]);
 	m_CommonData->SetData(info);
 }
-
+/*
+* E‹Æ‚ÌŽæ“¾
+*/
 JOB_ID CPlayer::GetPlayerJob()
 {
 	return m_PlayerJobID;
@@ -456,11 +474,5 @@ void CPlayer::Rotation()
 */
 void CPlayer::Weapon()
 {
-	//if (Input::In(Input::KEY_ID::B) && m_BagData->GetBagFlag())
-	//	if (m_WeaponManager)
-	//	{
-	//		m_WeaponManager->SetWeapon(m_BagData->GetWeaponData(m_BagData->GetSelectBagNumber()).id);
-	//	}
-
 	m_WeaponManager->SetHandMatrix(m_UnitModel, "mixamorig:RightHandThumb1");
 }

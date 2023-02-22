@@ -11,19 +11,25 @@ CWeaponManager::CWeaponManager(aqua::IGameObject* parent)
 	, m_Weapon(nullptr)
 {
 }
-
+/*
+* 初期化
+*/
 void CWeaponManager::Initialize()
 {
 	m_NowWeapon = WEAPON_ID::MAX;
 }
-
+/*
+* 更新
+*/
 void CWeaponManager::Update()
 {
 	if (m_Weapon)m_Weapon->Update();
 
 	IGameObject::Update();
 }
-
+/*
+* 解放
+*/
 void CWeaponManager::Finalize()
 {
 	if (m_Weapon)
@@ -32,7 +38,9 @@ void CWeaponManager::Finalize()
 		AQUA_SAFE_DELETE_ARRAY(m_Weapon);
 	}
 }
-
+/*
+* 武器を設定
+*/
 void CWeaponManager::SetWeapon(WEAPON_ID weapon_id)
 {
 	if (weapon_id == m_NowWeapon)return;
@@ -69,7 +77,9 @@ void CWeaponManager::SetWeapon(WEAPON_ID weapon_id)
 
 	m_NowWeapon = weapon_id;
 }
-
+/*
+* 武器の衝突判定
+*/
 bool CWeaponManager::CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
 {
 	if (!m_Weapon)return false;
@@ -101,7 +111,9 @@ bool CWeaponManager::CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
 
 	return hit_flag;
 }
-
+/*
+* 武器をプレイヤーの手につける
+*/
 void CWeaponManager::SetHandMatrix(aqua::CModel& model, std::string hand_name)
 {
 	if (hand_name == "")return;

@@ -141,6 +141,8 @@ void CResult::Draw(void)
 
 void CResult::Finalize(void)
 {
+	m_SoundManager->Stop(SoundID::RESULT_BGM);
+
 	CCommonData* cd = ((CCommonData*)aqua::FindGameObject("CommonData"));
 	if (cd)
 	{

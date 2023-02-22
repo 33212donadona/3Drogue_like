@@ -16,7 +16,7 @@ public:
 	void Finalize()override;
 
 private:
-
+	int            m_HitPointPositionZero;
 	int            m_HitPointMaskHandle;
 
 	aqua::CVector2 m_MaskPosition;

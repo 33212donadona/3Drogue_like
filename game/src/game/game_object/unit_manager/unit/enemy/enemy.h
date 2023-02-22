@@ -25,8 +25,6 @@ public:
 
 private:
 	void Algorithms();
-
-	void AnimetionWark();
 private:
 	static const float m_max_hit_point;
 	static const float m_attack;

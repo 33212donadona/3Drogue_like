@@ -74,7 +74,9 @@ aqua::CVector3 CStage::GetArePosition(aqua::CPoint stage_data)
 
 	return pos;
 }
-
+/*
+*　何もない空間かどうか
+*/
 bool CStage::CheckObject(aqua::CVector3 position)
 {
 	aqua::CPoint area;
@@ -277,7 +279,9 @@ void CStage::AutoMapCreate()
 		}
 	}
 }
-
+/*
+* マップ分割
+*/
 void CStage::MapPartition(aqua::CPoint stage_size_first, aqua::CPoint stage_size_end, int max_partition)
 {
 	if (max_partition <= 0)return;

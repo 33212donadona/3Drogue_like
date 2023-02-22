@@ -224,7 +224,9 @@ aqua::CollisionInfo aqua::CModel::GetBoneCapsuleCollision(
 
 void aqua::CModel::Draw()
 {
-	for (int i = 0; i <= MV1GetFrameNum(m_ModelHandle); i++)
+	int MV1frame = MV1GetFrameNum(m_ModelHandle);
+
+	for (int i = 0; i < MV1frame; i++)
 		MV1RefreshCollInfo(m_ModelHandle, i);
 
 	if (position != m_PrevPosition)

@@ -13,7 +13,9 @@ CMoneyWeapon::CMoneyWeapon(aqua::IGameObject* parent)
 	, m_BagData(nullptr)
 {
 }
-
+/*
+* 初期化
+*/
 void CMoneyWeapon::Initialize()
 {
 	m_MoneyEffect.Create("data\\effect\\coin_attack.efkefc");
@@ -28,7 +30,9 @@ void CMoneyWeapon::Initialize()
 	m_BagData = (CBagData*)aqua::FindGameObject("BagData");
 	m_SoundManager = (CGameSoundManager*)aqua::FindGameObject("GameSoundManager");
 }
-
+/*
+* 更新
+*/
 void CMoneyWeapon::Update()
 {
 	if (!m_Player)
@@ -56,20 +60,26 @@ void CMoneyWeapon::Update()
 
 	m_MoneyEffect.Update();
 }
-
+/*
+* 解放
+*/
 void CMoneyWeapon::Finalize()
 {
 	m_MoneyCollision.Delete();
 	m_MoneyEffect.Delete();
 }
-
+/*
+* 衝突判定
+*/
 bool CMoneyWeapon::CheckHit(aqua::CVector3 first_pos, aqua::CVector3 end_pos)
 {
 	m_HitMoney = m_MoneyCollision.GetBoneCapsuleCollision("Collition", first_pos, end_pos, 3).HitFlag;
 
 	return m_HitMoney;
 }
-
+/*
+* モデルにプレイヤーの手の座標を設定
+*/
 void CMoneyWeapon::SetPosition(aqua::CVector3 position)
 {
 	m_MoneyPosition = position;

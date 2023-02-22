@@ -37,7 +37,9 @@ CLoopGame::CLoopGame(IGameObject* parent)
 	for (int i = 0; i < 2; i++)
 		m_NextLever[i] = 0;
 }
-
+/*
+* 初期化
+*/
 void CLoopGame::Initialize()
 {
 	m_SoundManager = (CGameSoundManager*)aqua::FindGameObject("GameSoundManager");
@@ -127,7 +129,9 @@ void CLoopGame::Initialize()
 
 	IGameObject::Initialize();
 }
-
+/*
+* 更新
+*/
 void CLoopGame::Update()
 {
 	switch (m_LoopState)
@@ -247,7 +251,9 @@ void CLoopGame::Update()
 		break;
 	}
 }
-
+/*
+* 描画
+*/
 void CLoopGame::Draw()
 {
 
@@ -278,7 +284,9 @@ void CLoopGame::Draw()
 	}
 
 }
-
+/*
+* 解放
+*/
 void CLoopGame::Finalize()
 {
 
@@ -307,13 +315,17 @@ void CLoopGame::Finalize()
 
 	IGameObject::Finalize();
 }
-
+/*
+* リザルトに行くかどうか
+*/
 bool CLoopGame::ChengeResult()
 {
 	if (!m_UnitManager)return m_CommonData->GetData().crea_stage >= m_CommonData->GetData().crea_target;
 	return m_CommonData->GetData().crea_stage >= m_CommonData->GetData().crea_target || m_UnitManager->GetPlayerDead();
 }
-
+/*
+* 遷移の演出
+*/
 void CLoopGame::SettingFadeOutSprite()
 {
 	for (int l_i = 0; l_i < (int)STAGE_LEVER::MAX; l_i++)
@@ -352,7 +364,9 @@ void CLoopGame::SettingFadeOutSprite()
 	}
 
 }
-
+/*
+* 次のステージの難易度選択
+*/
 void CLoopGame::SelectNextStageLever()
 {
 	CommonDataInfo info = m_CommonData->GetData();
@@ -367,7 +381,9 @@ void CLoopGame::SelectNextStageLever()
 
 	m_SelectNextStageFlag = Input::In(Input::BUTTON_ID::B) || Input::In(Input::BUTTON_ID::X);
 }
-
+/*
+* レベル選択の処理
+*/
 void CLoopGame::SelectLever()
 {
 	SelectNextStageLever();
@@ -453,7 +469,9 @@ void CLoopGame::SelectLever()
 			m_LoopState = LOOP_STATE::FADE_IN;
 	}
 }
-
+/*
+* 職業選択
+*/
 void CLoopGame::SelectJob()
 {
 	if (m_SelectJobTimer.Finished())

@@ -83,7 +83,9 @@ void CEnemy::Finalize()
 	m_PlayerModel = nullptr;
 	IUnit::Finalize();
 }
-
+/*
+* 動きの更新
+*/
 void CEnemy::MoveUpdata()
 {
 	Algorithms();
@@ -109,7 +111,9 @@ void CEnemy::MoveUpdata()
 	}
 
 }
-
+/*
+* 敵の動く仕組み
+*/
 void CEnemy::Algorithms()
 {
 	aqua::CVector2 distance;
@@ -170,9 +174,4 @@ void CEnemy::Algorithms()
 
 
 	m_AttackCoolTime.Update();
-}
-
-void CEnemy::AnimetionWark()
-{
-
 }

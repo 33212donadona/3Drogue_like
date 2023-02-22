@@ -20,13 +20,17 @@ CGameSoundManager::CGameSoundManager(aqua::IGameObject* parent)
 	, m_Finalize(false)
 {
 }
-
+/*
+* ‰Šú‰»
+*/
 void CGameSoundManager::Initialize()
 {
 	for (int s_i = 0; s_i < (int)SoundID::MAX; s_i++)
 		m_SoundList[s_i].Create(m_Sound[s_i].name, m_Sound[s_i].flag);
 }
-
+/*
+* ‰ğ•ú
+*/
 void CGameSoundManager::Finalize()
 {
 	for (auto& i : m_SoundList)
@@ -35,7 +39,9 @@ void CGameSoundManager::Finalize()
 	m_Finalize = true;
 	IGameObject::Finalize();
 }
-
+/*
+* Ä¶
+*/
 void CGameSoundManager::Play(SoundID id)
 {
 	int sound_id = (int)id;
@@ -46,7 +52,9 @@ void CGameSoundManager::Play(SoundID id)
 	if (!m_Sound[sound_id].flag)
 		m_SoundList[sound_id].Play();
 }
-
+/*
+* ’â~
+*/
 void CGameSoundManager::Stop(SoundID id)
 {
 	if (!m_Finalize && m_SoundList[(int)id].IsPlaying())

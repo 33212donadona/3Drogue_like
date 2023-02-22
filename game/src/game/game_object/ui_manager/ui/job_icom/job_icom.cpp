@@ -14,7 +14,9 @@ CJobIcon::CJobIcon(aqua::IGameObject* parent)
 	, m_CommonData(nullptr)
 {
 }
-
+/*
+* ‰Šú‰»
+*/
 void CJobIcon::Initialize()
 {
 	for (int job_i = 0; job_i < (int)JOB_ID::MAX; job_i++)
@@ -24,17 +26,17 @@ void CJobIcon::Initialize()
 
 	m_CommonData = (CCommonData*)aqua::FindGameObject("CommonData");
 }
-
-void CJobIcon::Update()
-{
-}
-
+/*
+* •`‰æ
+*/
 void CJobIcon::Draw()
 {
 	if((int)m_CommonData->GetData().now_job > -1)
 	m_JobIconSprite[(int)m_CommonData->GetData( ).now_job].Draw();
 }
-
+/*
+* ‰ğ•ú
+*/
 void CJobIcon::Finalize()
 {
 	for (int job_i = 0; job_i < (int)JOB_ID::MAX; job_i++)

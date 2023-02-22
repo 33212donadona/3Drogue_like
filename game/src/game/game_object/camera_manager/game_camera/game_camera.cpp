@@ -48,31 +48,10 @@ void CGameCamera::Draw()
 	ICamera::Draw();
 
 	m_Range_of_VisionSprite.Draw();
-
-#ifdef AQUA_DEBUG
-	//aqua::CLabel cl;
-	//cl.Create(20);
-	//cl.color = aqua::CColor::BLUE;
-	//cl.position.y = 200.0f;
-	//cl.text = std::to_string(m_PlayerClass->GetAnimetionNum()) + "\n" +
-	//	"x:" + std::to_string(m_Camera.camera_position.x) + "\n"+
-	//	"y:" + std::to_string(m_Camera.camera_position.y) + "\n"+
-	//	"z:" + std::to_string(m_Camera.camera_position.z) + "\n"+
-	//	"Ho:" + std::to_string(Input::Horizotal()) + "\n"+
-	//	"V:" + std::to_string(Input::Vertical()) + "\n"	+
-	//	"E:" + std::to_string(m_CommonData->GetData().easy) + "\n"+
-	//	"N:" + std::to_string(m_CommonData->GetData().nomal) + "\n"+
-	//	"Ha:" + std::to_string(m_CommonData->GetData().hard) + "\n"	+
-	//	"Next:" + std::to_string((int)m_CommonData->GetData().stage_lever) + "\n"	+
-	//	"C:" + std::to_string(m_CommonData->GetData().crea_stage) + "\n"+
-	//	"S:" + std::to_string(m_CommonData->GetData().crea_target);
-	//
-	//cl.Draw();
-	//cl.Delete();
-#endif
-
 }
-
+/*
+* ‰ð•ú
+*/
 void CGameCamera::Finalize()
 {
 	m_Range_of_VisionSprite.Delete();

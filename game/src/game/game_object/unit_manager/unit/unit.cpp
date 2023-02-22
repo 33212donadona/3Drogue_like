@@ -56,7 +56,9 @@ void IUnit::Update()
 	{
 	case IUnit::STATE::SUMMON:
 		m_UnitModel.AttachAnimation(1);
+
 		Summon();
+
 		break;
 	case IUnit::STATE::MOVE:
 
@@ -118,7 +120,7 @@ void IUnit::Update()
 void IUnit::Finalize()
 {
 
-	if(m_UnitModel.GetHandle() < 0)
+	if (m_UnitModel.GetHandle() < 0)return;
 	m_UnitModel.Delete();
 	m_SummonEffect.Delete();
 

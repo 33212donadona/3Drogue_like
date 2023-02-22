@@ -7,7 +7,6 @@ public:
 	~CObjectTower() = default;
 
 	void Initialize(aqua::CVector3 position)override;
-	void Update() override;
 	void Finalize() override;
 };
 

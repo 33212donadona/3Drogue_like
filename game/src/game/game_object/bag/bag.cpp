@@ -144,12 +144,6 @@ void CBag::Finalize()
  */
 void CBag::SelectInventory()
 {
-
-	//if (aqua::keyboard::Button(aqua::keyboard::KEY_ID::LEFT) || aqua::keyboard::Button(aqua::keyboard::KEY_ID::RIGHT))
-	//	m_KeybordFlag = true;
-	//if (aqua::mouse::GetCursorMovement().x || aqua::mouse::GetCursorMovement().y)
-	//	m_KeybordFlag = false;
-
 	SelectNumber();
 
 	if (m_SelectNumber != -1)

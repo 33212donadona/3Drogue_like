@@ -7,7 +7,9 @@ CUIManager::CUIManager(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent ,"UIManager")
 {
 }
-
+/*
+* ‰Šú‰»
+*/
 void CUIManager::Initialize()
 {
 	aqua::CreateGameObject<CHitPointUI>(this);
@@ -16,17 +18,23 @@ void CUIManager::Initialize()
 
 	aqua::IGameObject::Initialize();
 }
-
+/*
+* XV
+*/
 void CUIManager::Update()
 {
 	aqua::IGameObject::Update();
 }
-
+/*
+* •`‰æ
+*/
 void CUIManager::Draw()
 {
 	aqua::IGameObject::Draw();
 }
-
+/*
+* ‰ğ•ú
+*/
 void CUIManager::Finalize()
 {
 	aqua::IGameObject::Finalize();

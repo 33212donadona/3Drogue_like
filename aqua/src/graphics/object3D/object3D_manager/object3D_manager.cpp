@@ -24,7 +24,7 @@ aqua::core::CObject3DManager::Load(const std::string& file_name)
 	if (!find_object_3d)
 		object_3d->Load(file_name);	
 	else
-		object_3d->DuplicateLoad(find_object_3d->GetResourceHandle());
+		object_3d->DuplicateLoad(find_object_3d->GetResourceHandle(), file_name);
 
 	// 3Dƒ‚ƒfƒ‹ƒŠƒXƒg‚É’Ç‰Á
 	m_Object3DList.push_back(object_3d);
@@ -56,7 +56,7 @@ Unload(CObject3DResorce* model)
 		{
 			(*it)->Unload();
 
-			//AQUA_SAFE_DELETE((*it));
+			AQUA_SAFE_DELETE((*it));
 
 			m_Object3DList.erase(it);
 

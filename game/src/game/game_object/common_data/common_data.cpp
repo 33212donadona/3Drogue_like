@@ -6,7 +6,9 @@ CCommonData::CCommonData(aqua::IGameObject* parent)
 	:aqua::IGameObject(parent, "CommonData")
 {
 }
-
+/*
+* 共有情報の更新
+*/
 void CCommonData::SetData(CommonDataInfo common_data)
 {
 	m_MapData.crea_target      = common_data.crea_target;
@@ -20,7 +22,9 @@ void CCommonData::SetData(CommonDataInfo common_data)
 	m_MapData.now_job          = common_data.now_job;
 	m_MapData.stage_lever = common_data.stage_lever;
 }
-
+/*
+* 共有情報の更新
+*/
 void CCommonData::SetData
 (
 	int max_stage,
@@ -68,12 +72,16 @@ void CCommonData::SetData
 	if (m_MapData.stage_lever != next_stage_lever)
 		m_MapData.stage_lever = next_stage_lever;
 }
-
+/*
+* 共有情報の取得
+*/
 CommonDataInfo CCommonData::GetData()
 {
 	return m_MapData;
 }
-
+/*
+* 目標レベルの個数の最大
+*/
 int CCommonData::GetSelectMaxCreaTarget()
 {
 	return m_selct_max_crea_target;

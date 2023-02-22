@@ -4,13 +4,17 @@ IUserInterface::IUserInterface(aqua::IGameObject* parent, std::string name)
 	:aqua::IGameObject(parent, name, "UserInterface")
 {
 }
-
+/*
+* ‰Šú‰»
+*/
 void IUserInterface::Initialize()
 {
 	if (m_user_interface_name != "")
 		m_UserInterfaceSprite.Create(m_user_interface_name);
 }
-
+/*
+* •`‰æ
+*/
 void IUserInterface::Draw()
 {
 	if (m_user_interface_name != "")

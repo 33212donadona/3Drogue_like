@@ -54,7 +54,9 @@ void CSelsectCamera::Draw()
 	ICamera::Draw();
 	m_StageTargetLabel.Draw();
 }
-
+/*
+* ‰ð•ú
+*/
 void CSelsectCamera::Finalize()
 {
 	m_StageTargetLabel.Delete();

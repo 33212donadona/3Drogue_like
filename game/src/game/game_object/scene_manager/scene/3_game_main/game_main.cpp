@@ -14,7 +14,9 @@ CGameMain::CGameMain(IGameObject* parent)
 	, m_Timer(0.0f)
 {
 }
-
+/*
+* 初期化
+*/
 void CGameMain::Initialize()
 {
 	m_SoundManager = (CGameSoundManager*)aqua::FindGameObject("GameSoundManager");
@@ -23,7 +25,6 @@ void CGameMain::Initialize()
 	aqua::CreateGameObject<CLoopGame>(this);
 	aqua::CreateGameObject<CUIManager>(this);
 	aqua::CreateGameObject<CMoneyManager>(this);
-	//aqua::CreateGameObject<CBag>(this);
 
 	m_CommonData = (CCommonData*)aqua::FindGameObject("CommonData");
 	m_GameData = m_CommonData->GetData();
@@ -34,33 +35,38 @@ void CGameMain::Initialize()
 	// ゲームタイマーセット
 	m_GameTimer.Setup(1000.0f);
 }
-
+/*
+* 更新
+*/
 void CGameMain::Update()
 {
 	// ゲームタイマーの更新
 	m_GameTimer.Update();
-
-	//if (aqua::keyboard::Trigger(aqua::keyboard::KEY_ID::Z))
-	//	((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::RESULT);
 
 	if(m_LoopGame->ChengeResult())
 			((CSceneManager*)aqua::FindGameObject("SceneManager"))->ChangeScene(SCENE_ID::RESULT);
 
 	aqua::IGameObject::Update();
 }
-
+/*
+* 描画
+*/
 void CGameMain::Draw()
 {
 	aqua::IGameObject::Draw();
 }
-
+/*
+* 解放
+*/
 void CGameMain::Finalize()
 {
 	m_SoundManager->Stop(SoundID::GAME_BGM);
 
 	aqua::IGameObject::Finalize();
 }
-
+/*
+* ゲームの全体時間
+*/
 float CGameMain::GetGameTime(void)
 {
 	return m_GameTimer.GetTime();

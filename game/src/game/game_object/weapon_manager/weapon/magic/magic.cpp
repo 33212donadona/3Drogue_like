@@ -15,7 +15,9 @@ CMagic::CMagic(aqua::IGameObject* parent)
 	, m_MagicState(MAGIC_STATE::STANDBY)
 {
 }
-
+/*
+* 初期化
+*/
 void CMagic::Initialize()
 {
 	m_MagicFirstEffect.Create("data\\effect\\magic_3_first_2.efkefc");
@@ -23,7 +25,9 @@ void CMagic::Initialize()
 	m_MagicEndEffect.Create("data\\effect\\magic_3_end.efkefc");
 	m_SoundManager = (CGameSoundManager*)aqua::FindGameObject("GameSoundManager");
 }
-
+/*
+* 更新
+*/
 void CMagic::Update()
 {
 	if (!m_Player)
@@ -47,6 +51,7 @@ void CMagic::Update()
 			}
 
 			break;
+
 		case MAGIC_STATE::INVOKE_MAGIC:
 
 			m_MagicFirstEffect.Update();
@@ -67,7 +72,9 @@ void CMagic::Update()
 				m_MagicKeepEffect.visible = true;
 				m_HitMagic = false;
 			}
+
 			break;
+
 		case MAGIC_STATE::KEEP_MAGIC:
 
 			if (m_Player->GetAttackFlag() || m_ShotFlag)
@@ -93,7 +100,9 @@ void CMagic::Update()
 			m_MagicKeepEffect.Update();
 
 			break;
+
 		case MAGIC_STATE::FINISHED_MAGIC:
+
 			if (m_MagicEndEffect.Finished())
 			{
 				m_MagicState = MAGIC_STATE::STANDBY;
@@ -102,8 +111,6 @@ void CMagic::Update()
 
 			m_MagicEndEffect.Update();
 
-			break;
-		default:
 			break;
 		}
 
@@ -114,14 +121,18 @@ void CMagic::Update()
 		}
 	}
 }
-
+/*
+* 解放
+*/
 void CMagic::Finalize()
 {
 	m_MagicFirstEffect.Delete();
 	m_MagicKeepEffect.Delete();
 	m_MagicEndEffect.Delete();
 }
-
+/*
+* 衝突判定
+*/
 bool CMagic::CheckHit(aqua::CVector3 enemy_pos)
 {
 	float r = m_effect_radius + m_enemy_radius;
@@ -134,12 +145,16 @@ bool CMagic::CheckHit(aqua::CVector3 enemy_pos)
 	m_HitMagic = m_HitMagic && !Input::Button(Input::BUTTON_ID::B);
 	return m_HitMagic;
 }
-
+/*
+* モデルにプレイヤーの手の座標を設定
+*/
 void CMagic::SetPosition(aqua::CVector3 position)
 {
 	m_MagicFirstEffect.position = position;
 }
-
+/*
+* 前方に打ち出す
+*/
 void CMagic::Shot()
 {
 	m_Angles = m_Player->GetAngle();

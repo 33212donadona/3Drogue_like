@@ -6,7 +6,9 @@ CHitPointUI::CHitPointUI(aqua::IGameObject* parent)
 	, m_CommonData(nullptr)
 {
 }
-
+/*
+* 初期化
+*/
 void CHitPointUI::Initialize()
 {
 	m_CommonData = (CCommonData*)aqua::FindGameObject("CommonData");
@@ -20,15 +22,19 @@ void CHitPointUI::Initialize()
 
 	m_MaskPosition.x = (float)m_HitPointSprite.GetTextureWidth();
 
+	m_HitPointPositionZero = m_HitPointSprite.GetTextureWidth() - m_MaskSize.x * 1.01f;
 }
-
+/*
+* 更新
+*/
 void CHitPointUI::Update()
 {
-	int hit_point_zero = m_HitPointSprite.GetTextureWidth() - m_MaskSize.x;
-
-	m_MaskPosition.x =  hit_point_zero + m_CommonData->GetData().hit_point / m_CommonData->GetData().max_hit_point * m_MaskSize.x - 26.0f;
+	float hp = aqua::Limit(m_CommonData->GetData().hit_point, 0.0f, m_CommonData->GetData().max_hit_point);
+	m_MaskPosition.x = m_HitPointPositionZero +  hp / m_CommonData->GetData().max_hit_point * m_MaskSize.x;
 }
-
+/*
+* 描画
+*/
 void CHitPointUI::Draw()
 {
 	m_HitPointFrameSprite.Draw();
@@ -41,7 +47,9 @@ void CHitPointUI::Draw()
 
 	DeleteMaskScreen();
 }
-
+/*
+* 更新
+*/
 void CHitPointUI::Finalize()
 {
 	m_HitPointSprite.Delete();

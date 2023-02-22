@@ -4,7 +4,9 @@ CObjectRock::CObjectRock(aqua::IGameObject* parent)
 	:IObject(parent,"ObjectRock")
 {
 }
-
+/*
+* èâä˙âª
+*/
 void CObjectRock::Initialize(aqua::CVector3 position)
 {
 	m_Model.Create("data\\stage\\object_rock", 0);
@@ -18,11 +20,9 @@ void CObjectRock::Initialize(aqua::CVector3 position)
 	m_Model.axis = aqua::CVector3(1.0f, 0.0f, 0.0f);
 	m_Model.angles = aqua::DegToRad((float)std::pow(-1.0f, aqua::Rand(1, 0)) * 90.0f);
 }
-
-void CObjectRock::Update()
-{
-}
-
+/*
+* âï˙
+*/
 void CObjectRock::Finalize()
 {
 	IObject::Finalize();

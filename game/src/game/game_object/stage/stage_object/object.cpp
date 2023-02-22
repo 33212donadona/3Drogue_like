@@ -5,10 +5,6 @@ IObject::IObject(aqua::IGameObject* parent, std::string name)
 {
 }
 
-void IObject::Initialize(aqua::CVector3 position)
-{
-}
-
 void IObject::Update()
 {
 	IGameObject::Update();
